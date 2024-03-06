@@ -7,6 +7,27 @@
 * Outputs - xxxxxx
 *******************************/
 
+int captureMode()
+{
+	/*
+	* Purpose - Sets the acquisition mode of the program. Static or Dynamic
+	* Parameters - none
+	* Outputs - mode flag
+	*/
+
+	// define variables
+	int modeFlag = 0;
+
+	// prompt user for acquisition mode
+	while (modeFlag<1 || modeFlag>>2)
+	{
+		cout << "Select Mode:\n1 = Static Mode\n2 = Dynamic Mode\n";
+		cin >> modeFlag;
+	}
+	
+	return(modeFlag);
+}
+
 void cameraCalibration()
 {
 	/*

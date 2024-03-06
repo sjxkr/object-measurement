@@ -13,6 +13,7 @@ Constants
 Functions 
 ****************************************************************/ 
 
+int  captureMode();
 void cameraCalibration();
 void calibrationCheck();
 void remapImage();
