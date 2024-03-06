@@ -36,11 +36,13 @@ void runCameraCalibration()
 	* Outputs - Camera Matrix, Distortion Coefficients
 	*/
 
+	// declare variables
+	int imgNumber = 0;
 
 	// capture images for calibration
 	VideoCapture cap(0);	// 0 = default camera
 
-	
+
 	if (!cap.isOpened())
 	{
 		// print error message
@@ -50,7 +52,7 @@ void runCameraCalibration()
 
 	while (waitKey(1) != 27)	// esc to exit
 	{
-		// declare frame
+		// declare local variables
 		Mat rawframe;
 
 		// read webcam into frame and check if frame is empty
@@ -58,21 +60,18 @@ void runCameraCalibration()
 
 		imshow("Webcam Raw", rawframe);
 
-
-		// save on 'c' press
-		for (int i = 1; i == nSamples; i++)
+		// save image on 'c' press
+		int keySave = waitKey(10);
+		if (keySave == 'c') 
 		{
-			string label = to_string(i);
-			string imgName = "Cal_img_" + label;
+			// name image file
+			imgNumber += 1;
+			cout << imgNumber;
+			string imgPath = "Images/Target_Capture_" + to_string(imgNumber) + ".png";
 
-			//print filename for debugging
-			cout << imgName;
+			// write image
+			imwrite(imgPath, rawframe);	
 
-			int keySave = waitKey(0);
-			if (keySave == 'c')
-			{
-				imwrite(imgName, rawframe);
-			}
 		}
 
 	}
