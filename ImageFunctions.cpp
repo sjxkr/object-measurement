@@ -34,7 +34,48 @@ void runCameraCalibration()
 	* Purpose - Estimate camera intrinsics and calibrate the camera to be used for the object measurement
 	* Parameters - Chessboard pattern dimensions
 	* Outputs - Camera Matrix, Distortion Coefficients
-	*/ 
+	*/
+
+
+	// capture images for calibration
+	VideoCapture cap(0);	// 0 = default camera
+
+	
+	if (!cap.isOpened())
+	{
+		// print error message
+		cout << "Failed to access webcam" << endl;
+		exit(EXIT_FAILURE);
+	}
+
+	while (waitKey(1) != 27)	// esc to exit
+	{
+		// declare frame
+		Mat rawframe;
+
+		// read webcam into frame and check if frame is empty
+		if (!cap.read(rawframe)) break;
+
+		imshow("Webcam Raw", rawframe);
+
+
+		// save on 'c' press
+		for (int i = 1; i == nSamples; i++)
+		{
+			string label = to_string(i);
+			string imgName = "Cal_img_" + label;
+
+			//print filename for debugging
+			cout << imgName;
+
+			int keySave = waitKey(0);
+			if (keySave == 'c')
+			{
+				imwrite(imgName, rawframe);
+			}
+		}
+
+	}
 }
 
 void calibrationCheck()
