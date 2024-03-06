@@ -25,7 +25,10 @@ int main()
 	cv::utils::logging::setLogLevel(cv::utils::logging::LogLevel::LOG_LEVEL_WARNING);
 
 	// Prompt user on input method
-		// insert code here
+	int mode = captureMode();
+	
+	// test return value
+	cout << "The selected mode is " << mode << "\n";
 
 	// calibrate camera if required
 	cameraCalibration();
