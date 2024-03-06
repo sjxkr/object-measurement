@@ -27,9 +27,6 @@ int main()
 	// Prompt user on input method
 	int mode = captureMode();
 	
-	// test return value
-	cout << "The selected mode is " << mode << "\n";
-
 	// calibrate camera if required
 	cameraCalibration();
 
