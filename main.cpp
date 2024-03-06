@@ -1,4 +1,4 @@
-/*
+/****************************************************************************************************
 * Course Title					-					MSc Robotics
 * Module						-					Machine Vision for Robotics
 * Assignment					-					Object Measurement 
@@ -6,32 +6,44 @@
 * Author						-					Shahir Jagot
 * 
 * Project Description			-					Measures dimensions of objects using a webcam 
-*/
+****************************************************************************************************/
 
+
+/***************************************************************************************************
+* Preprocessor directives 
+****************************************************************************************************/
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/core/utils/logger.hpp>
 #include <iostream>
+#include "ImageFunctions.h"
 
-using namespace std;
-using namespace cv;
 
 int main()
 {
 	//Set logging level to keep console clean of non-pertinent messages
-	utils::logging::setLogLevel(cv::utils::logging::LogLevel::LOG_LEVEL_WARNING);
+	cv::utils::logging::setLogLevel(cv::utils::logging::LogLevel::LOG_LEVEL_WARNING);
 
-	// try to open image
-	Mat inputImg = imread("lena.bmp", -1);
-	if (inputImg.empty())
-		return -1;
+	// Prompt user on input method
+		// insert code here
 
-	// show image
-	namedWindow("lena", WINDOW_AUTOSIZE);
-	imshow("lena", inputImg);
+	// calibrate camera if required
+	cameraCalibration();
 
-	waitKey(0);
-	destroyAllWindows;
+	// perform a calibration check if required
+	calibrationCheck();
+
+	// preprocess image
+	edgeDetection();
+
+	// detect shape of object to be measured
+	shapeRecognition();
+
+	// measure object
+	measureObject();
+
+	// display results
+		// enter code here
 
 	return 0;
 }
