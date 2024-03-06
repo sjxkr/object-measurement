@@ -42,6 +42,10 @@ void runCameraCalibration()
 	// capture images for calibration
 	VideoCapture cap(0);	// 0 = default camera
 
+	// print user instructions
+	cout << "Capture " << nSamples << " images of the calibration target\n";
+	cout << "Press 'c' to capture images";
+
 
 	if (!cap.isOpened())
 	{
@@ -66,7 +70,7 @@ void runCameraCalibration()
 		{
 			// name image file
 			imgNumber += 1;
-			cout << imgNumber;
+			cout << "Image "<<imgNumber<<" captured\n";
 			string imgPath = "Images/Target_Capture_" + to_string(imgNumber) + ".png";
 
 			// write image
