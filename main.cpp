@@ -28,7 +28,7 @@ int main()
 	int mode = captureMode();
 	
 	// calibrate camera if required
-	cameraCalibration();
+	runCameraCalibration();
 
 	// perform a calibration check if required
 	calibrationCheck();

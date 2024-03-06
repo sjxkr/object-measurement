@@ -28,7 +28,7 @@ int captureMode()
 	return(modeFlag);
 }
 
-void cameraCalibration()
+void runCameraCalibration()
 {
 	/*
 	* Purpose - Estimate camera intrinsics and calibrate the camera to be used for the object measurement

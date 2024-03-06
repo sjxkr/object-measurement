@@ -14,7 +14,7 @@ Functions
 ****************************************************************/ 
 
 int  captureMode();
-void cameraCalibration();
+void runCameraCalibration();
 void calibrationCheck();
 void remapImage();
 void edgeDetection();
