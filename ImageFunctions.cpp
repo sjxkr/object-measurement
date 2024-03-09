@@ -28,10 +28,11 @@ int captureMode()
 	return(modeFlag);
 }
 
-void runCameraCalibration()
+
+void captureCalibrationImages()
 {
 	/*
-	* Purpose - Estimate camera intrinsics and calibrate the camera to be used for the object measurement
+	* Purpose - Capture images to be used for camera calibration
 	* Parameters - Chessboard pattern dimensions
 	* Outputs - Camera Matrix, Distortion Coefficients
 	*/
@@ -79,6 +80,62 @@ void runCameraCalibration()
 		}
 
 	}
+
+	// Close all windows
+	destroyAllWindows();
+	
+}
+
+void runCameraCalibration()
+{
+	/*
+* Purpose - Detect chessboard and find corner coordinates and run calibration to determine coefficients 
+* Parameters - xxxxxx
+* Outputs - xxxx
+*/
+
+	// define variables
+	vector<vector<vec3f>> objectPoints;		// appended 3d vector, all cal images included -> used for calibrate camera
+	vector<vector<vec2f>> imagePoints;		// appended 2d vectors from cal images -> used for calibrate camera
+	vector<vector<vec3f>> points3D;			// 3d points from image
+	vector<vector<vec2f>> points2D;			// 2d points from image
+
+	Size imageSize;
+	Mat cameraMatrix;		// 3x3 matrix
+	Mat distCoefficients;	// 5x1 matrix
+	Mat rvecs;
+	Mat tvecs;
+
+	// CALIBRATION SETUP
+	
+	// Initialise 3D points vector including square size
+
+
+	// Start a FOR loop, looping through all calibration images in path
+
+		// find corners -> findchessboardcorners()
+			//
+		
+		// append 3D points to objectPoints
+			//
+
+		// find subpix -> corners in more detail and store in points2d, double type
+			//
+
+		// append points2d to imagePoints
+			//
+
+		// draw and display chessboard corners for verification
+			// drawchessboardcorners();
+
+	// End FOR loop
+	
+	// CAMERA CALIBRATION
+
+	calibrateCamera(objectPoints, imagePoints, (gray.cols, gray.rows), cameraMatrix, distCoefficients, rvecs, tvecs);
+
+	// print and save values to settings file.
+
 }
 
 void calibrationCheck()

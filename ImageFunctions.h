@@ -4,6 +4,7 @@
 #include <opencv2/imgproc.hpp>
 #include<opencv2/highgui/highgui.hpp>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 using namespace cv;
@@ -12,6 +13,9 @@ using namespace cv;
 Constants 
 ****************************************************************/
 const int nSamples(10);
+const int chessboardSizeX = 9;
+const int chessboardSizeY = 6;
+const int squareSize = 24;		// in millimeters
 
 /*************************************************************** 
 Functions 
@@ -19,6 +23,7 @@ Functions
 
 int  captureMode();
 void runCameraCalibration();
+void captureCalibrationImages();
 void calibrationCheck();
 void remapImage();
 void edgeDetection();
