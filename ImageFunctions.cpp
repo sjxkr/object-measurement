@@ -95,16 +95,18 @@ void runCameraCalibration()
 */
 
 	// define variables
-	vector<vector<vec3f>> objectPoints;		// appended 3d vector, all cal images included -> used for calibrate camera
-	vector<vector<vec2f>> imagePoints;		// appended 2d vectors from cal images -> used for calibrate camera
-	vector<vector<vec3f>> points3D;			// 3d points from image
-	vector<vector<vec2f>> points2D;			// 2d points from image
+	vector<vector<Vec3f>> objectPoints;		// appended 3d vector, all cal images included -> used for calibrate camera
+	vector<vector<Vec3f>> imagePoints;		// appended 2d vectors from cal images -> used for calibrate camera
+	vector<vector<Vec3f>> points3D;			// 3d points from image
+	vector<vector<Vec2f>> points2D;			// 2d points from image
 
 	Size imageSize;
 	Mat cameraMatrix;		// 3x3 matrix
 	Mat distCoefficients;	// 5x1 matrix
 	Mat rvecs;
 	Mat tvecs;
+
+	Mat calImg;		//	used for reading calibration image properties
 
 	// CALIBRATION SETUP
 	
@@ -132,7 +134,7 @@ void runCameraCalibration()
 	
 	// CAMERA CALIBRATION
 
-	calibrateCamera(objectPoints, imagePoints, (gray.cols, gray.rows), cameraMatrix, distCoefficients, rvecs, tvecs);
+	calibrateCamera(objectPoints, imagePoints, imageSize, cameraMatrix, distCoefficients, rvecs, tvecs);
 
 	// print and save values to settings file.
 
