@@ -45,7 +45,7 @@ void captureCalibrationImages()
 
 	// print user instructions
 	cout << "Capture " << nSamples << " images of the calibration target\n";
-	cout << "Press 'c' to capture images";
+	cout << "Press 'c' to capture images\n";
 
 
 	if (!cap.isOpened())
@@ -71,11 +71,15 @@ void captureCalibrationImages()
 		{
 			// name image file
 			imgNumber += 1;
-			cout << "Image "<<imgNumber<<" captured\n";
-			string imgPath = "Images/Target_Capture_" + to_string(imgNumber) + ".png";
 
-			// write image
-			imwrite(imgPath, rawframe);	
+			if (imgNumber < nSamples)
+			{
+				cout << "Image " << imgNumber << " captured\n";
+				string imgPath = "Target_Capture_" + to_string(imgNumber) + ".png";
+
+				// write image
+				imwrite(imgPath, rawframe);
+			}
 
 		}
 
