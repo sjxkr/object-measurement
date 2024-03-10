@@ -72,7 +72,7 @@ void captureCalibrationImages()
 			// name image file
 			imgNumber += 1;
 
-			if (imgNumber < nSamples)
+			if (imgNumber < nSamples +1)
 			{
 				cout << "Image " << imgNumber << " captured\n";
 				string imgPath = "Target_Capture_" + to_string(imgNumber) + ".png";
