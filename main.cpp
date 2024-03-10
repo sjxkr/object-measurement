@@ -27,8 +27,11 @@ int main()
 	// Prompt user on input method
 	//int mode = captureMode();
 	
+	// capture calibration images
+	captureCalibrationImages();
+
 	// calibrate camera if required
-	runCameraCalibration();
+	//runCameraCalibration();
 
 	// perform a calibration check if required
 	calibrationCheck();
