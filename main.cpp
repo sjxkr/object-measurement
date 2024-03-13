@@ -26,6 +26,9 @@ int main()
 
 	// User capture mode prompt
 	int mode = captureMode();
+
+	// print mode
+	cout << "Selected mode : " << mode << endl;
 	
 	// capture calibration images
 	switch (mode)
