@@ -164,12 +164,6 @@ void runCameraCalibration()
 			exit(EXIT_FAILURE);
 		}
 
-		// get image size
-		Size imageSize(calImg.cols, calImg.rows);
-
-		// print image size
-		cout << "Image resolution is " << imageSize << endl;
-
 		// convert to grayscale
 		cvtColor(calImg, calImgGray, COLOR_BGR2GRAY);
 
@@ -215,7 +209,12 @@ void runCameraCalibration()
 
 	// CAMERA CALIBRATION ***********************************************************************************************************************************
 
-	calibrateCamera(objectPoints, imagePoints, imageSize, cameraMatrix, distCoefficients, rvecs, tvecs);
+	// get camera resolution
+	Mat image = imread("Target_Capture_1,png", -1);
+	Size imageSize(image.rows, image.cols);
+	cout << "Image resolution: " << imageSize << endl;
+
+	//calibrateCamera(objectPoints, imagePoints, imageSize, cameraMatrix, distCoefficients, rvecs, tvecs);
 
 	// print and save values to settings file.
 
