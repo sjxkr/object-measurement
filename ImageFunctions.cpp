@@ -15,7 +15,7 @@ int captureMode()
 	* Outputs - mode flag
 	*/
 
-	int modeFlag = MessageBox(NULL, (LPCWSTR)L"Is a camera calibration required?\nClick 'yes' to run camera calibration.\nClick 'No' to skip calibration.\n",
+	int modeFlag = MessageBox(NULL, (LPCWSTR)L"Is a camera calibration required?\nClick 'Yes' to run camera calibration.\nClick 'No' to skip calibration.\n",
 		(LPCWSTR)L"Camera Calibration?", MB_ICONQUESTION | MB_YESNOCANCEL);
 
 	switch (modeFlag)
@@ -25,7 +25,7 @@ int captureMode()
 		break;
 
 	case IDNO:
-		cout << "Loading camera acquisition program\n";
+		cout << "Loading camera acquisition program.....\n";
 		break;
 
 	case IDCANCEL:
