@@ -151,8 +151,8 @@ void runCameraCalibration()
 			exit(EXIT_FAILURE);
 		}
 
-		namedWindow(fName, WINDOW_AUTOSIZE);
-		imshow("Calibration Image" + to_string(i + 1), calImg);
+		// display images
+		imshow(fName, calImg);
 
 		// wait
 		waitKey(0);
