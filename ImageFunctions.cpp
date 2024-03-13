@@ -1,5 +1,6 @@
 #include "ImageFunctions.h"
 
+
 /*
 ******* Header Template *******
 * Purpose - xxxxxxx
@@ -141,6 +142,8 @@ void runCameraCalibration()
 	Mat calImg;		//	used for reading calibration image properties
 	Mat calImgGray;
 
+	ofstream fout("CameraCalibration.txt", ios::binary);			// output filestream
+
 	// CALIBRATION SETUP **************************************************************************************************************************
 
 	// Initialise 3D points vector including square size --> (Col, Row, 0)
@@ -223,6 +226,11 @@ void runCameraCalibration()
 	cout << "RMS Error: " << rmsError << endl;
 	cout << "Camera Matrix: " << cameraMatrix << endl;
 	cout << "Distortion Coefficients: " << distCoefficients << endl;
+
+	// write calibration file
+	fout << "test" << endl;
+
+	fout.close();
 
 }
 
