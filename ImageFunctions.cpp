@@ -49,6 +49,7 @@ void captureCalibrationImages()
 
 	// declare variables
 	int imgNumber = 0;
+	vector<int> compressParams(IMWRITE_PNG_COMPRESSION, 10);
 
 	// capture images for calibration
 	VideoCapture cap(0);	// 0 = default camera
@@ -88,7 +89,7 @@ void captureCalibrationImages()
 				string imgPath = "Target_Capture_" + to_string(imgNumber) + ".png";
 
 				// write image
-				imwrite(imgPath, rawframe);
+				imwrite(imgPath, rawframe, compressParams);
 			}
 
 			if (imgNumber == nSamples + 1)
@@ -214,9 +215,12 @@ void runCameraCalibration()
 	imageSize = Size(image.cols , image.rows);
 	cout << "Image resolution: " << imageSize << endl;
 
-	//calibrateCamera(objectPoints, imagePoints, imageSize, cameraMatrix, distCoefficients, rvecs, tvecs);
+	rmsError = calibrateCamera(objectPoints, imagePoints, imageSize, cameraMatrix, distCoefficients, rvecs, tvecs);
 
-	// print and save values to settings file.
+	// print calibration values to settings file
+	cout << "RMS Error: " << rmsError << endl;
+	cout << "Camera Matrix: " << cameraMatrix << endl;
+	cout << "Distortion Coefficients: " << distCoefficients << endl;
 
 }
 
