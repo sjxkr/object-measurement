@@ -91,6 +91,16 @@ void captureCalibrationImages()
 				imwrite(imgPath, rawframe);
 			}
 
+			// Capture complete dialog box
+			int msgBox = MessageBox(NULL, (LPCWSTR)L"Required number of samples for calibration achieved.",
+				(LPCWSTR)L"Capture Complete", MB_ICONINFORMATION | MB_OK);
+
+			// exit while loop
+			switch (msgBox)
+			{
+			case IDOK:
+				break;
+			}
 		}
 
 	}
