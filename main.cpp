@@ -24,29 +24,46 @@ int main()
 	//Set logging level to keep console clean of non-pertinent messages
 	cv::utils::logging::setLogLevel(cv::utils::logging::LogLevel::LOG_LEVEL_WARNING);
 
-	// Prompt user on input method
+	// User capture mode prompt
 	int mode = captureMode();
 	
 	// capture calibration images
-	captureCalibrationImages();
+	switch (mode)
+	{
+	case IDYES:
+		// run calibration
+		captureCalibrationImages();
+		runCameraCalibration();
+		calibrationCheck();
 
-	// calibrate camera if required
-	runCameraCalibration();
+		// preprocess image
+		edgeDetection();
 
-	// perform a calibration check if required
-	calibrationCheck();
+		// detect shape of object to be measured
+		shapeRecognition();
 
-	// preprocess image
-	edgeDetection();
+		// measure object
+		measureObject();
 
-	// detect shape of object to be measured
-	shapeRecognition();
+	case IDNO:
 
-	// measure object
-	measureObject();
+		// preprocess image
+		edgeDetection();
 
-	// display results
-		// enter code here
+		// detect shape of object to be measured
+		shapeRecognition();
+
+		// measure object
+		measureObject();
+
+		// display results
+			// enter code here
+
+	case IDCANCEL:
+		cout << "Program exiting...\n";
+		break;
+
+	}
 
 	return 0;
 }
