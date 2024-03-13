@@ -124,6 +124,7 @@ void runCameraCalibration()
 	Mat tvecs;				// translation vectors
 
 	Mat calImg;		//	used for reading calibration image properties
+	Mat calImgGray;
 
 	// CALIBRATION SETUP
 
@@ -151,27 +152,30 @@ void runCameraCalibration()
 			exit(EXIT_FAILURE);
 		}
 
+		// convert to grayscale
+		cvtColor(calImg, calImgGray, COLOR_BGR2GRAY);
+
+		// make copy of image
+		Mat calImgCorners = calImg.clone();
+
 		// find target corners
-		bool success = findChessboardCorners(calImg, chessboardSize, cornerPoints, CALIB_CB_ADAPTIVE_THRESH | CALIB_CB_NORMALIZE_IMAGE);
+		bool success = findChessboardCorners(calImgGray, chessboardSize, cornerPoints, CALIB_CB_ADAPTIVE_THRESH | CALIB_CB_NORMALIZE_IMAGE | CALIB_CB_FAST_CHECK);
 
 		if (success)
 		{
-
-			// make copy of image
-			Mat calImgCorners = calImg.clone();
-
 			// save file 
-			imwrite(fName + "_corners.png", calImgCorners);
+			//imwrite(fName + "_corners.png", calImgCorners);
 
 			// draw found corners for verification
 			drawChessboardCorners(calImgCorners, chessboardSize, cornerPoints, success);
 		}
 
-		Mat cornerVerify = imread(fName + "_corners.png", -1);
+		//Mat cornerVerify = imread(fName + "_corners.png", -1);
 
 		// display images
-		imshow("Input Cal Image", calImg);
-		imshow("found Corners", cornerVerify);
+		imshow("Original Image", calImg);
+		imshow("Gray Image", calImgGray);
+		imshow("found Corners", calImgCorners);
 
 		// wait
 		waitKey(0);
