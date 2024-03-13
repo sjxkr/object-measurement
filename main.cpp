@@ -25,7 +25,7 @@ int main()
 	cv::utils::logging::setLogLevel(cv::utils::logging::LogLevel::LOG_LEVEL_WARNING);
 
 	// Prompt user on input method
-	//int mode = captureMode();
+	int mode = captureMode();
 	
 	// capture calibration images
 	captureCalibrationImages();

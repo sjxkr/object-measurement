@@ -15,17 +15,27 @@ int captureMode()
 	* Outputs - mode flag
 	*/
 
-	// define variables
-	int modeFlag = 0;
+	int modeFlag = MessageBox(NULL, (LPCWSTR)L"Is a camera calibration required?\nClick 'yes' to run camera calibration.\nClick 'No' to skip calibration.\n",
+		(LPCWSTR)L"Camera Calibration?", MB_ICONQUESTION | MB_YESNOCANCEL);
 
-	// prompt user for acquisition mode
-	while (modeFlag<1 || modeFlag>>2)
+	switch (modeFlag)
 	{
-		cout << "Select Mode:\n1 = Static Mode\n2 = Dynamic Mode\n";
-		cin >> modeFlag;
+	case IDYES:
+		cout << "Loading calibration program.....\n";
+		break;
+
+	case IDNO:
+		cout << "Loading camera acquisition program\n";
+		break;
+
+	case IDCANCEL:
+		cout << "Exiting program....\n";
+		exit(EXIT_SUCCESS);
+
 	}
-	
+
 	return(modeFlag);
+
 }
 
 
@@ -45,7 +55,7 @@ void captureCalibrationImages()
 
 	// print user instructions
 	cout << "Capture " << nSamples << " images of the calibration target\n";
-	cout << "Press 'c' to capture images\n";
+	cout << "Press 'c' to capture images\nPress'Esc' key once calibration images have been captured.\n";
 
 
 	if (!cap.isOpened())
