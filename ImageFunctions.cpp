@@ -151,8 +151,27 @@ void runCameraCalibration()
 			exit(EXIT_FAILURE);
 		}
 
+		// find target corners
+		bool success = findChessboardCorners(calImg, chessboardSize, cornerPoints, CALIB_CB_ADAPTIVE_THRESH | CALIB_CB_NORMALIZE_IMAGE);
+
+		if (success)
+		{
+
+			// make copy of image
+			Mat calImgCorners = calImg.clone();
+
+			// save file 
+			imwrite(fName + "_corners.png", calImgCorners);
+
+			// draw found corners for verification
+			drawChessboardCorners(calImgCorners, chessboardSize, cornerPoints, success);
+		}
+
+		Mat cornerVerify = imread(fName + "_corners.png", -1);
+
 		// display images
-		imshow(fName, calImg);
+		imshow("Input Cal Image", calImg);
+		imshow("found Corners", cornerVerify);
 
 		// wait
 		waitKey(0);
