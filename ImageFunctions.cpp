@@ -105,9 +105,6 @@ void captureCalibrationImages()
 				}
 			}
 		}
-
-
-
 	}
 
 	// Close all windows
