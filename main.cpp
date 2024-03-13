@@ -37,7 +37,6 @@ int main()
 		// run calibration
 		captureCalibrationImages();
 		runCameraCalibration();
-		calibrationCheck();
 
 		// preprocess image
 		edgeDetection();

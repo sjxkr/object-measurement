@@ -240,15 +240,30 @@ void runCameraCalibration()
 	fout << tvecs << endl;
 	fout.close();
 
+	// calibration check
+	calibrationCheck(image, cameraMatrix, distCoefficients, rvecs, tvecs);
+
 }
 
-void calibrationCheck()
+void calibrationCheck(Mat &image, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs)
 {
 	/*
 	* Purpose - Verify the calibration and quantify the error in order to decide whether the calibration is good.
 	* Parameters - Camera matrix, distortion coefficients, chessboard dimensions
 	* Outputs - Total error
 	*/
+
+	// define variables
+	Mat imgUndistorted;
+
+	// undistort image
+	undistort(image, imgUndistorted, camMtx, dstMtx);
+
+	// show images
+	imshow("Distorted", image);
+	imshow("Undistorted", imgUndistorted);
+
+	waitKey(0);
 
 }
 
