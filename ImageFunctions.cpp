@@ -142,7 +142,7 @@ void runCameraCalibration()
 	Mat calImg;		//	used for reading calibration image properties
 	Mat calImgGray;
 
-	ofstream fout("CameraCalibration.txt", ios::binary);			// output filestream
+	ofstream fout("CameraCalibration.bin", ios::binary);			// output filestream
 
 	// CALIBRATION SETUP **************************************************************************************************************************
 
