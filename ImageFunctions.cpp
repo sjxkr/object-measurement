@@ -169,22 +169,20 @@ void runCameraCalibration()
 			//imwrite(fName + "_corners.png", calImgCorners);
 
 			// refine corner points
-			cornerSubPix(calImgGray, cornerSubPoints, Size(11, 11), Size(-1, -1), cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::COUNT, 30, 0.1));
+			cornerSubPix(calImgGray, cornerPoints, Size(11, 11), Size(-1, -1), cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::COUNT, 30, 0.1));
 
 			// draw found corners for verification
 			drawChessboardCorners(calImgCorners, chessboardSize, cornerPoints, success);
-			drawChessboardCorners(calImgSubCorners, chessboardSize, cornerSubPoints, success);
-
 
 		}
 
 		//Mat cornerVerify = imread(fName + "_corners.png", -1);
 
 		// display images
-		imshow("Original Image", calImg);
-		imshow("Gray Image", calImgGray);
-		imshow("Found Corners Estimated", calImgCorners);
-		imshow("Found Sub Corners", calImgSubCorners);
+		//imshow("Original Image " + to_string(i+1), calImg);
+		//imshow("Gray Image " + to_string(i+1), calImgGray);
+		imshow("Found Corners " + to_string(i+1), calImgCorners);
+
 
 		// wait
 		waitKey(0);
