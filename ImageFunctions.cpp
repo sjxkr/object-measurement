@@ -109,22 +109,34 @@ void runCameraCalibration()
 */
 
 	// define variables
-	vector<vector<Vec3f>> objectPoints;		// appended 3d vector, all cal images included -> used for calibrate camera
-	vector<vector<Vec3f>> imagePoints;		// appended 2d vectors from cal images -> used for calibrate camera
-	vector<vector<Vec3f>> points3D;			// 3d points from image
-	vector<vector<Vec2f>> points2D;			// 2d points from image
+	vector<vector<Point3f>> objectPoints;		// vector of 3d point vectors from cal images
+	vector<vector<Point2f>> imagePoints;		// vector of 2d point vectors from cal images
+	vector<Point3f> points3D;					// vector to store 3d points from image
+	vector<Point2f> points2D;					// vector to store 2d points from image
+	vector<Point2f> cornerPoints;				// vector to store corner coords from cal image
+	double rmsError;							// rms error from calibration
 
-	Size imageSize;
+	Size chessboardSize(chessboardSizeX,chessboardSizeY);	// size of chessboard
+	Size imageSize;			// resolution of images
 	Mat cameraMatrix;		// 3x3 matrix
 	Mat distCoefficients;	// 5x1 matrix
-	Mat rvecs;
-	Mat tvecs;
+	Mat rvecs;				// rotation vectors
+	Mat tvecs;				// translation vectors
 
 	Mat calImg;		//	used for reading calibration image properties
 
 	// CALIBRATION SETUP
 	
 	// Initialise 3D points vector including square size
+	for (int i = 0; i < chessboardSizeY; i++) {
+		for (int j = 0; j < chessboardSizeX; j++) {
+			points3D.push_back(Point3f(j, i, 0));
+		}
+	}
+
+	// print object points vector
+	cout << "Printing chessboard pattern coords\n";
+	cout << points3D << endl;
 
 
 	// Start a FOR loop, looping through all calibration images in path
@@ -148,7 +160,7 @@ void runCameraCalibration()
 	
 	// CAMERA CALIBRATION
 
-	calibrateCamera(objectPoints, imagePoints, imageSize, cameraMatrix, distCoefficients, rvecs, tvecs);
+	//calibrateCamera(objectPoints, imagePoints, imageSize, cameraMatrix, distCoefficients, rvecs, tvecs);
 
 	// print and save values to settings file.
 

@@ -31,7 +31,7 @@ int main()
 	captureCalibrationImages();
 
 	// calibrate camera if required
-	//runCameraCalibration();
+	runCameraCalibration();
 
 	// perform a calibration check if required
 	calibrationCheck();

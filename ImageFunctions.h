@@ -16,8 +16,8 @@ using namespace cv;
 Constants 
 ****************************************************************/
 const int nSamples(10);
-const int chessboardSizeX = 9;
-const int chessboardSizeY = 6;
+const int chessboardSizeX = 6;
+const int chessboardSizeY = 9;
 const int squareSize = 24;		// in millimeters
 
 /*************************************************************** 
