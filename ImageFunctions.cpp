@@ -211,7 +211,7 @@ void runCameraCalibration()
 
 	// get camera resolution
 	Mat image = imread("Target_Capture_1,png", -1);
-	Size imageSize(image.rows, image.cols);
+	imageSize = Size(image.rows, image.cols);
 	cout << "Image resolution: " << imageSize << endl;
 
 	//calibrateCamera(objectPoints, imagePoints, imageSize, cameraMatrix, distCoefficients, rvecs, tvecs);
