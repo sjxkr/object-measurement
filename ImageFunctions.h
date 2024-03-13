@@ -29,7 +29,7 @@ Functions
 int  captureMode();
 void runCameraCalibration();
 void captureCalibrationImages();
-void calibrationCheck();
+void calibrationCheck(Mat& image, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs);
 void remapImage();
 void edgeDetection();
 void shapeRecognition();
