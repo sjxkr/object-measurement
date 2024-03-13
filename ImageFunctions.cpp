@@ -254,14 +254,20 @@ void calibrationCheck(Mat &image, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs)
 	*/
 
 	// define variables
+	Mat imgDistorted = image;
 	Mat imgUndistorted;
 
 	// undistort image
-	undistort(image, imgUndistorted, camMtx, dstMtx);
+	undistort(imgDistorted, imgUndistorted, camMtx, dstMtx);
+
+	Mat diff;
+	absdiff(imgDistorted, imgUndistorted, diff);
 
 	// show images
-	imshow("Distorted", image);
+	imshow("Distorted", imgDistorted);
 	imshow("Undistorted", imgUndistorted);
+	imshow("Diff", diff);
+
 
 	waitKey(0);
 
