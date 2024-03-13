@@ -73,16 +73,16 @@ void captureCalibrationImages()
 		// read webcam into frame and check if frame is empty
 		if (!cap.read(rawframe)) break;
 
-		imshow("Webcam Raw", rawframe);
+		imshow("Webcam Raw - Cal Image Capture", rawframe);
 
 		// save image on 'c' press
 		int keySave = waitKey(10);
-		if (keySave == 'c') 
+		if (keySave == 'c')
 		{
 			// name image file
 			imgNumber += 1;
 
-			if (imgNumber < nSamples +1)
+			if (imgNumber < nSamples + 1)
 			{
 				cout << "Image " << imgNumber << " captured\n";
 				string imgPath = "Target_Capture_" + to_string(imgNumber) + ".png";
@@ -97,18 +97,18 @@ void captureCalibrationImages()
 
 	// Close all windows
 	destroyAllWindows();
-	
+
 }
 
 void runCameraCalibration()
 {
 	/*
-* Purpose - Detect chessboard and find corner coordinates and run calibration to determine coefficients 
+* Purpose - Detect chessboard and find corner coordinates and run calibration to determine coefficients
 * Parameters - xxxxxx
 * Outputs - xxxx
 */
 
-	// define variables
+// define variables
 	vector<vector<Point3f>> objectPoints;		// vector of 3d point vectors from cal images
 	vector<vector<Point2f>> imagePoints;		// vector of 2d point vectors from cal images
 	vector<Point3f> points3D;					// vector to store 3d points from image
@@ -116,7 +116,7 @@ void runCameraCalibration()
 	vector<Point2f> cornerPoints;				// vector to store corner coords from cal image
 	double rmsError;							// rms error from calibration
 
-	Size chessboardSize(chessboardSizeX,chessboardSizeY);	// size of chessboard
+	Size chessboardSize(chessboardSizeX, chessboardSizeY);	// size of chessboard
 	Size imageSize;			// resolution of images
 	Mat cameraMatrix;		// 3x3 matrix
 	Mat distCoefficients;	// 5x1 matrix
@@ -126,8 +126,8 @@ void runCameraCalibration()
 	Mat calImg;		//	used for reading calibration image properties
 
 	// CALIBRATION SETUP
-	
-	// Initialise 3D points vector including square size
+
+	// Initialise 3D points vector including square size --> (Col, Row, 0)
 	for (int i = 0; i < chessboardSizeY; i++) {
 		for (int j = 0; j < chessboardSizeX; j++) {
 			points3D.push_back(Point3f(j, i, 0));
@@ -137,6 +137,22 @@ void runCameraCalibration()
 	// print object points vector
 	cout << "Printing chessboard pattern coords\n";
 	cout << points3D << endl;
+
+	for (int i = 0; i < nSamples; i++){
+		
+		// get image filename
+		string imgPath = "Target_Capture_" + to_string(i + 1) + ".png";
+		
+		// try to read file
+		calImg = imread(imgPath, -1);
+		if (calImg.empty()) {
+			cout << "Error: Could not open "<<"'"<<imgPath<<"'\n";
+			exit(EXIT_FAILURE);
+		}
+
+		namedWindow("Calibration Image" + to_string(i + 1), WINDOW_AUTOSIZE);
+		imshow("Calibration Image" + to_string(i + 1), calImg);
+	}
 
 
 	// Start a FOR loop, looping through all calibration images in path
