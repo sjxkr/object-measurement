@@ -142,14 +142,14 @@ void runCameraCalibration()
 	Mat calImg;		//	used for reading calibration image properties
 	Mat calImgGray;
 
-	ofstream fout("CameraCalibration.bin", ios::binary);			// output filestream
+	ofstream fout("Calibration.bin", ios::binary);			// output filestream
 
 	// CALIBRATION SETUP **************************************************************************************************************************
 
 	// Initialise 3D points vector including square size --> (Col, Row, 0)
 	for (int i = 0; i < chessboardSizeY; i++) {
 		for (int j = 0; j < chessboardSizeX; j++) {
-			points3D.push_back(Point3f(j, i, 0));
+			points3D.push_back(Point3f(j*squareSize, i*squareSize, 0));
 		}
 	}
 
@@ -228,8 +228,9 @@ void runCameraCalibration()
 	cout << "Distortion Coefficients: " << distCoefficients << endl;
 
 	// write calibration file
-	fout << "test" << endl;
-
+	fout << rmsError << endl;
+	fout << cameraMatrix << endl;
+	fout << distCoefficients << endl;
 	fout.close();
 
 }
