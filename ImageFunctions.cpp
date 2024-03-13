@@ -140,8 +140,9 @@ void runCameraCalibration()
 
 	for (int i = 0; i < nSamples; i++){
 		
-		// get image filename
-		string imgPath = "Target_Capture_" + to_string(i + 1) + ".png";
+		// get image path
+		string fName = "Target_Capture_" + to_string(i + 1);
+		string imgPath = fName + ".png";
 		
 		// try to read file
 		calImg = imread(imgPath, -1);
@@ -150,8 +151,14 @@ void runCameraCalibration()
 			exit(EXIT_FAILURE);
 		}
 
-		namedWindow("Calibration Image" + to_string(i + 1), WINDOW_AUTOSIZE);
+		namedWindow(fName, WINDOW_AUTOSIZE);
 		imshow("Calibration Image" + to_string(i + 1), calImg);
+
+		// wait
+		waitKey(0);
+
+		// destroy window
+		destroyWindow(fName);
 	}
 
 
