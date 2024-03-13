@@ -126,7 +126,6 @@ void runCameraCalibration()
 	vector<Point3f> points3D;					// vector to store 3d points from image
 	vector<Point2f> points2D;					// vector to store 2d points from image
 	vector<Point2f> cornerPoints;				// vector to store corner coords from cal image
-	vector<Point2f> cornerSubPoints;			// refined corner points
 	double rmsError;							// rms error from calibration
 
 	Size chessboardSize(chessboardSizeX, chessboardSizeY);	// size of chessboard
@@ -139,7 +138,7 @@ void runCameraCalibration()
 	Mat calImg;		//	used for reading calibration image properties
 	Mat calImgGray;
 
-	// CALIBRATION SETUP
+	// CALIBRATION SETUP **************************************************************************************************************************
 
 	// Initialise 3D points vector including square size --> (Col, Row, 0)
 	for (int i = 0; i < chessboardSizeY; i++) {
@@ -165,6 +164,12 @@ void runCameraCalibration()
 			exit(EXIT_FAILURE);
 		}
 
+		// get image size
+		Size imageSize(calImg.cols, calImg.rows);
+
+		// print image size
+		cout << "Image resolution is " << imageSize << endl;
+
 		// convert to grayscale
 		cvtColor(calImg, calImgGray, COLOR_BGR2GRAY);
 
@@ -186,6 +191,10 @@ void runCameraCalibration()
 			// draw found corners for verification
 			drawChessboardCorners(calImgCorners, chessboardSize, cornerPoints, success);
 
+			// Store 3D and 2D points in their vectors
+			objectPoints.push_back(points3D);
+			imagePoints.push_back(cornerPoints);
+
 		}
 
 		//Mat cornerVerify = imread(fName + "_corners.png", -1);
@@ -204,28 +213,9 @@ void runCameraCalibration()
 	}
 
 
-	// Start a FOR loop, looping through all calibration images in path
+	// CAMERA CALIBRATION ***********************************************************************************************************************************
 
-		// find corners -> findchessboardcorners()
-			//
-		
-		// append 3D points to objectPoints
-			//
-
-		// find subpix -> corners in more detail and store in points2d, double type
-			//
-
-		// append points2d to imagePoints
-			//
-
-		// draw and display chessboard corners for verification
-			// drawchessboardcorners();
-
-	// End FOR loop
-	
-	// CAMERA CALIBRATION
-
-	//calibrateCamera(objectPoints, imagePoints, imageSize, cameraMatrix, distCoefficients, rvecs, tvecs);
+	calibrateCamera(objectPoints, imagePoints, imageSize, cameraMatrix, distCoefficients, rvecs, tvecs);
 
 	// print and save values to settings file.
 
