@@ -49,7 +49,9 @@ void captureCalibrationImages()
 
 	// declare variables
 	int imgNumber = 0;
-	vector<int> compressParams(IMWRITE_PNG_COMPRESSION, 10);
+	vector<int> compressParams;
+	compressParams.push_back(IMWRITE_PNG_COMPRESSION);
+	compressParams.push_back(1);
 
 	// capture images for calibration
 	VideoCapture cap(0);	// 0 = default camera
