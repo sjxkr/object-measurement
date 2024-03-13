@@ -114,6 +114,7 @@ void runCameraCalibration()
 	vector<Point3f> points3D;					// vector to store 3d points from image
 	vector<Point2f> points2D;					// vector to store 2d points from image
 	vector<Point2f> cornerPoints;				// vector to store corner coords from cal image
+	vector<Point2f> cornerSubPoints;			// refined corner points
 	double rmsError;							// rms error from calibration
 
 	Size chessboardSize(chessboardSizeX, chessboardSizeY);	// size of chessboard
@@ -157,6 +158,7 @@ void runCameraCalibration()
 
 		// make copy of image
 		Mat calImgCorners = calImg.clone();
+		Mat calImgSubCorners = calImg.clone();
 
 		// find target corners
 		bool success = findChessboardCorners(calImgGray, chessboardSize, cornerPoints, CALIB_CB_ADAPTIVE_THRESH | CALIB_CB_NORMALIZE_IMAGE | CALIB_CB_FAST_CHECK);
@@ -166,8 +168,14 @@ void runCameraCalibration()
 			// save file 
 			//imwrite(fName + "_corners.png", calImgCorners);
 
+			// refine corner points
+			cornerSubPix(calImgGray, cornerSubPoints, Size(11, 11), Size(-1, -1), cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::COUNT, 30, 0.1));
+
 			// draw found corners for verification
 			drawChessboardCorners(calImgCorners, chessboardSize, cornerPoints, success);
+			drawChessboardCorners(calImgSubCorners, chessboardSize, cornerSubPoints, success);
+
+
 		}
 
 		//Mat cornerVerify = imread(fName + "_corners.png", -1);
@@ -175,13 +183,14 @@ void runCameraCalibration()
 		// display images
 		imshow("Original Image", calImg);
 		imshow("Gray Image", calImgGray);
-		imshow("found Corners", calImgCorners);
+		imshow("Found Corners Estimated", calImgCorners);
+		imshow("Found Sub Corners", calImgSubCorners);
 
 		// wait
 		waitKey(0);
 
 		// destroy window
-		destroyWindow(fName);
+		destroyAllWindows();
 	}
 
 
