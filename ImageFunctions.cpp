@@ -234,6 +234,10 @@ void runCameraCalibration()
 	fout << cameraMatrix << endl;
 	fout << "Distortion Coefficients\n";
 	fout << distCoefficients << endl;
+	fout << "Rotation Vectors\n";
+	fout << rvecs << endl;
+	fout << "Translation Vectors\n";
+	fout << tvecs << endl;
 	fout.close();
 
 }
