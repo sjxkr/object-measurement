@@ -26,6 +26,7 @@ const int MAXWIDTH(5);
 const char newline('\n');
 const char terminator('@');
 const char nullChar('\0');
+const string calFilename("Calibration.bin");
 
 /*************************************************************** 
 Functions 

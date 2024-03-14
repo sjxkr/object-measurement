@@ -142,7 +142,7 @@ void runCameraCalibration()
 	Mat calImg;		//	used for reading calibration image properties
 	Mat calImgGray;
 
-	ofstream fout("Calibration.bin", ios::binary);			// output filestream
+	ofstream fout(calFilename, ios::binary);			// output filestream
 
 	// CALIBRATION SETUP **************************************************************************************************************************
 
@@ -282,8 +282,10 @@ Mat remapImage(Mat& image)
 	// define variables
 	Mat imgUndistorted;
 	Mat camMtx, dstMtx;
-
+	ifstream fin;
+	
 	// check if cal file exists
+
 
 	// read calibration file
 
