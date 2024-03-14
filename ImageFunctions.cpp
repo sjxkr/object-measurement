@@ -343,4 +343,59 @@ void measureObject()
 	* Parameters - Shape, required dimensions
 	* Outputs - Measured dimensions
 	*/
+
+	// Display camera preview and capture object
+	
+	// Define variables
+	VideoCapture cap(0);	// 0 = default camera
+	vector<int> compressParams;
+	compressParams.push_back(IMWRITE_PNG_COMPRESSION);
+	compressParams.push_back(1);
+	string imgPath = "Object_Capture.png";
+
+	// print user instructions
+	cout << "Capture image of the object to be measured\n";
+	cout << "Press 'c' to capture images\nPress'Esc' key once image has been captured.\n";
+
+	// try to open webcam
+	if (!cap.isOpened())
+	{
+		// print error message
+		cout << "Failed to access webcam" << endl;
+		exit(EXIT_FAILURE);
+	}
+
+	while (waitKey(1) != 27)	// esc to exit
+	{
+		// declare local variables
+		Mat rawframe;
+
+		// read webcam into frame and check if frame is empty
+		if (!cap.read(rawframe)) break;
+
+		imshow("Webcam Preview - Image Capture", rawframe);
+
+		// save image on 'c' press
+		int keySave = waitKey(10);
+		if (keySave == 'c')
+		{
+
+			cout << "Image captured\n";
+
+			// write image
+			imwrite(imgPath, rawframe, compressParams);
+
+		}
+	}
+
+	// read image
+	Mat img = imread(imgPath, -1);
+
+	// edge detection
+	edgeDetection(img);
+
+	// shape recognition
+
+	// measurement
+
 }
