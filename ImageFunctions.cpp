@@ -310,11 +310,11 @@ Mat remapImage(Mat& image)
 
 	// define variables
 	Mat imgUndistorted;
-	Mat camMtx, dstMtx;
+	Mat camMtx, dstMtx, rvecs, tvecs;
 	ifstream fin;
 	string line;
 	double fRMSError;
-	Mat camMtx, dstMtx, rvecs, tvecs;
+
 	
 	// check if cal file exists and open
 	fin.open(calFilename);
