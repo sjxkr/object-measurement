@@ -272,13 +272,22 @@ void calibrationCheck(Mat &image, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs)
 
 }
 
-void remapImage()
+Mat remapImage(Mat& image, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs)
 {
 	/*
 	* Purpose - To undistort and image by applying the camera calibration coefficients. Used for verification of image quality (focus, lighting)
 	* Parameters - raw colour image, camera matrix, distortion coefficients
-	* Outputs - Remapped undistorted image, remapped undistorted grayscale image
+	* Outputs - Remapped undistorted image
 	*/
+
+	// define variables
+	Mat imgDistorted = image;
+	Mat imgUndistorted;
+
+	// undistort image
+	undistort(imgDistorted, imgUndistorted, camMtx, dstMtx);
+
+	return(imgUndistorted);
 }
 
 Mat edgeDetection(Mat image)
@@ -390,6 +399,9 @@ void measureObject()
 
 	// read image
 	Mat img = imread(imgPath, -1);
+
+	// remap image
+	//Mat imgRemap = remapImage();
 
 	// edge detection
 	edgeDetection(img);
