@@ -231,7 +231,16 @@ void runCameraCalibration()
 	fout << "RMS Error\n";
 	fout << rmsError << endl;
 	fout << "Camera Matrix\n";
-	fout << cameraMatrix << endl;
+
+	for (int x = 0; x < 2; x++)
+	{
+		for (int y = 0; y < 2; y++)
+		{
+			fout << cameraMatrix.at<double>(x, y) << endl;
+			fout << ",";
+		}
+	}
+	
 	fout << "Distortion Coefficients\n";
 	fout << distCoefficients << endl;
 	fout << "Rotation Vectors\n";
