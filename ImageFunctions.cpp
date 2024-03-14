@@ -230,8 +230,8 @@ void runCameraCalibration()
 	// write calibration values file
 	fout << "RMS Error\n";
 	fout << rmsError << endl;
-	fout << "Camera Matrix\n";
 
+	fout << "Camera Matrix\n";
 	for (int x = 0; x < 3; x++)
 	{
 		for (int y = 0; y < 3; y++)
@@ -242,18 +242,20 @@ void runCameraCalibration()
 	}
 	
 	fout << "\nDistortion Coefficients\n";
-	for (int x = 0; x < 6; x++)
+	
+	for (int x = 0; x < 5; x++)
 	{
-		fout << distCoefficients.at<double>(x);
+		fout << distCoefficients.at<double>(x,0);
 		fout << ",";
 	}
 	
 	fout << "\nRotation Vectors\n";
+	/*
 	for (int x = 0; x < nSamples; x++)
 	{
 		for (int y = 0; y < 3; y++)
 		{
-			fout << rvecs;
+			fout << rvecs.at<double>(x,y);
 			fout << ",";
 		}
 	}
@@ -263,11 +265,11 @@ void runCameraCalibration()
 	{
 		for (int y = 0; y < 3; y++)
 		{
-			fout << tvecs;
+			fout << tvecs.at<double>(x, y);
 			fout << ",";
 		}
 	}
-
+	*/
 	fout.close();
 
 	// calibration check
