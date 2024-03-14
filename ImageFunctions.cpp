@@ -317,32 +317,6 @@ Mat remapImage(Mat& image)
 	ifstream fin;
 	string line;
 	double fRMSError;
-	
-	// get calibration from file
-	readCalibrationFile();
-
-	// undistort image
-	undistort(image, imgUndistorted, camMtx, dstMtx);
-
-	return(imgUndistorted);
-}
-
-void readCalibrationFile()
-{
-	/*
-	* Purpose - To undistort and image by applying the camera calibration coefficients. Used for verification of image quality (focus, lighting)
-	* Parameters - raw colour image, camera matrix, distortion coefficients
-	* Outputs - Remapped undistorted image
-	*/
-
-	// define variables
-	Mat camMtx(3, 3, CV_64F);
-	Mat dstMtx(1, 5, CV_64F);
-	Mat rvecs(nSamples, 3, CV_64F);
-	Mat tvecs(nSamples, 3, CV_64F);
-	ifstream fin;
-	string line;
-	double fRMSError;
 
 
 	// check if cal file exists and open
@@ -402,6 +376,17 @@ void readCalibrationFile()
 	cout << "Rotation Vectors:\n" << rvecs << endl;
 	cout << "Translation Vectors:\n" << tvecs << endl;
 	
+	// undistort image
+	undistort(image, imgUndistorted, camMtx, dstMtx);
+
+	imshow("Remap - Distorted", image);
+	imshow("Remap - Undistorted", imgUndistorted);
+
+	waitKey(0);
+
+	destroyAllWindows();
+
+	return(imgUndistorted);
 }
 
 Mat edgeDetection(Mat& image)
@@ -419,10 +404,6 @@ Mat edgeDetection(Mat& image)
 	int kSize = 3;
 	int sigma = 3;
 	Mat imgRemapped, imgGray, imgGrayThresh, imgBlur, imgCanny;
-
-
-	// remap image
-	imgRemapped = remapImage(image);
 
 	// convert to grayscale
 	cvtColor(imgRemapped, imgGray, COLOR_BGR2GRAY);
@@ -475,6 +456,7 @@ void measureObject()
 	compressParams.push_back(IMWRITE_PNG_COMPRESSION);
 	compressParams.push_back(1);
 	string imgPath = "Object_Capture.png";
+	Mat imgRemapped;
 
 	// print user instructions
 	cout << "Capture image of the object to be measured\n";
@@ -515,10 +497,10 @@ void measureObject()
 	Mat img = imread(imgPath, -1);
 
 	// remap image
-	//Mat imgRemap = remapImage();
+	imgRemapped = remapImage(img);
 
 	// edge detection
-	edgeDetection(img);
+	edgeDetection(imgRemapped);
 
 	// shape recognition
 
