@@ -227,26 +227,47 @@ void runCameraCalibration()
 	cout << "Camera Matrix: " << cameraMatrix << endl;
 	cout << "Distortion Coefficients: " << distCoefficients << endl;
 
-	// write calibration file
+	// write calibration values file
 	fout << "RMS Error\n";
 	fout << rmsError << endl;
 	fout << "Camera Matrix\n";
 
-	for (int x = 0; x < 2; x++)
+	for (int x = 0; x < 3; x++)
 	{
-		for (int y = 0; y < 2; y++)
+		for (int y = 0; y < 3; y++)
 		{
-			fout << cameraMatrix.at<double>(x, y) << endl;
+			fout << cameraMatrix.at<double>(x, y);
 			fout << ",";
 		}
 	}
 	
-	fout << "Distortion Coefficients\n";
-	fout << distCoefficients << endl;
-	fout << "Rotation Vectors\n";
-	fout << rvecs << endl;
-	fout << "Translation Vectors\n";
-	fout << tvecs << endl;
+	fout << "\nDistortion Coefficients\n";
+	for (int x = 0; x < 6; x++)
+	{
+		fout << distCoefficients.at<double>(x);
+		fout << ",";
+	}
+	
+	fout << "\nRotation Vectors\n";
+	for (int x = 0; x < nSamples; x++)
+	{
+		for (int y = 0; y < 3; y++)
+		{
+			fout << rvecs;
+			fout << ",";
+		}
+	}
+
+	fout << "\nTranslation Vectors\n";
+	for (int x = 0; x < nSamples; x++)
+	{
+		for (int y = 0; y < 3; y++)
+		{
+			fout << tvecs;
+			fout << ",";
+		}
+	}
+
 	fout.close();
 
 	// calibration check
