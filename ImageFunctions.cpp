@@ -420,8 +420,9 @@ Mat edgeDetection(Mat& image)
 	Canny(imgBlur, imgCanny, CannyThreshMin, CannyThreshMax, apSize);
 
 	// display images
-	imshow("Original", imgGray);
-	imshow("Original", imgGrayThresh);
+	imshow("Input Image", image);
+	imshow("Gray", imgGray);
+	imshow("OTSU", imgGrayThresh);
 	imshow("Blurred", imgBlur);
 	imshow("Canny ED", imgCanny);
 
@@ -493,7 +494,10 @@ void measureObject()
 		}
 	}
 
-	// read image
+	// close webcam preview
+	destroyAllWindows();
+
+	// read image from file
 	Mat img = imread(imgPath, -1);
 
 	// remap image
