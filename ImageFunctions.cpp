@@ -304,6 +304,21 @@ void readCalFile()
 
 	// print line
 	cout << line << endl;
+
+	getline(fin, line);
+
+	// print line
+	cout << line << endl;
+
+	getline(fin, line);
+
+	// print line
+	cout << line << endl;
+
+	getline(fin, line);
+
+	// print line
+	cout << line << endl;
 }
 
 Mat edgeDetection(Mat& image)
