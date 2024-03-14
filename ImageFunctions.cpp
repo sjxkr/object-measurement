@@ -285,6 +285,7 @@ Mat remapImage(Mat& image)
 	ifstream fin;
 	
 	// check if cal file exists
+	fin.open(calFilename);
 
 
 	// read calibration file

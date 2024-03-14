@@ -21,7 +21,7 @@ const int nSamples(10);
 const int chessboardSizeX = 6;
 const int chessboardSizeY = 9;
 const int squareSize = 24;		// in millimeters
-const int MAXLEN(100);
+const int MAXLEN(1000);
 const int MAXWIDTH(5);
 const char newline('\n');
 const char terminator('@');
