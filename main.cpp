@@ -24,8 +24,9 @@ int main()
 	//Set logging level to keep console clean of non-pertinent messages
 	cv::utils::logging::setLogLevel(cv::utils::logging::LogLevel::LOG_LEVEL_WARNING);
 
-	// test reading cal file
-	readCalFile();
+	// test undistort
+	Mat imageTEST = imread("Object_Capture.png", -1);
+	remapImage(imageTEST);
 
 	// User capture mode prompt
 	int mode = captureMode();

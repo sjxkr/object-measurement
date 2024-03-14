@@ -229,7 +229,7 @@ void runCameraCalibration()
 
 	// write calibration values file
 	fout << rmsError;
-	fout << "\n";
+	fout << ",\n";
 
 	for (int x = 0; x < 3; x++)
 	{
@@ -311,43 +311,72 @@ Mat remapImage(Mat& image)
 	// define variables
 	Mat imgUndistorted;
 	Mat camMtx, dstMtx;
-
+	ifstream fin;
+	string line;
+	double fRMSError;
+	Mat camMtx, dstMtx, rvecs, tvecs;
 	
+	// check if cal file exists and open
+	fin.open(calFilename);
 
+	if (!fin)
+	{
+		cout << "Error! Could not find calibration file: Exiting program" << endl;
+		exit(EXIT_FAILURE);
+	}
+
+	// get RMS error
+	getline(fin, line, ',');
+	fRMSError = stod(line);
+
+	// get camera matrix
+	for (int x = 0; x < 3; x++)
+	{
+		for (int y = 0; y < 3; y++)
+		{
+			getline(fin, line, ',');
+			camMtx.at<double>(x, y)=stod(line);
+		}
+	}
+
+	// get distortion matrix
+	for (int x = 0; x < 5; x++)
+	{
+		getline(fin, line, ',');
+		dstMtx.at<double>(x) = stod(line);
+	}
+
+	// get rotation vectors
+	for (int x = 0; x < nSamples; x++)
+	{
+		for (int y = 0; y < 3; y++)
+		{
+			getline(fin, line);
+			rvecs.at<double>(x, y) = stod(line);
+		}
+	}
+
+	// get translation vectors
+	for (int x = 0; x < nSamples; x++)
+	{
+		for (int y = 0; y < 3; y++)
+		{
+			getline(fin, line);
+			tvecs.at<double>(x, y) = stod(line);
+		}
+	}
+
+	// print calibrations
+	cout << "RMS Error:\n" << fRMSError << endl;
+	cout << "Camera Matrix:\n" << camMtx << endl;
+	cout << "Distortion Matrix:\n" << dstMtx << endl;
+	cout << "Rotation Vectors:\n" << rvecs << endl;
+	cout << "Translation Vectors:\n" << tvecs << endl;
 
 	// undistort image
 	undistort(image, imgUndistorted, camMtx, dstMtx);
 
 	return(imgUndistorted);
-}
-
-void readCalFile()
-{
-	// define variables
-	ifstream fin;
-	string line;
-
-	// check if cal file exists
-	fin.open(calFilename);
-	getline(fin, line,',');
-
-	// print line
-	cout << line << endl;
-
-	getline(fin, line);
-
-	// print line
-	cout << line << endl;
-
-	getline(fin, line);
-
-	// print line
-	cout << line << endl;
-
-	getline(fin, line);
-
-	// print line
-	cout << line << endl;
 }
 
 Mat edgeDetection(Mat& image)
