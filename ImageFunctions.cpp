@@ -310,68 +310,16 @@ Mat remapImage(Mat& image)
 
 	// define variables
 	Mat imgUndistorted;
-	Mat camMtx, dstMtx, rvecs, tvecs;
+	Mat camMtx(3, 3, CV_64F);
+	Mat dstMtx(1, 5, CV_64F);
+	Mat rvecs(nSamples, 3, CV_64F);
+	Mat tvecs(nSamples, 3, CV_64F);
 	ifstream fin;
 	string line;
 	double fRMSError;
-
 	
-	// check if cal file exists and open
-	fin.open(calFilename);
-
-	if (!fin)
-	{
-		cout << "Error! Could not find calibration file: Exiting program" << endl;
-		exit(EXIT_FAILURE);
-	}
-
-	// get RMS error
-	getline(fin, line, ',');
-	fRMSError = stod(line);
-
-	// get camera matrix
-	for (int x = 0; x < 3; x++)
-	{
-		for (int y = 0; y < 3; y++)
-		{
-			getline(fin, line, ',');
-			camMtx.at<double>(x, y)=stod(line);
-		}
-	}
-
-	// get distortion matrix
-	for (int x = 0; x < 5; x++)
-	{
-		getline(fin, line, ',');
-		dstMtx.at<double>(x) = stod(line);
-	}
-
-	// get rotation vectors
-	for (int x = 0; x < nSamples; x++)
-	{
-		for (int y = 0; y < 3; y++)
-		{
-			getline(fin, line);
-			rvecs.at<double>(x, y) = stod(line);
-		}
-	}
-
-	// get translation vectors
-	for (int x = 0; x < nSamples; x++)
-	{
-		for (int y = 0; y < 3; y++)
-		{
-			getline(fin, line);
-			tvecs.at<double>(x, y) = stod(line);
-		}
-	}
-
-	// print calibrations
-	cout << "RMS Error:\n" << fRMSError << endl;
-	cout << "Camera Matrix:\n" << camMtx << endl;
-	cout << "Distortion Matrix:\n" << dstMtx << endl;
-	cout << "Rotation Vectors:\n" << rvecs << endl;
-	cout << "Translation Vectors:\n" << tvecs << endl;
+	// get calibration from file
+	readCalibrationFile();
 
 	// undistort image
 	undistort(image, imgUndistorted, camMtx, dstMtx);
@@ -379,8 +327,14 @@ Mat remapImage(Mat& image)
 	return(imgUndistorted);
 }
 
-void testreadcal()
+void readCalibrationFile()
 {
+	/*
+	* Purpose - To undistort and image by applying the camera calibration coefficients. Used for verification of image quality (focus, lighting)
+	* Parameters - raw colour image, camera matrix, distortion coefficients
+	* Outputs - Remapped undistorted image
+	*/
+
 	// define variables
 	Mat camMtx(3, 3, CV_64F);
 	Mat dstMtx(1, 5, CV_64F);
@@ -464,14 +418,14 @@ Mat edgeDetection(Mat& image)
 	int apSize = 3;			// size of sobel operator
 	int kSize = 3;
 	int sigma = 3;
-	Mat imgGray;
-	Mat imgGrayThresh;
-	Mat imgBlur;
-	Mat imgCanny;
+	Mat imgRemapped, imgGray, imgGrayThresh, imgBlur, imgCanny;
 
+
+	// remap image
+	imgRemapped = remapImage(image);
 
 	// convert to grayscale
-	cvtColor(image, imgGray, COLOR_BGR2GRAY);
+	cvtColor(imgRemapped, imgGray, COLOR_BGR2GRAY);
 
 	// determine thresholds & binarize image
 	CannyThreshMax = threshold(imgGray, imgGrayThresh, 0, 255, THRESH_BINARY | THRESH_OTSU);
