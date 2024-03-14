@@ -21,6 +21,11 @@ const int nSamples(10);
 const int chessboardSizeX = 6;
 const int chessboardSizeY = 9;
 const int squareSize = 24;		// in millimeters
+const int MAXLEN(100);
+const int MAXWIDTH(5);
+const char newline('\n');
+const char terminator('@');
+const char nullChar('\0');
 
 /*************************************************************** 
 Functions 
@@ -30,7 +35,7 @@ int  captureMode();
 void runCameraCalibration();
 void captureCalibrationImages();
 void calibrationCheck(Mat& image, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs);
-Mat remapImage(Mat& image, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs);
-Mat edgeDetection(Mat image);
+Mat remapImage(Mat& image);
+Mat edgeDetection(Mat& image);
 void shapeRecognition();
 void measureObject();

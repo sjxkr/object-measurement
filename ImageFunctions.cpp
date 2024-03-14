@@ -254,17 +254,16 @@ void calibrationCheck(Mat &image, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs)
 	*/
 
 	// define variables
-	Mat imgDistorted = image;
 	Mat imgUndistorted;
 
 	// undistort image
-	undistort(imgDistorted, imgUndistorted, camMtx, dstMtx);
+	undistort(image, imgUndistorted, camMtx, dstMtx);
 
 	Mat diff;
-	absdiff(imgDistorted, imgUndistorted, diff);
+	absdiff(image, imgUndistorted, diff);
 
 	// show images
-	imshow("Distorted", imgDistorted);
+	imshow("Distorted", image);
 	imshow("Undistorted", imgUndistorted);
 	imshow("Diff", diff);
 
@@ -272,7 +271,7 @@ void calibrationCheck(Mat &image, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs)
 
 }
 
-Mat remapImage(Mat& image, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs)
+Mat remapImage(Mat& image)
 {
 	/*
 	* Purpose - To undistort and image by applying the camera calibration coefficients. Used for verification of image quality (focus, lighting)
@@ -281,16 +280,20 @@ Mat remapImage(Mat& image, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs)
 	*/
 
 	// define variables
-	Mat imgDistorted = image;
 	Mat imgUndistorted;
+	Mat camMtx, dstMtx;
+
+	// check if cal file exists
+
+	// read calibration file
 
 	// undistort image
-	undistort(imgDistorted, imgUndistorted, camMtx, dstMtx);
+	undistort(image, imgUndistorted, camMtx, dstMtx);
 
 	return(imgUndistorted);
 }
 
-Mat edgeDetection(Mat image)
+Mat edgeDetection(Mat& image)
 {
 	/*
 	* Purpose - Seperate the object from the background and apply a canny edge detection filter as a prerequisite for shape detection
