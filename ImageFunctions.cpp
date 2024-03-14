@@ -403,10 +403,10 @@ Mat edgeDetection(Mat& image)
 	int apSize = 3;			// size of sobel operator
 	int kSize = 3;
 	int sigma = 3;
-	Mat imgRemapped, imgGray, imgGrayThresh, imgBlur, imgCanny;
+	Mat imgGray, imgGrayThresh, imgBlur, imgCanny;
 
 	// convert to grayscale
-	cvtColor(imgRemapped, imgGray, COLOR_BGR2GRAY);
+	cvtColor(image, imgGray, COLOR_BGR2GRAY);
 
 	// determine thresholds & binarize image
 	CannyThreshMax = threshold(imgGray, imgGrayThresh, 0, 255, THRESH_BINARY | THRESH_OTSU);
