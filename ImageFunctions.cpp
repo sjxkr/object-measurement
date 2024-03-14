@@ -245,12 +245,12 @@ void runCameraCalibration()
 	
 	for (int x = 0; x < 5; x++)
 	{
-		fout << distCoefficients.at<double>(x,0);
+		fout << distCoefficients.at<double>(x);
 		fout << ",";
 	}
 	
 	fout << "\nRotation Vectors\n";
-	/*
+	
 	for (int x = 0; x < nSamples; x++)
 	{
 		for (int y = 0; y < 3; y++)
@@ -269,7 +269,7 @@ void runCameraCalibration()
 			fout << ",";
 		}
 	}
-	*/
+	
 	fout.close();
 
 	// calibration check
