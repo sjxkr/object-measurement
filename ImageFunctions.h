@@ -10,6 +10,7 @@
 #include <fstream>
 #include <vector>
 #include <Windows.h>
+#include <string.h>
 
 using namespace std;
 using namespace cv;
@@ -40,3 +41,4 @@ Mat remapImage(Mat& image);
 Mat edgeDetection(Mat& image);
 void shapeRecognition();
 void measureObject();
+void readCalFile();

@@ -282,18 +282,28 @@ Mat remapImage(Mat& image)
 	// define variables
 	Mat imgUndistorted;
 	Mat camMtx, dstMtx;
-	ifstream fin;
+
 	
-	// check if cal file exists
-	fin.open(calFilename);
 
-
-	// read calibration file
 
 	// undistort image
 	undistort(image, imgUndistorted, camMtx, dstMtx);
 
 	return(imgUndistorted);
+}
+
+void readCalFile()
+{
+	// define variables
+	ifstream fin;
+	string line;
+
+	// check if cal file exists
+	fin.open(calFilename);
+	getline(fin, line);
+
+	// print line
+	cout << line << endl;
 }
 
 Mat edgeDetection(Mat& image)
