@@ -228,10 +228,9 @@ void runCameraCalibration()
 	cout << "Distortion Coefficients: " << distCoefficients << endl;
 
 	// write calibration values file
-	fout << "RMS Error\n";
 	fout << rmsError << endl;
+	fout << "\n";
 
-	fout << "Camera Matrix\n";
 	for (int x = 0; x < 3; x++)
 	{
 		for (int y = 0; y < 3; y++)
@@ -240,16 +239,14 @@ void runCameraCalibration()
 			fout << ",";
 		}
 	}
-	
-	fout << "\nDistortion Coefficients\n";
+	fout << "\n";
 	
 	for (int x = 0; x < 5; x++)
 	{
 		fout << distCoefficients.at<double>(x);
 		fout << ",";
 	}
-	
-	fout << "\nRotation Vectors\n";
+	fout << "\n";
 	
 	for (int x = 0; x < nSamples; x++)
 	{
@@ -259,8 +256,8 @@ void runCameraCalibration()
 			fout << ",";
 		}
 	}
+	fout << "\n";
 
-	fout << "\nTranslation Vectors\n";
 	for (int x = 0; x < nSamples; x++)
 	{
 		for (int y = 0; y < 3; y++)
@@ -332,7 +329,7 @@ void readCalFile()
 
 	// check if cal file exists
 	fin.open(calFilename);
-	getline(fin, line);
+	getline(fin, line,',');
 
 	// print line
 	cout << line << endl;
