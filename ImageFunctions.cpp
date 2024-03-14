@@ -505,7 +505,7 @@ void measureObject()
 	Mat img = imread(imgPath, -1);
 
 	// show image histogram
-	imageHistogramDisplay(img);
+	//imageHistogramDisplay(img);
 
 	// remap image
 	imgRemapped = remapImage(img);
@@ -521,6 +521,10 @@ void measureObject()
 
 void imageHistogramDisplay(Mat& image)
 {
+	// split images into frames - really this is only needed for bgr image - might not be needed afterall
+	vector<Mat> captureFrames;
+	split(image, captureFrames);
+
 	// histogram parameters
 	int histSize = 256;
 	float range[] = { 0,256 };	// the upper boundary is exclusive
