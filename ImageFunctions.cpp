@@ -228,7 +228,7 @@ void runCameraCalibration()
 	cout << "Distortion Coefficients: " << distCoefficients << endl;
 
 	// write calibration values file
-	fout << rmsError << endl;
+	fout << rmsError;
 	fout << "\n";
 
 	for (int x = 0; x < 3; x++)
