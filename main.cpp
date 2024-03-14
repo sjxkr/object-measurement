@@ -46,9 +46,6 @@ int main()
 
 	case IDNO:
 
-		// detect shape of object to be measured
-		shapeRecognition();
-
 		// measure object
 		measureObject();
 
