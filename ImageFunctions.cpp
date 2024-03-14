@@ -382,7 +382,10 @@ Mat remapImage(Mat& image)
 void testreadcal()
 {
 	// define variables
-	Mat camMtx, dstMtx, rvecs, tvecs;
+	Mat camMtx(3, 3, CV_64F);
+	Mat dstMtx(1, 5, CV_64F);
+	Mat rvecs(nSamples, 3, CV_64F);
+	Mat tvecs(nSamples, 3, CV_64F);
 	ifstream fin;
 	string line;
 	double fRMSError;
@@ -400,7 +403,7 @@ void testreadcal()
 	// get RMS error
 	getline(fin, line, ',');
 	fRMSError = stod(line);
-
+	
 	// get camera matrix
 	for (int x = 0; x < 3; x++)
 	{
@@ -410,7 +413,7 @@ void testreadcal()
 			camMtx.at<double>(x, y) = stod(line);
 		}
 	}
-
+	
 	// get distortion matrix
 	for (int x = 0; x < 5; x++)
 	{
@@ -423,17 +426,17 @@ void testreadcal()
 	{
 		for (int y = 0; y < 3; y++)
 		{
-			getline(fin, line);
+			getline(fin, line,',');
 			rvecs.at<double>(x, y) = stod(line);
 		}
 	}
-
+	
 	// get translation vectors
 	for (int x = 0; x < nSamples; x++)
 	{
 		for (int y = 0; y < 3; y++)
 		{
-			getline(fin, line);
+			getline(fin, line,',');
 			tvecs.at<double>(x, y) = stod(line);
 		}
 	}
@@ -444,6 +447,7 @@ void testreadcal()
 	cout << "Distortion Matrix:\n" << dstMtx << endl;
 	cout << "Rotation Vectors:\n" << rvecs << endl;
 	cout << "Translation Vectors:\n" << tvecs << endl;
+	
 }
 
 Mat edgeDetection(Mat& image)
