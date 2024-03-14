@@ -26,7 +26,7 @@ int main()
 
 	// test undistort
 	Mat imageTEST = imread("Object_Capture.png", -1);
-	remapImage(imageTEST);
+	Mat imageTest_U = remapImage(imageTEST);
 
 	// User capture mode prompt
 	int mode = captureMode();
