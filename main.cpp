@@ -38,9 +38,6 @@ int main()
 		captureCalibrationImages();
 		runCameraCalibration();
 
-		// preprocess image
-		edgeDetection();
-
 		// detect shape of object to be measured
 		shapeRecognition();
 
@@ -48,9 +45,6 @@ int main()
 		measureObject();
 
 	case IDNO:
-
-		// preprocess image
-		edgeDetection();
 
 		// detect shape of object to be measured
 		shapeRecognition();

@@ -31,6 +31,6 @@ void runCameraCalibration();
 void captureCalibrationImages();
 void calibrationCheck(Mat& image, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs);
 void remapImage();
-void edgeDetection();
+Mat edgeDetection(Mat image);
 void shapeRecognition();
 void measureObject();

@@ -268,7 +268,6 @@ void calibrationCheck(Mat &image, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs)
 	imshow("Undistorted", imgUndistorted);
 	imshow("Diff", diff);
 
-
 	waitKey(0);
 
 }
@@ -282,13 +281,50 @@ void remapImage()
 	*/
 }
 
-void edgeDetection()
+Mat edgeDetection(Mat image)
 {
 	/*
 	* Purpose - Seperate the object from the background and apply a canny edge detection filter as a prerequisite for shape detection
 	* Parameters - remapped undistorted grayscale image
 	* Outputs - Filtered image
 	*/
+
+	// Define variables
+	double CannyThreshMin;
+	double CannyThreshMax;
+	int apSize = 3;			// size of sobel operator
+	int kSize = 3;
+	int sigma = 3;
+	Mat imgGray;
+	Mat imgGrayThresh;
+	Mat imgBlur;
+	Mat imgCanny;
+
+
+	// convert to grayscale
+	cvtColor(image, imgGray, COLOR_BGR2GRAY);
+
+	// determine thresholds & binarize image
+	CannyThreshMax = threshold(imgGray, imgGrayThresh, 0, 255, THRESH_BINARY | THRESH_OTSU);
+	CannyThreshMin = 0.1 * CannyThreshMax;
+
+	// gaussian blur for noise reduction
+	GaussianBlur(imgGrayThresh,imgBlur, Size(kSize, kSize), sigma, sigma);
+
+
+	// apply canny filter
+	Canny(imgBlur, imgCanny, CannyThreshMin, CannyThreshMax, apSize);
+
+	// display images
+	imshow("Original", imgGray);
+	imshow("Original", imgGrayThresh);
+	imshow("Blurred", imgBlur);
+	imshow("Canny ED", imgCanny);
+
+	waitKey(0);
+
+	// return filtered image
+	return(imgCanny);
 }
 
 void shapeRecognition()
