@@ -41,3 +41,4 @@ Mat remapImage(Mat& image);
 Mat edgeDetection(Mat& image);
 void shapeRecognition();
 void measureObject();
+void imageHistogramDisplay(Mat& image);

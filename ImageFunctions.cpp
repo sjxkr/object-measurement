@@ -504,6 +504,9 @@ void measureObject()
 	// read image from file
 	Mat img = imread(imgPath, -1);
 
+	// show image histogram
+	imageHistogramDisplay(img);
+
 	// remap image
 	imgRemapped = remapImage(img);
 
@@ -514,4 +517,39 @@ void measureObject()
 
 	// measurement
 
+}
+
+void imageHistogramDisplay(Mat& image)
+{
+	// histogram parameters
+	int histSize = 256;
+	float range[] = { 0,256 };	// the upper boundary is exclusive
+	const float* histRange[] = { range };
+	bool uniform = true, accumulate = false;	//We want our bins to have the same size (uniform) and to clear the histograms in the beginning
+
+	// calculate histogram
+	Mat imgHist;
+	calcHist(&image, 1, 0, Mat(), imgHist, 1, &histSize, histRange, uniform, accumulate);
+
+	// create an image to display the histogram
+	int hist_h = image.rows;
+	int hist_w = image.cols;
+
+	// define bin width
+	int bin_w = cvRound((double)hist_w / histSize);
+
+	Mat histImage(hist_h, hist_w, CV_8UC3, Scalar(0, 0, 0));
+
+	// normalize histogram so the values fit within range
+	normalize(imgHist, imgHist, 0, histImage.rows, NORM_MINMAX, -1, Mat());
+
+	// draw a line connection all data points
+	for (int i = 1; i < histSize; i++)
+	{
+		line(histImage, Point(bin_w * (i - 1), hist_h - cvRound(imgHist.at<float>(i - 1))),
+			Point(bin_w * (i), hist_h - cvRound(imgHist.at<float>(i))),
+			Scalar(255, 0, 0), 2, 8, 0);
+	}
+
+	imshow("Histogram", histImage);
 }
