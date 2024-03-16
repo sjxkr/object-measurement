@@ -424,10 +424,10 @@ Mat edgeDetection(Mat& image)
 	Canny(imgBlur, imgCanny, CannyThreshMin, CannyThreshMax, apSize);
 
 	// display images
-	imshow("Input Image", image);
-	imshow("Gray", imgGray);
-	imshow("OTSU", imgGrayThresh);
-	imshow("Blurred", imgBlur);
+	//imshow("Input Image", image);
+	//imshow("Gray", imgGray);
+	//imshow("OTSU", imgGrayThresh);
+	//imshow("Blurred", imgBlur);
 	imshow("Canny ED", imgCanny);
 
 	waitKey(0);
