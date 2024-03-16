@@ -548,7 +548,8 @@ void imageHistogramDisplay()
 	// define bin width
 	int bin_w = cvRound((double)hist_w / histSize);
 
-	Mat histImage(hist_h, hist_w, CV_8UC3, Scalar(0, 0, 0));
+	// Histogram plot parameters
+	Mat histImage(hist_h, hist_w, CV_8UC3, Scalar(255, 255, 255));
 
 	// normalize histogram so the values fit within range
 	normalize(imgHist, imgHist, 0, histImage.rows, NORM_MINMAX, -1, Mat());
@@ -558,10 +559,10 @@ void imageHistogramDisplay()
 	{
 		line(histImage, Point(bin_w * (i - 1), hist_h - cvRound(imgHist.at<float>(i - 1))),
 			Point(bin_w * (i), hist_h - cvRound(imgHist.at<float>(i))),
-			Scalar(255, 0, 0), 2, 8, 0);
+			Scalar(0, 0, 255), 1, LINE_AA, 0);
 	}
 
-	imshow("Object Capture", imgCap);
+	imshow("Object Capture", imgCapGray);
 	imshow("Histogram", histImage);
 
 	waitKey(0);
