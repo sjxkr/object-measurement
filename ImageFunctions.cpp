@@ -507,10 +507,12 @@ void measureObject()
 	// remap image
 	imgRemapped = remapImage(img);
 
-	// edge detection
-	edgeDetection(imgRemapped);
-
+	// display histogram of captured image for verification
 	imageHistogramDisplay(imgRemapped);
+
+	// edge detection
+	Mat imgCanny = edgeDetection(imgRemapped);
+
 	// shape recognition
 
 	// measurement
@@ -579,7 +581,7 @@ void imageHistogramDisplay(Mat& image)
 	equalizeHist(imgCapGray, imgEqualised);
 
 
-	imshow("Object Capture", imgCapGray);
+	imshow("Calc Histogram Input", imgCapGray);
 	imshow("Histogram", histImage);
 	imshow("Equalised Image", imgEqualised);
 
