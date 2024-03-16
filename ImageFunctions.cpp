@@ -544,12 +544,13 @@ void imageHistogramDisplay()
 	// create an image to display the histogram
 	int hist_h = imgCapGray.rows;
 	int hist_w = imgCapGray.cols;
+	int yOffset = hist_w * 0.1;			// Y axis offset value
 
 	// define bin width
 	int bin_w = cvRound((double)hist_w / histSize);
 
-	// Histogram plot parameters
-	Mat histImage(hist_h, hist_w, CV_8UC3, Scalar(255, 255, 255));
+	// Histogram canvas
+	Mat histImage(hist_h*1.10, hist_w*1.10, CV_8UC3, Scalar(255, 255, 255));
 
 	// normalize histogram so the values fit within range
 	normalize(imgHist, imgHist, 0, histImage.rows, NORM_MINMAX, -1, Mat());
@@ -557,27 +558,25 @@ void imageHistogramDisplay()
 	// draw a line connection all data points
 	for (int i = 1; i < histSize; i++)
 	{
-		line(histImage, Point(bin_w * (i - 1), hist_h - cvRound(imgHist.at<float>(i - 1))),
-			Point(bin_w * (i), hist_h - cvRound(imgHist.at<float>(i))),
+		line(histImage, Point(bin_w * (i - 1)+ yOffset, hist_h - cvRound(imgHist.at<float>(i - 1))),
+			Point(bin_w * (i)+ yOffset, hist_h - cvRound(imgHist.at<float>(i))),
 			Scalar(0, 0, 255), 1, LINE_AA, 0);
 	}
 
 	// Draw X and Y axes
-	line(histImage, Point(0, hist_h), Point(hist_w, hist_h), Scalar(0, 0, 0), 1, LINE_AA); // X-axis
-	line(histImage, Point(0, 0), Point(0, hist_h), Scalar(0, 0, 0), 1, LINE_AA);           // Y-axis
+	line(histImage, Point(yOffset, hist_h), Point(hist_w, hist_h), Scalar(0, 0, 0), 1, LINE_AA); // X-axis
+	line(histImage, Point(yOffset, 0), Point(yOffset, hist_h), Scalar(0, 0, 0), 1, LINE_AA);           // Y-axis
 
-	// Label X-axis
-	for (int i = 0; i <= histSize; i += 15)
+	// Draw labels for Y axes
+	putText(histImage, "Intensity", Point(5, 15), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 0), 1);
+	
+	// Draw labels for X Axis
+	for (int i = 0; i <= histSize; i += 30)
 	{
-		line(histImage, Point(bin_w * i, hist_h), Point(bin_w * i, hist_h + 5), Scalar(0, 0, 0), 1, LINE_AA);
-		if (i < histSize)
-		{
-			putText(histImage, to_string(i), Point(bin_w * i + 5, hist_h + 20), FONT_HERSHEY_COMPLEX_SMALL, 0.5, Scalar(0, 0, 0), 1);
-		}
+		int x = i * bin_w;
+		putText(histImage, to_string(i), Point(x, hist_h - 5), FONT_HERSHEY_SIMPLEX, 0.4, Scalar(0, 0, 0), 1);
+		line(histImage, Point(x, hist_h - 3), Point(x, hist_h + 3), Scalar(0, 0, 0), 1, LINE_AA);
 	}
-
-	// Label Y-axis
-	putText(histImage, "Intensity", Point(5, 15), FONT_HERSHEY_COMPLEX_SMALL, 0.5, Scalar(0, 0, 0), 1);
 
 
 	imshow("Object Capture", imgCapGray);
