@@ -504,15 +504,13 @@ void measureObject()
 	// read image from file
 	Mat img = imread(imgPath, -1);
 
-	// show image histogram
-	imageHistogramDisplay(img);
-
 	// remap image
 	imgRemapped = remapImage(img);
 
 	// edge detection
 	edgeDetection(imgRemapped);
 
+	imageHistogramDisplay(imgRemapped);
 	// shape recognition
 
 	// measurement
@@ -576,9 +574,14 @@ void imageHistogramDisplay(Mat& image)
 		line(histImage, Point(x+xOffset, hist_h - 3), Point(x+xOffset, hist_h + 3), Scalar(0, 0, 0), 1, LINE_AA);
 	}
 
+	// Equalise histogram
+	Mat imgEqualised;
+	equalizeHist(imgCapGray, imgEqualised);
+
 
 	imshow("Object Capture", imgCapGray);
 	imshow("Histogram", histImage);
+	imshow("Equalised Image", imgEqualised);
 
 	waitKey(0);
 	
