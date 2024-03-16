@@ -505,7 +505,7 @@ void measureObject()
 	Mat img = imread(imgPath, -1);
 
 	// show image histogram
-	imageHistogramDisplay();
+	imageHistogramDisplay(img);
 
 	// remap image
 	imgRemapped = remapImage(img);
@@ -519,10 +519,10 @@ void measureObject()
 
 }
 
-void imageHistogramDisplay()
+void imageHistogramDisplay(Mat& image)
 {
 	Mat imgCapGray;
-	Mat imgCap = imread("Object_Capture.png",-1);
+	Mat imgCap = image;
 
 	// convert to grayscale
 	cvtColor(imgCap, imgCapGray, COLOR_BGR2GRAY, 0);
