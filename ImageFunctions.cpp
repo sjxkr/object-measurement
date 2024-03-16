@@ -379,10 +379,10 @@ Mat remapImage(Mat& image)
 	// undistort image
 	undistort(image, imgUndistorted, camMtx, dstMtx);
 
-	imshow("Remap - Distorted", image);
-	imshow("Remap - Undistorted", imgUndistorted);
+	//imshow("Remap - Distorted", image);
+	//imshow("Remap - Undistorted", imgUndistorted);
 
-	waitKey(0);
+	//waitKey(0);
 
 	destroyAllWindows();
 
