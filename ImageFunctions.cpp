@@ -505,7 +505,7 @@ void measureObject()
 	Mat img = imread(imgPath, -1);
 
 	// show image histogram
-	imageHistogramDisplay(img);
+	imageHistogramDisplay();
 
 	// remap image
 	imgRemapped = remapImage(img);
@@ -519,11 +519,17 @@ void measureObject()
 
 }
 
-void imageHistogramDisplay(Mat& image)
+void imageHistogramDisplay()
 {
+	Mat imgCapGray;
+	Mat imgCap = imread("Object_Capture.png",-1);
+
+	// convert to grayscale
+	cvtColor(imgCap, imgCapGray, COLOR_BGR2GRAY, 0);
+
 	// split images into frames - really this is only needed for bgr image - might not be needed afterall
 	vector<Mat> captureFrames;
-	split(image, captureFrames);
+	split(imgCapGray, captureFrames);
 
 	// histogram parameters
 	int histSize = 256;
@@ -533,11 +539,11 @@ void imageHistogramDisplay(Mat& image)
 
 	// calculate histogram
 	Mat imgHist;
-	calcHist(&image, 1, 0, Mat(), imgHist, 1, & histSize, histRange, uniform, accumulate);
+	calcHist(&imgCapGray, 1, 0, Mat(), imgHist, 1, & histSize, histRange, uniform, accumulate);
 
 	// create an image to display the histogram
-	int hist_h = image.rows;
-	int hist_w = image.cols;
+	int hist_h = imgCapGray.rows;
+	int hist_w = imgCapGray.cols;
 
 	// define bin width
 	int bin_w = cvRound((double)hist_w / histSize);
@@ -556,4 +562,5 @@ void imageHistogramDisplay(Mat& image)
 	}
 
 	imshow("Histogram", histImage);
+	
 }
