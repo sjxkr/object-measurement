@@ -561,6 +561,9 @@ void imageHistogramDisplay()
 			Scalar(255, 0, 0), 2, 8, 0);
 	}
 
+	imshow("Object Capture", imgCap);
 	imshow("Histogram", histImage);
+
+	waitKey(0);
 	
 }
