@@ -542,6 +542,7 @@ void imageHistogramDisplay()
 	int hist_w = imgCapGray.cols;
 	int xOffset = hist_w * 0.1;			// X axis offset value
 	int yOffset = hist_h * 0.07;			// Y axis offset value
+	int lineThickness = 2;
 
 	// define bin width
 	int bin_w = cvRound((double)hist_w / histSize);
@@ -557,15 +558,15 @@ void imageHistogramDisplay()
 	{
 		line(histImage, Point(bin_w * (i - 1)+ xOffset, hist_h - cvRound(imgHist.at<float>(i - 1))),
 			Point(bin_w * (i)+ xOffset, hist_h - cvRound(imgHist.at<float>(i))),
-			Scalar(0, 0, 255), 1, LINE_AA, 0);
+			Scalar(0, 0, 255), lineThickness, LINE_AA, 0);
 	}
 
 	// Draw X and Y axes
 	line(histImage, Point(xOffset, hist_h), Point(hist_w, hist_h), Scalar(0, 0, 0), 1, LINE_AA); // X-axis
-	//line(histImage, Point(xOffset, 0), Point(xOffset, hist_h), Scalar(0, 0, 0), 1, LINE_AA);           // Y-axis
+	line(histImage, Point(xOffset, 0), Point(xOffset, hist_h), Scalar(0, 0, 0), 1, LINE_AA);           // Y-axis
 
 	// Draw labels for Y axes
-	//putText(histImage, "Count", Point(5+xOffset, 15), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 0), 1);
+	putText(histImage, "Count", Point(5+xOffset, 15), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 0), 1);
 	
 	// Draw labels for X Axis
 	for (int i = 0; i <= histSize; i += 30)
