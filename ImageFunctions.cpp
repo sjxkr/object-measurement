@@ -430,6 +430,9 @@ Mat edgeDetection(Mat& image)
 	//imshow("Blurred", imgBlur);
 	imshow("Canny ED", imgCanny);
 
+	// save image for debuggin
+	imwrite("Canny.png", imgCanny);
+
 	waitKey(0);
 
 	// return filtered image
