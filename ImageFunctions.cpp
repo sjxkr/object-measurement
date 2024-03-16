@@ -544,7 +544,8 @@ void imageHistogramDisplay()
 	// create an image to display the histogram
 	int hist_h = imgCapGray.rows;
 	int hist_w = imgCapGray.cols;
-	int yOffset = hist_w * 0.1;			// Y axis offset value
+	int xOffset = hist_w * 0.1;			// X axis offset value
+	int yOffset = hist_h * 0.07;			// Y axis offset value
 
 	// define bin width
 	int bin_w = cvRound((double)hist_w / histSize);
@@ -558,24 +559,24 @@ void imageHistogramDisplay()
 	// draw a line connection all data points
 	for (int i = 1; i < histSize; i++)
 	{
-		line(histImage, Point(bin_w * (i - 1)+ yOffset, hist_h - cvRound(imgHist.at<float>(i - 1))),
-			Point(bin_w * (i)+ yOffset, hist_h - cvRound(imgHist.at<float>(i))),
+		line(histImage, Point(bin_w * (i - 1)+ xOffset, hist_h - cvRound(imgHist.at<float>(i - 1))),
+			Point(bin_w * (i)+ xOffset, hist_h - cvRound(imgHist.at<float>(i))),
 			Scalar(0, 0, 255), 1, LINE_AA, 0);
 	}
 
 	// Draw X and Y axes
-	line(histImage, Point(yOffset, hist_h), Point(hist_w, hist_h), Scalar(0, 0, 0), 1, LINE_AA); // X-axis
-	line(histImage, Point(yOffset, 0), Point(yOffset, hist_h), Scalar(0, 0, 0), 1, LINE_AA);           // Y-axis
+	line(histImage, Point(xOffset, hist_h), Point(hist_w, hist_h), Scalar(0, 0, 0), 1, LINE_AA); // X-axis
+	//line(histImage, Point(xOffset, 0), Point(xOffset, hist_h), Scalar(0, 0, 0), 1, LINE_AA);           // Y-axis
 
 	// Draw labels for Y axes
-	putText(histImage, "Intensity", Point(5, 15), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 0), 1);
+	//putText(histImage, "Count", Point(5+xOffset, 15), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 0), 1);
 	
 	// Draw labels for X Axis
 	for (int i = 0; i <= histSize; i += 30)
 	{
 		int x = i * bin_w;
-		putText(histImage, to_string(i), Point(x, hist_h - 5), FONT_HERSHEY_SIMPLEX, 0.4, Scalar(0, 0, 0), 1);
-		line(histImage, Point(x, hist_h - 3), Point(x, hist_h + 3), Scalar(0, 0, 0), 1, LINE_AA);
+		putText(histImage, to_string(i), Point(x+xOffset, hist_h + yOffset), FONT_HERSHEY_SIMPLEX, 0.4, Scalar(0, 0, 0), 1);
+		line(histImage, Point(x+xOffset, hist_h - 3), Point(x+xOffset, hist_h + 3), Scalar(0, 0, 0), 1, LINE_AA);
 	}
 
 
