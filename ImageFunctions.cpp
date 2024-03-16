@@ -527,10 +527,6 @@ void imageHistogramDisplay()
 	// convert to grayscale
 	cvtColor(imgCap, imgCapGray, COLOR_BGR2GRAY, 0);
 
-	// split images into frames - really this is only needed for bgr image - might not be needed afterall
-	vector<Mat> captureFrames;
-	split(imgCapGray, captureFrames);
-
 	// histogram parameters
 	int histSize = 256;
 	float range[] = { 0,256 };	// the upper boundary is exclusive
