@@ -505,7 +505,7 @@ void measureObject()
 	Mat img = imread(imgPath, -1);
 
 	// show image histogram
-	//imageHistogramDisplay(img);
+	imageHistogramDisplay(img);
 
 	// remap image
 	imgRemapped = remapImage(img);
@@ -533,7 +533,7 @@ void imageHistogramDisplay(Mat& image)
 
 	// calculate histogram
 	Mat imgHist;
-	calcHist(&image, 1, 0, Mat(), imgHist, 1, &histSize, histRange, uniform, accumulate);
+	calcHist(&image, 1, 0, Mat(), imgHist, 1, & histSize, histRange, uniform, accumulate);
 
 	// create an image to display the histogram
 	int hist_h = image.rows;
