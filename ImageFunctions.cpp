@@ -562,6 +562,24 @@ void imageHistogramDisplay()
 			Scalar(0, 0, 255), 1, LINE_AA, 0);
 	}
 
+	// Draw X and Y axes
+	line(histImage, Point(0, hist_h), Point(hist_w, hist_h), Scalar(0, 0, 0), 1, LINE_AA); // X-axis
+	line(histImage, Point(0, 0), Point(0, hist_h), Scalar(0, 0, 0), 1, LINE_AA);           // Y-axis
+
+	// Label X-axis
+	for (int i = 0; i <= histSize; i += 15)
+	{
+		line(histImage, Point(bin_w * i, hist_h), Point(bin_w * i, hist_h + 5), Scalar(0, 0, 0), 1, LINE_AA);
+		if (i < histSize)
+		{
+			putText(histImage, to_string(i), Point(bin_w * i + 5, hist_h + 20), FONT_HERSHEY_COMPLEX_SMALL, 0.5, Scalar(0, 0, 0), 1);
+		}
+	}
+
+	// Label Y-axis
+	putText(histImage, "Intensity", Point(5, 15), FONT_HERSHEY_COMPLEX_SMALL, 0.5, Scalar(0, 0, 0), 1);
+
+
 	imshow("Object Capture", imgCapGray);
 	imshow("Histogram", histImage);
 
