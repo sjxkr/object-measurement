@@ -472,7 +472,7 @@ void shapeRecognition()
 
 	// create output matrix and initialise with zeros and draw contours in this image
 	Mat dst = Mat::zeros(imgInputTest.rows, imgInputTest.cols, CV_8UC3);
-	drawContours(dst, contours, -1, Scalar(255, 255, 0), 1, LINE_AA);
+	drawContours(dst, contours, -1, Scalar(255, 255, 0), 2);
 
 	// close all previous windows 
 	cvDestroyAllWindows();
