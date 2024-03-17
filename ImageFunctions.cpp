@@ -69,6 +69,10 @@ void captureCalibrationImages()
 		exit(EXIT_FAILURE);
 	}
 
+	// set camera resolution
+	cap.set(CAP_PROP_FRAME_WIDTH, 1920);
+	cap.set(CAP_PROP_FRAME_HEIGHT, 1080);
+
 	while (waitKey(1) != 27)	// esc to exit
 	{
 		// declare local variables
@@ -145,6 +149,7 @@ void runCameraCalibration()
 	ofstream fout(calFilename, ios::binary);			// output filestream
 
 	// CALIBRATION SETUP **************************************************************************************************************************
+	// read all calibration images, find corners and calibrate camera
 
 	// Initialise 3D points vector including square size --> (Col, Row, 0)
 	for (int i = 0; i < chessboardSizeY; i++) {
@@ -477,6 +482,10 @@ void measureObject()
 		cout << "Failed to access webcam" << endl;
 		exit(EXIT_FAILURE);
 	}
+
+	// set camera resolution
+	cap.set(CAP_PROP_FRAME_WIDTH, 1920);
+	cap.set(CAP_PROP_FRAME_WIDTH, 1080);
 
 	while (waitKey(1) != 27)	// esc to exit
 	{
