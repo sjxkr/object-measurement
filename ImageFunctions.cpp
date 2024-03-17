@@ -70,8 +70,10 @@ void captureCalibrationImages()
 	}
 
 	// set camera resolution
-	cap.set(CAP_PROP_FRAME_WIDTH, 2000);
-	cap.set(CAP_PROP_FRAME_HEIGHT, 2000);
+	cap.set(CAP_PROP_FRAME_WIDTH, 1280);
+	cap.set(CAP_PROP_FRAME_HEIGHT, 720);
+
+	int checkW = cap.get(CAP_PROP_FRAME_WIDTH);
 
 	while (waitKey(1) != 27)	// esc to exit
 	{
@@ -484,8 +486,11 @@ void measureObject()
 	}
 
 	// set camera resolution
-	cap.set(CAP_PROP_FRAME_WIDTH, 2000);
-	cap.set(CAP_PROP_FRAME_WIDTH, 2000);
+	cap.set(CAP_PROP_FRAME_WIDTH, 1280);
+	cap.set(CAP_PROP_FRAME_WIDTH, 720);
+
+	int checkW = cap.get(CAP_PROP_FRAME_WIDTH);
+	cout << "Camera Width is set to " << checkW << endl;
 
 	while (waitKey(1) != 27)	// esc to exit
 	{
