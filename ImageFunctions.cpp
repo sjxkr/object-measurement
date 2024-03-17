@@ -55,7 +55,7 @@ void captureCalibrationImages()
 	compressParams.push_back(1);
 
 	// capture images for calibration
-	VideoCapture cap(0);	// 0 = default camera
+	VideoCapture cap(0,CAP_DSHOW);	// 0 = default camera, using Direct Show backen
 
 	// print user instructions
 	cout << "Capture " << nSamples << " images of the calibration target\n";
@@ -466,7 +466,7 @@ void measureObject()
 	// Display camera preview and capture object
 	
 	// Define variables
-	VideoCapture cap(0);	// 0 = default camera
+	VideoCapture cap(0, CAP_DSHOW);	// 0 = default camera, using Direct Dhow backend
 	vector<int> compressParams;
 	compressParams.push_back(IMWRITE_PNG_COMPRESSION);
 	compressParams.push_back(1);
@@ -487,7 +487,7 @@ void measureObject()
 
 	// set camera resolution
 	cap.set(CAP_PROP_FRAME_WIDTH, 1280);
-	cap.set(CAP_PROP_FRAME_WIDTH, 720);
+	cap.set(CAP_PROP_FRAME_HEIGHT, 720);
 
 	int checkW = cap.get(CAP_PROP_FRAME_WIDTH);
 	cout << "Camera Width is set to " << checkW << endl;
