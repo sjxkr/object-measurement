@@ -491,7 +491,15 @@ void shapeRecognition()
 	// draw contours
 	for (int i=0; i < contours.size(); i++)
 	{
+		double area = contourArea(contours[i]);
 		drawContours(dst, contours, i, Scalar(255, 255, 0), FILLED, LINE_AA, heirarchy, maxLevel);
+
+		// print results
+		cout << "Area of shape " << to_string(i) << " : " << area << endl;
+
+		imshow("Contour" + to_string(i), dst);
+		waitKey(0);
+		destroyWindow("Contour" + to_string(i));
 	}
 
 
