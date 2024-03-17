@@ -464,9 +464,13 @@ void shapeRecognition()
 
 	// define variables
 	vector<vector<Point>> contours;
+	vector<Vec4i> heirarchy;
+	int maxLevel = 0;
+	int contID = 0;
 
 	// read binary image 
 	Mat imgInputTest = imread("Canny.png", -1);
+	
 
 	// image exist check
 	if (imgInputTest.empty())
@@ -476,14 +480,20 @@ void shapeRecognition()
 	}
 
 	// find contours
-	findContours(imgInputTest, contours, RETR_LIST, CHAIN_APPROX_NONE);
+	findContours(imgInputTest, contours, heirarchy, RETR_LIST, CHAIN_APPROX_NONE);
 
 	// print contours
 	cout<< "Contours:\n"<< contours[0] << endl;
 
 	// create output matrix and initialise with zeros and draw contours in this image
 	Mat dst = Mat::zeros(imgInputTest.rows, imgInputTest.cols, CV_8UC3);
-	drawContours(dst, contours, -1, Scalar(255, 255, 0), 2);
+
+	// draw contours
+	for (int i=0; i < contours.size(); i++)
+	{
+		drawContours(dst, contours, i, Scalar(255, 255, 0), FILLED, LINE_AA, heirarchy, maxLevel);
+	}
+
 
 	// close all previous windows 
 	cvDestroyAllWindows();
