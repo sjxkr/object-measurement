@@ -496,17 +496,25 @@ void shapeRecognition()
 		// approximate shape here
 			// use approxPolyDP
 
+		// calculate object width in pixels
+			// boundingRect(approx);
+
+		// Calculate object width in real-world units
+		//	double objectWidthMeters = objectWidth;  // Actual width of the object in meters
+		//	double focalLength = cameraMatrix.at<double>(0, 0);  // Focal length along X-axis (assuming square pixels)
+		//	double realWidth = (objectWidthMeters * focalLength) / pixelWidth;
+
 		// calculate area --> of approximated shape
 		double area = contourArea(contours[i]);
-
-		// determine shape of contour - compare number of sides to determine triangle, circle or quadrilateral
 
 		// draw bounding box around shape
 		drawContours(dst, contours, i, Scalar(255, 255, 0), FILLED, LINE_AA, heirarchy, maxLevel);
 
-		// Give each shape a unique name
+		// Give each shape a unique name and label it on image
 
-		// append shape id, shape description and area to dict
+		// add dimension to image next to shape
+
+		// append shape id, shape description, area, real width and dict
 
 		// print results
 		cout << "Area of shape " << to_string(i) << " : " << area << endl;
