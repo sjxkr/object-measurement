@@ -391,13 +391,14 @@ Mat remapImage(Mat& image)
 	int imgW = imgUndistorted.cols;
 	int cropThreshold = 0.1;
 	
-	Mat croppedImage = imgUndistorted(Range(imgH * cropThreshold, imgW * cropThreshold), Range(imgH * (1 - cropThreshold), imgW * (1 - cropThreshold)));
+
+	Mat croppedImage = imgUndistorted(Range(imgH * cropThreshold, imgH * (1-cropThreshold)), Range(imgW*cropThreshold, imgW * (1 - cropThreshold)));	// Range(Start_Row,End_Row),Range(Start_Col,End_Col)
 
 	imshow("Remap - Distorted", image);
 	imshow("Remap - Undistorted", imgUndistorted);
 	imshow("Remap - Undis_Cropped", croppedImage);
 
-	//waitKey(0);
+	waitKey(0);
 
 	destroyAllWindows();
 
