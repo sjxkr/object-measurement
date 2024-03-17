@@ -389,10 +389,10 @@ Mat remapImage(Mat& image)
 	// crop the undistorted image
 	int imgH = imgUndistorted.rows;
 	int imgW = imgUndistorted.cols;
-	int cropThreshold = 0.1;
+	double cropThreshold = 0.05;	// proportion of edges to trim
 	
 
-	Mat croppedImage = imgUndistorted(Range(imgH * cropThreshold, imgH * (1-cropThreshold)), Range(imgW*cropThreshold, imgW * (1 - cropThreshold)));	// Range(Start_Row,End_Row),Range(Start_Col,End_Col)
+	Mat croppedImage = imgUndistorted(Range(imgH*cropThreshold,imgH*(1-cropThreshold)),Range(imgW*cropThreshold,imgW*(1-cropThreshold)));	// Range(Start_Row,End_Row),Range(Start_Col,End_Col)
 
 	imshow("Remap - Distorted", image);
 	imshow("Remap - Undistorted", imgUndistorted);
