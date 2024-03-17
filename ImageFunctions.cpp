@@ -476,7 +476,7 @@ void shapeRecognition()
 	}
 
 	// find contours
-	findContours(imgInputTest, contours, RETR_LIST, CHAIN_APPROX_SIMPLE);
+	findContours(imgInputTest, contours, RETR_LIST, CHAIN_APPROX_NONE);
 
 	// print contours
 	cout<< "Contours:\n"<< contours[0] << endl;
