@@ -390,19 +390,18 @@ Mat remapImage(Mat& image)
 	int imgH = imgUndistorted.rows;
 	int imgW = imgUndistorted.cols;
 	double cropThreshold = 0.05;	// proportion of edges to trim
-	
-
 	Mat croppedImage = imgUndistorted(Range(imgH*cropThreshold,imgH*(1-cropThreshold)),Range(imgW*cropThreshold,imgW*(1-cropThreshold)));	// Range(Start_Row,End_Row),Range(Start_Col,End_Col)
 
-	imshow("Remap - Distorted", image);
-	imshow("Remap - Undistorted", imgUndistorted);
-	imshow("Remap - Undis_Cropped", croppedImage);
+	// display images - debugging only
+	//imshow("Remap - Distorted", image);
+	//imshow("Remap - Undistorted", imgUndistorted);
+	//imshow("Remap - Undis_Cropped", croppedImage);
 
-	waitKey(0);
+	//waitKey(0);
 
 	destroyAllWindows();
 
-	return(imgUndistorted);
+	return(croppedImage);
 }
 
 Mat edgeDetection(Mat& image)
