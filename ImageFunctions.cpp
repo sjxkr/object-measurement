@@ -386,8 +386,16 @@ Mat remapImage(Mat& image)
 	// undistort image
 	undistort(image, imgUndistorted, camMtx, dstMtx);
 
-	//imshow("Remap - Distorted", image);
-	//imshow("Remap - Undistorted", imgUndistorted);
+	// crop the undistorted image
+	int imgH = imgUndistorted.rows;
+	int imgW = imgUndistorted.cols;
+	int cropThreshold = 0.1;
+	
+	Mat croppedImage = imgUndistorted(Range(imgH * cropThreshold, imgW * cropThreshold), Range(imgH * (1 - cropThreshold), imgW * (1 - cropThreshold)));
+
+	imshow("Remap - Distorted", image);
+	imshow("Remap - Undistorted", imgUndistorted);
+	imshow("Remap - Undis_Cropped", croppedImage);
 
 	//waitKey(0);
 
@@ -469,6 +477,9 @@ void shapeRecognition()
 
 	// find contours
 	findContours(imgInputTest, contours, RETR_LIST, CHAIN_APPROX_SIMPLE);
+
+	// print contours
+	cout<< "Contours:\n"<< contours[0] << endl;
 
 	// create output matrix and initialise with zeros and draw contours in this image
 	Mat dst = Mat::zeros(imgInputTest.rows, imgInputTest.cols, CV_8UC3);
