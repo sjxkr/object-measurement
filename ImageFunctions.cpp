@@ -482,6 +482,8 @@ void shapeRecognition()
 	// find contours
 	findContours(imgInputTest, contours, heirarchy, RETR_LIST, CHAIN_APPROX_NONE);
 
+	// calculate area of reference object
+
 	// print contours
 	cout<< "Contours:\n"<< contours[0] << endl;
 
@@ -491,8 +493,20 @@ void shapeRecognition()
 	// draw contours
 	for (int i=0; i < contours.size(); i++)
 	{
+		// approximate shape here
+			// use approxPolyDP
+
+		// calculate area --> of approximated shape
 		double area = contourArea(contours[i]);
+
+		// determine shape of contour - compare number of sides to determine triangle, circle or quadrilateral
+
+		// draw bounding box around shape
 		drawContours(dst, contours, i, Scalar(255, 255, 0), FILLED, LINE_AA, heirarchy, maxLevel);
+
+		// Give each shape a unique name
+
+		// append shape id, shape description and area to dict
 
 		// print results
 		cout << "Area of shape " << to_string(i) << " : " << area << endl;
@@ -509,8 +523,11 @@ void shapeRecognition()
 	imshow("Input Image", imgInputTest);
 	imshow("Detected Shapes", dst);
 
+	// return dict
+
 	// wait
 	waitKey(0);
+
 
 }
 
