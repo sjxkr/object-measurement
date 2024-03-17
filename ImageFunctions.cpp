@@ -70,8 +70,8 @@ void captureCalibrationImages()
 	}
 
 	// set camera resolution
-	cap.set(CAP_PROP_FRAME_WIDTH, 1920);
-	cap.set(CAP_PROP_FRAME_HEIGHT, 1080);
+	cap.set(CAP_PROP_FRAME_WIDTH, 2000);
+	cap.set(CAP_PROP_FRAME_HEIGHT, 2000);
 
 	while (waitKey(1) != 27)	// esc to exit
 	{
@@ -484,8 +484,8 @@ void measureObject()
 	}
 
 	// set camera resolution
-	cap.set(CAP_PROP_FRAME_WIDTH, 1920);
-	cap.set(CAP_PROP_FRAME_WIDTH, 1080);
+	cap.set(CAP_PROP_FRAME_WIDTH, 2000);
+	cap.set(CAP_PROP_FRAME_WIDTH, 2000);
 
 	while (waitKey(1) != 27)	// esc to exit
 	{
