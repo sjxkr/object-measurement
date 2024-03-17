@@ -461,7 +461,7 @@ void shapeRecognition()
 	Mat imgInputTest = imread("Canny.png", -1);
 
 	// image exist check
-	if (!imgInputTest.empty())
+	if (imgInputTest.empty())
 	{
 		cout << "Error: Could not open image: bye" << endl;
 		exit(EXIT_FAILURE);
