@@ -494,7 +494,7 @@ void shapeRecognition()
 		double area = contourArea(contours[i]);
 
 		// Approximate the shape
-		double epsilon = 0.1 * arcLength(contours[i], true);
+		double epsilon = 0.5 * arcLength(contours[i], true);
 		vector<Point> approx;
 		approxPolyDP(contours[i], approx, epsilon, true);
 
