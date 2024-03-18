@@ -647,23 +647,46 @@ void shapeRecognition()
 		cout << "Area for shape " << to_string(i + 1) << " = " << shapeAreasMM2[i] << " mm^2" << endl;
 	}
 
-	// print shape class and dimension/s
+	// print shape class and dimension/s in real units
 	for (int i = 0; i < shapeClass.size(); i++)
 	{
+		// local variables
+		double shapeWidth = shapeBounds[i].height / pixPerMM;
+		double shapeHeight = shapeBounds[i].width / pixPerMM;
+		double centreX = shapeBounds[i].x + shapeBounds[i].width / 2;
+		double centreY = shapeBounds[i].y + shapeBounds[i].height / 2;
+		Point shapeCentroid = Point(centreX,centreY);
+		Scalar fCol = Scalar(0, 255, 0);
+		double fScale;
+
 		if (shapeClass[i] == "Rectangle")
 		{
+
+
 			cout << "Shape " << to_string(i + 1) <<
 				" : " <<
 				shapeClass[i] <<
 				", Height = " <<
-				shapeBounds[i].height / pixPerMM << " mm" <<
-				", Width = " << shapeBounds[i].width / pixPerMM << " mm" <<
-				endl;
+				shapeHeight << " mm" <<
+				", Width = " << shapeWidth << " mm" <<
+				endl;			
+
+			// label the shape
+			string sText = to_string(i + 1) + ": " + shapeClass[i] + "\n" + "H: " + to_string(shapeHeight) + " mm" + "\n" + "W: " + to_string(shapeWidth) + " mm";
+			putText(dst, sText, shapeCentroid, FONT_HERSHEY_PLAIN, 0.2, fCol, fThickness);
+		
 		}
 		else
 		{
-			cout << "Shape " << to_string(i + 1) << " : " << shapeClass[i] << ", Width = " << shapeBounds[i].width / pixPerMM << " mm" << endl;
+			cout << "Shape " << to_string(i + 1) << " : " << shapeClass[i] << ", Width = " << shapeWidth << " mm" << endl;
+
+			// label the shape
+			string sText = to_string(i + 1) + ": " + shapeClass[i] + "\n" + "W: " + to_string(shapeWidth) + " mm";
+			putText(dst, sText, shapeCentroid, FONT_HERSHEY_PLAIN, 0.2, fCol, fThickness);
 		}
+
+		
+		//line(histImage, Point(x + xOffset, hist_h - 3), Point(x + xOffset, hist_h + 3), Scalar(0, 0, 0), 1, LINE_AA);
 	
 	}
 
