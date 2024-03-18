@@ -493,6 +493,10 @@ void shapeRecognition()
 		{
 			filteredContours.push_back(contours[i]);
 		}
+		else
+		{
+			i++;
+		}
 	}
 
 	// print contours
@@ -521,7 +525,7 @@ void shapeRecognition()
 		//	double realWidth = (objectWidthMeters * focalLength) / pixelWidth;
 
 		// draw bounding box around shape (draw contours for now)
-		drawContours(dst, filteredContours, i, Scalar(255, 255, 0), drawLineThickness, LINE_AA, heirarchy, maxLevel);
+		//drawContours(dst, filteredContours, i, Scalar(255, 255, 0), drawLineThickness, LINE_AA, heirarchy, maxLevel);
 
 		// draw approximation of shapes
 		drawContours(dst, vector<vector<Point>>{approx}, contID, Scalar(0, 0, 255), drawLineThickness);
@@ -578,7 +582,7 @@ void shapeRecognition()
 		// append shape id, shape description, area, real width and dict
 
 		// print results
-		cout << "Area of shape " << to_string(i+1) << " : " << area << endl;
+		cout << "Area of shape " << to_string(i+1) << " : " << area << "square pixels"<< endl;
 
 		//imshow("Contour" + to_string(i), dst);
 		//waitKey(0);
