@@ -656,13 +656,13 @@ void shapeRecognition()
 				" : " <<
 				shapeClass[i] <<
 				", Height = " <<
-				shapeBounds[i].height / pixPerMM << "mm" <<
-				", Width = " << shapeBounds[i].width / pixPerMM << "mm" <<
+				shapeBounds[i].height / pixPerMM << " mm" <<
+				", Width = " << shapeBounds[i].width / pixPerMM << " mm" <<
 				endl;
 		}
 		else
 		{
-			cout << "Shape " << to_string(i + 1) << " : " << shapeClass[i] << ", Width = " << shapeBounds[i].width / pixPerMM << "mm" << endl;
+			cout << "Shape " << to_string(i + 1) << " : " << shapeClass[i] << ", Width = " << shapeBounds[i].width / pixPerMM << " mm" << endl;
 		}
 	
 	}
