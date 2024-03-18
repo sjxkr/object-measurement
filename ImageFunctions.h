@@ -28,7 +28,7 @@ const char newline('\n');
 const char terminator('@');
 const char nullChar('\0');
 const string calFilename("Calibration.bin");		// calibration file
-const double refObjWidth = 18.0;					// reference object for pixel to mm conversion - UK 5p coin
+const double refObjWidth = 50.0;					// reference object for pixel to mm conversion
 
 /*************************************************************** 
 Functions 
