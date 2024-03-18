@@ -514,8 +514,7 @@ void shapeRecognition()
 	//cout<< "Contours:\n"<< contours[0] << endl;
 
 	// create output matrix and initialise with zeros and draw contours in this image
-	//Mat dst = Mat::zeros(imgInputTest.rows, imgInputTest.cols, CV_8UC3);
-	Mat dst = imread("Object_Capture", -1);
+	Mat dst = Mat::zeros(imgInputTest.rows, imgInputTest.cols, CV_8UC3);
 
 	// draw contours
 	for (int i=0; i < filteredContours.size(); i++)
