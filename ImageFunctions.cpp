@@ -478,9 +478,8 @@ void shapeRecognition()
 		exit(EXIT_FAILURE);
 	}
 
-
 	// find contours
-	findContours(imgInputTest, contours, heirarchy, RETR_EXTERNAL, CHAIN_APPROX_NONE);
+	findContours(imgInputTest, contours, heirarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
 
 	// print contours
 	cout<< "Contours:\n"<< contours[0] << endl;
@@ -491,8 +490,13 @@ void shapeRecognition()
 	// draw contours
 	for (int i=0; i < contours.size(); i++)
 	{
-		// approximate shape here
-			// use approxPolyDP
+		// calculate area of complex shape
+		double area = contourArea(contours[i]);
+
+		// Approximate the shape
+		double epsilon = 0.1 * arcLength(contours[i], true);
+		vector<Point> approx;
+		approxPolyDP(contours[i], approx, epsilon, true);
 
 		// calculate object width in pixels
 			// boundingRect(approx);
@@ -502,11 +506,11 @@ void shapeRecognition()
 		//	double focalLength = cameraMatrix.at<double>(0, 0);  // Focal length along X-axis (assuming square pixels)
 		//	double realWidth = (objectWidthMeters * focalLength) / pixelWidth;
 
-		// calculate area --> of approximated shape
-		double area = contourArea(contours[i]);
-
-		// draw bounding box around shape
+		// draw bounding box around shape (draw contours for now)
 		drawContours(dst, contours, i, Scalar(255, 255, 0), FILLED, LINE_AA, heirarchy, maxLevel);
+
+		// draw approximation of shapes
+		drawContours(dst, vector<vector<Point>>{approx}, contID, Scalar(0, 0, 255), 2);
 
 		// Give each shape a unique name and label it on image
 
@@ -517,15 +521,16 @@ void shapeRecognition()
 		// print results
 		cout << "Area of shape " << to_string(i) << " : " << area << endl;
 
-		imshow("Contour" + to_string(i), dst);
-		waitKey(0);
-		destroyWindow("Contour" + to_string(i));
+		//imshow("Contour" + to_string(i), dst);
+		//waitKey(0);
+		//destroyWindow("Contour" + to_string(i));
 	}
 
 
 	// close all previous windows 
 	destroyAllWindows();
 
+	// show detected shapes and their approximation
 	imshow("Input Image", imgInputTest);
 	imshow("Detected Shapes", dst);
 
