@@ -507,10 +507,10 @@ void shapeRecognition()
 		//	double realWidth = (objectWidthMeters * focalLength) / pixelWidth;
 
 		// draw bounding box around shape (draw contours for now)
-		drawContours(dst, contours, i, Scalar(255, 255, 0), FILLED, LINE_AA, heirarchy, maxLevel);
+		drawContours(dst, contours, i, Scalar(255, 255, 0), drawLineThickness, LINE_AA, heirarchy, maxLevel);
 
 		// draw approximation of shapes
-		drawContours(dst, vector<vector<Point>>{approx}, contID, Scalar(0, 0, 255), 2);
+		drawContours(dst, vector<vector<Point>>{approx}, contID, Scalar(0, 0, 255), drawLineThickness);
 
 		// Give each shape a unique name and label it on image
 
@@ -647,7 +647,7 @@ void imageHistogramDisplay(Mat& image)
 	int hist_w = imgCapGray.cols;
 	int xOffset = hist_w * 0.1;			// X axis offset value
 	int yOffset = hist_h * 0.07;			// Y axis offset value
-	int lineThickness = 2;
+
 
 	// define bin width
 	int bin_w = cvRound((double)hist_w / histSize);
@@ -663,7 +663,7 @@ void imageHistogramDisplay(Mat& image)
 	{
 		line(histImage, Point(bin_w * (i - 1)+ xOffset, hist_h - cvRound(imgHist.at<float>(i - 1))),
 			Point(bin_w * (i)+ xOffset, hist_h - cvRound(imgHist.at<float>(i))),
-			Scalar(0, 0, 255), lineThickness, LINE_AA, 0);
+			Scalar(0, 0, 255), drawLineThickness, LINE_AA, 0);
 	}
 
 	// Draw X and Y axes
