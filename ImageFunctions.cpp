@@ -416,7 +416,7 @@ Mat edgeDetection(Mat& image)
 	double CannyThreshMin;
 	double CannyThreshMax;
 	int apSize = 3;			// size of sobel operator
-	int kSize = 3;
+	int kSize = 7;
 	int sigma = 3;
 	Mat imgGray, imgGrayThresh, imgBlur, imgCanny;
 
@@ -425,7 +425,7 @@ Mat edgeDetection(Mat& image)
 
 	// determine thresholds & binarize image
 	CannyThreshMax = threshold(imgGray, imgGrayThresh, 0, 255, THRESH_BINARY | THRESH_OTSU);
-	CannyThreshMin = 0.2 * CannyThreshMax;
+	CannyThreshMin = 0.1 * CannyThreshMax;
 
 	// print threshold values
 	cout << "Canny Edge Detection Threshold Upper = " << CannyThreshMax << endl;
