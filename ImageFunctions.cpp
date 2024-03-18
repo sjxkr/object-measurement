@@ -473,8 +473,10 @@ void shapeRecognition()
 	double realWorldArea = PI*pow((realObjWidth/2),2);		// real world area of refernce object
 	double minArea = 500;									// used to filter detected contours which are too small
 	double pixPerMM;										// conversion factor -> pixels per millimeter
-	vector<double> shapeAreas;								// list of shape areas
-	vector<double> shapeAreasMM2;							// list of shape areas in mm2
+	vector<double> shapeAreas;								// vector of shape areas
+	vector<double> shapeAreasMM2;							// vector of shape areas in mm2
+	vector<string> shapeClass;								// vector of cassification of shapes
+	vector<Rect> shapeBounds;								// vector of bounding boxes of all detected shapes
 
 	// read binary image 
 	Mat imgInputTest = imread("Canny.png", -1);	
@@ -547,10 +549,14 @@ void shapeRecognition()
 		Rect bRectangle = boundingRect(filteredContours[i]);
 		double aspectRatio = static_cast<double>(bRectangle.height) / static_cast<double>(bRectangle.width);
 
+		// append bounding rectangle to vector
+		shapeBounds.push_back(bRectangle);
+
 		switch (vertices)
 		{
 			case 3:
 				polygonType = "Triangle";
+				shapeClass.push_back(polygonType);
 				break;
 
 			case 4:
@@ -558,33 +564,40 @@ void shapeRecognition()
 				if (aspectRatio > 0.97 && aspectRatio < 1.03)
 				{
 					polygonType = "Square";
+					shapeClass.push_back(polygonType);
 				}
 				else
 				{
 					polygonType = "Rectangle";
+					shapeClass.push_back(polygonType);
 				}
 				break;
 
 			case 5:
 				polygonType = "Pentagon";
+				shapeClass.push_back(polygonType);
 				break;
 
 			case 6:
 				polygonType = "Hexagon";
+				shapeClass.push_back(polygonType);
 				break;
 
 			case 7:
 				polygonType = "Heptagon";
+				shapeClass.push_back(polygonType);
 				break;
 
 			case 8:
 				polygonType = "Octagon";
+				shapeClass.push_back(polygonType);
 				break;
 
 			default:
 				if (vertices > 8)
 				{
 					polygonType = "Circle";
+					shapeClass.push_back(polygonType);
 
 					// overwrite refArea with area of the current circle object. Final value will be area of smallest circle
 					if (area < refObjArea)
@@ -596,12 +609,13 @@ void shapeRecognition()
 				else
 				{
 					polygonType = "Undefined";
+					shapeClass.push_back(polygonType);
 				}				
 				break;
 		}
 
 		// print the shape
-		cout << "Detected Shape " << to_string(i + 1) << ": " << polygonType << endl;
+		cout << "Detected Shape " << to_string(i + 1) << " : " << polygonType << endl;
 
 		// Give each shape a unique name and label it on image
 
@@ -631,6 +645,26 @@ void shapeRecognition()
 
 		// print areas in mm2
 		cout << "Area for shape " << to_string(i + 1) << " = " << shapeAreasMM2[i] << " mm^2" << endl;
+	}
+
+	// print shape class and dimension/s
+	for (int i = 0; i < shapeClass.size(); i++)
+	{
+		if (shapeClass[i] == "Rectangle")
+		{
+			cout << "Shape " << to_string(i + 1) <<
+				" : " <<
+				shapeClass[i] <<
+				", Height = " <<
+				shapeBounds[i].height / pixPerMM <<
+				", Width = " << shapeBounds[i].width / pixPerMM <<
+				endl;
+		}
+		else
+		{
+			cout << "Shape " << to_string(i + 1) << " : " << shapeClass[i] << ", Width = " << shapeBounds[i].width / pixPerMM << endl;
+		}
+	
 	}
 
 
