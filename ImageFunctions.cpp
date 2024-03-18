@@ -467,8 +467,14 @@ void shapeRecognition()
 	vector<Vec4i> heirarchy;
 	int maxLevel = 1;
 	int contID = 0;
-	double refArea;			// area of reference object
-	double minArea = 500;			// used to filter detected contours which are too small
+	double refObjArea;										// area of reference object in image in pixels
+	double refObjWidth;										// width of reference object in image in pixels
+	double refObjWidthMM;									// width in MM
+	double realWorldArea = PI*pow((realObjWidth/2),2);		// real world area of refernce object
+	double minArea = 500;									// used to filter detected contours which are too small
+	double pixPerMM;										// conversion factor -> pixels per millimeter
+	vector<double> shapeAreas;								// list of shape areas
+	vector<double> shapeAreasMM2;							// list of shape areas in mm2
 
 	// read binary image 
 	Mat imgInputTest = imread("Canny.png", -1);	
@@ -499,6 +505,9 @@ void shapeRecognition()
 		}
 	}
 
+	// initialise refArea variable to canvas size
+	refObjArea = imgInputTest.cols * imgInputTest.rows;
+
 	// print contours
 	//cout<< "Contours:\n"<< contours[0] << endl;
 
@@ -510,6 +519,9 @@ void shapeRecognition()
 	{
 		// calculate area of complex shape
 		double area = contourArea(filteredContours[i]);
+		
+		// add area to shape area vector
+		shapeAreas.push_back(area);
 
 		// Approximate the shape
 		double epsilon = 0.005 * arcLength(filteredContours[i], true);		// smaller epsilon = more points in approximation
@@ -526,9 +538,6 @@ void shapeRecognition()
 
 		// draw bounding box around shape (draw contours for now)
 		//drawContours(dst, filteredContours, i, Scalar(255, 255, 0), drawLineThickness, LINE_AA, heirarchy, maxLevel);
-
-		// draw approximation of shapes
-		drawContours(dst, vector<vector<Point>>{approx}, contID, Scalar(0, 0, 255), drawLineThickness);
 
 		// classify the shapes
 		int vertices = static_cast<int>(approx.size());
@@ -564,6 +573,13 @@ void shapeRecognition()
 				if (vertices > 8)
 				{
 					polygonType = "Circle";
+
+					// overwrite refArea with area of the current circle object. Final value will be area of smallest circle
+					if (area < refObjArea)
+					{
+						refObjArea = area;
+					}				
+
 				}
 				else
 				{
@@ -582,11 +598,27 @@ void shapeRecognition()
 		// append shape id, shape description, area, real width and dict
 
 		// print results
-		cout << "Area of shape " << to_string(i+1) << " : " << area << "square pixels"<< endl;
+		cout << "Area of shape " << to_string(i+1) << " : " << area << " square pixels"<< endl;
+
+		// draw approximation of shapes
+		drawContours(dst, vector<vector<Point>>{approx}, contID, Scalar(0, 0, 255), drawLineThickness);
 
 		//imshow("Contour" + to_string(i), dst);
 		//waitKey(0);
 		//destroyWindow("Contour" + to_string(i));
+	}
+
+	// calculate pixels per millimeter
+	refObjWidth = sqrt(refObjArea / PI);
+	pixPerMM = refObjWidth / realObjWidth;
+
+	// convert areas from square pixels to square millimeters
+	for (int i = 0; i < shapeAreas.size(); i++)
+	{
+		shapeAreasMM2.push_back(shapeAreas[i] / pixPerMM);
+
+		// print areas in mm2
+		cout << "Area for shape " << to_string(i + 1) << " = " << shapeAreasMM2[i] << " mm^2" << endl;
 	}
 
 

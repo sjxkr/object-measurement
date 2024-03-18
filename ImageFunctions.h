@@ -11,6 +11,9 @@
 #include <vector>
 #include <Windows.h>
 #include <string.h>
+#include<cmath>
+
+#define PI	3.14159	/* pi */
 
 using namespace std;
 using namespace cv;
@@ -28,7 +31,7 @@ const char newline('\n');
 const char terminator('@');
 const char nullChar('\0');
 const string calFilename("Calibration.bin");		// calibration file
-const double refObjWidth = 50.0;					// reference object for pixel to mm conversion
+const double realObjWidth = 50.0;					// reference object for pixel to mm conversion
 const int drawLineThickness = 2;						// line thickness for drawing shapes
 
 /*************************************************************** 
