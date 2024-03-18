@@ -467,6 +467,8 @@ void shapeRecognition()
 	vector<Vec4i> heirarchy;
 	int maxLevel = 1;
 	int contID = 0;
+	double refArea;			// area of reference object
+	double minArea = 100;			// used to filter detected contours which are too small
 
 	// read binary image 
 	Mat imgInputTest = imread("Canny.png", -1);	
@@ -481,22 +483,34 @@ void shapeRecognition()
 	// find contours
 	findContours(imgInputTest, contours, heirarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
 
+	// filter out small detected contours by area
+	vector<vector<Point>> filteredContours;
+
+	for (int i = 0; contours.size(); i++)
+	{
+		double areaCheck = contourArea(contours[i]);
+		if (areaCheck >= minArea)
+		{
+			filteredContours.push_back(contours[i]);
+		}
+	}
+
 	// print contours
-	cout<< "Contours:\n"<< contours[0] << endl;
+	//cout<< "Contours:\n"<< contours[0] << endl;
 
 	// create output matrix and initialise with zeros and draw contours in this image
 	Mat dst = Mat::zeros(imgInputTest.rows, imgInputTest.cols, CV_8UC3);
 
 	// draw contours
-	for (int i=0; i < contours.size(); i++)
+	for (int i=0; i < filteredContours.size(); i++)
 	{
 		// calculate area of complex shape
-		double area = contourArea(contours[i]);
+		double area = contourArea(filteredContours[i]);
 
 		// Approximate the shape
-		double epsilon = 0.005 * arcLength(contours[i], true);		// smaller epsilon = more points in approximation
+		double epsilon = 0.005 * arcLength(filteredContours[i], true);		// smaller epsilon = more points in approximation
 		vector<Point> approx;
-		approxPolyDP(contours[i], approx, epsilon, true);
+		approxPolyDP(filteredContours[i], approx, epsilon, true);
 
 		// calculate object width in pixels
 			// boundingRect(approx);
@@ -507,7 +521,7 @@ void shapeRecognition()
 		//	double realWidth = (objectWidthMeters * focalLength) / pixelWidth;
 
 		// draw bounding box around shape (draw contours for now)
-		drawContours(dst, contours, i, Scalar(255, 255, 0), drawLineThickness, LINE_AA, heirarchy, maxLevel);
+		drawContours(dst, filteredContours, i, Scalar(255, 255, 0), drawLineThickness, LINE_AA, heirarchy, maxLevel);
 
 		// draw approximation of shapes
 		drawContours(dst, vector<vector<Point>>{approx}, contID, Scalar(0, 0, 255), drawLineThickness);
