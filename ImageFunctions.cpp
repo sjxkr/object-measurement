@@ -416,7 +416,7 @@ Mat edgeDetection(Mat& image)
 	double CannyThreshMin;
 	double CannyThreshMax;
 	int apSize = 3;			// size of sobel operator
-	int kSize = 7;
+	int kSize = 3;
 	int sigma = 3;
 	Mat imgGray, imgGrayThresh, imgBlur, imgCanny;
 
@@ -441,7 +441,7 @@ Mat edgeDetection(Mat& image)
 	// display images
 	//imshow("Input Image", image);
 	//imshow("Gray", imgGray);
-	//imshow("OTSU", imgGrayThresh);
+	imshow("OTSU", imgGrayThresh);
 	//imshow("Blurred", imgBlur);
 	imshow("Canny ED", imgCanny);
 
