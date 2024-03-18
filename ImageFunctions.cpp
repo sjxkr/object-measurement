@@ -494,7 +494,7 @@ void shapeRecognition()
 		double area = contourArea(contours[i]);
 
 		// Approximate the shape
-		double epsilon = 0.02 * arcLength(contours[i], true);
+		double epsilon = 0.005 * arcLength(contours[i], true);
 		vector<Point> approx;
 		approxPolyDP(contours[i], approx, epsilon, true);
 
@@ -511,6 +511,32 @@ void shapeRecognition()
 
 		// draw approximation of shapes
 		drawContours(dst, vector<vector<Point>>{approx}, contID, Scalar(0, 0, 255), drawLineThickness);
+
+		// determine contour shape
+		
+		switch (approx.size())
+		{
+		case 3:
+			cout << "Detected polygon " << i << " categorisation : Triangle\n";
+
+		case 4:
+			cout << "Detected polygon " << i << " categorisation : Quadrilateral\n";
+
+		case 5:
+			cout << "Detected polygon " << i << " categorisation : Pentagon\n";
+
+		case 6:
+			cout << "Detected polygon " << i << " categorisation : Hexagon\n";
+
+		case 7:
+			cout << "Detected polygon " << i << " categorisation : Heptagon\n";
+
+		case 8:
+			cout << "Detected polygon " << i << " categorisation : Octagon\n";
+
+		default:
+			break;
+		}
 
 		// Give each shape a unique name and label it on image
 
