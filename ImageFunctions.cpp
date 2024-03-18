@@ -672,8 +672,8 @@ void shapeRecognition()
 				endl;			
 
 			// label the shape
-			string sText = to_string(i + 1) + ": " + shapeClass[i] + "\n" + "H: " + to_string(shapeHeight) + " mm" + "\n" + "W: " + to_string(shapeWidth) + " mm";
-			putText(dst, sText, shapeCentroid, FONT_HERSHEY_PLAIN, 0.4, fCol, fThickness);
+			string sText = to_string(i + 1) + ": " + shapeClass[i] + '\n' + "H: " + to_string(shapeHeight) + " mm" + '\n' + "W: " + to_string(shapeWidth) + " mm";
+			putText(dst, sText, shapeCentroid, FONT_HERSHEY_SIMPLEX, 0.4, fCol, fThickness);
 		
 		}
 		else
@@ -682,7 +682,7 @@ void shapeRecognition()
 
 			// label the shape
 			string sText = to_string(i + 1) + ": " + shapeClass[i] + "\n" + "W: " + to_string(shapeWidth) + " mm";
-			putText(dst, sText, shapeCentroid, FONT_HERSHEY_PLAIN, 0.4, fCol, fThickness);
+			putText(dst, sText, shapeCentroid, FONT_HERSHEY_SIMPLEX, 0.4, fCol, fThickness);
 		}
 
 		
