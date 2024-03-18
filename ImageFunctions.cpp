@@ -543,6 +543,10 @@ void shapeRecognition()
 		int vertices = static_cast<int>(approx.size());
 		string polygonType;
 
+		// calculate aspect ratio
+		Rect bRectangle = boundingRect(filteredContours[i]);
+		double aspectRatio = static_cast<double>(bRectangle.height) / static_cast<double>(bRectangle.width);
+
 		switch (vertices)
 		{
 			case 3:
@@ -550,7 +554,15 @@ void shapeRecognition()
 				break;
 
 			case 4:
-				polygonType = "Quadrilateral";
+				
+				if (aspectRatio != 1)
+				{
+					polygonType = "Rectangle";
+				}
+				else
+				{
+					polygonType = "Square";
+				}
 				break;
 
 			case 5:
