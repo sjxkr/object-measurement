@@ -425,7 +425,7 @@ Mat edgeDetection(Mat& image)
 
 	// determine thresholds & binarize image
 	CannyThreshMax = threshold(imgGray, imgGrayThresh, 0, 255, THRESH_BINARY | THRESH_OTSU);
-	CannyThreshMin = 0.1 * CannyThreshMax;
+	CannyThreshMin = 0.2 * CannyThreshMax;
 
 	// print threshold values
 	cout << "Canny Edge Detection Threshold Upper = " << CannyThreshMax << endl;
