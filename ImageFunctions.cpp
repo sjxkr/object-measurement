@@ -677,10 +677,10 @@ void shapeRecognition()
 			string sText3 = "W : " + to_string(shapeWidth) + " mm";
 
 			vector<string>lines{ sText1,sText2,sText3 };
+			double y = 0.0;
 
 			for (int j = 0; j < lines.size(); j++)
-			{
-				double y = 0.0;
+			{				
 				putText(dst, lines[j], Point(centreX, centreY+y), FONT_HERSHEY_SIMPLEX, 0.4, fCol, fThickness);
 				y += 10;
 			}
@@ -696,10 +696,10 @@ void shapeRecognition()
 			string sText2 = "W : " + to_string(shapeWidth) + " mm";
 
 			vector<string>lines{ sText1,sText2 };
+			double y = 0.0;
 
 			for (int j = 0; j < lines.size(); j++)
-			{
-				double y = 0.0;
+			{				
 				putText(dst, lines[j], Point(centreX, centreY+y), FONT_HERSHEY_SIMPLEX, 0.4, fCol, fThickness);
 				y += 10;
 			}
