@@ -465,7 +465,7 @@ void shapeRecognition()
 	// define variables
 	vector<vector<Point>> contours;
 	vector<Vec4i> heirarchy;
-	int maxLevel = 0;
+	int maxLevel = 1;
 	int contID = 0;
 
 	// read binary image 
@@ -480,7 +480,7 @@ void shapeRecognition()
 	}
 
 	// find contours
-	findContours(imgInputTest, contours, heirarchy, RETR_LIST, CHAIN_APPROX_NONE);
+	findContours(imgInputTest, contours, heirarchy, RETR_EXTERNAL, CHAIN_APPROX_NONE);
 
 	// calculate area of reference object
 

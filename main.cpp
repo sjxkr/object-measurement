@@ -39,7 +39,7 @@ int main()
 		runCameraCalibration();
 
 		// detect shape of object to be measured
-		shapeRecognition();
+		//shapeRecognition();
 
 		// measure object
 		//measureObject();
