@@ -44,6 +44,8 @@ int main()
 		// measure object
 		//measureObject();
 
+		break;
+
 	case IDNO:
 
 		// measure object
@@ -51,6 +53,8 @@ int main()
 
 		// display results
 			// enter code here
+
+		break;
 
 	case IDCANCEL:
 		cout << "Program exiting...\n";

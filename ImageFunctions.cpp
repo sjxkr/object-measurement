@@ -512,30 +512,46 @@ void shapeRecognition()
 		// draw approximation of shapes
 		drawContours(dst, vector<vector<Point>>{approx}, contID, Scalar(0, 0, 255), drawLineThickness);
 
-		// determine contour shape
-		
-		switch (approx.size())
+		// classift the shapes
+		int vertices = static_cast<int>(approx.size());
+		string polygonType;
+
+		switch (vertices)
 		{
-		case 3:
-			cout << "Detected polygon " << i << " categorisation : Triangle\n";
+			case 3:
+				polygonType = "Triangle";
+				break;
 
-		case 4:
-			cout << "Detected polygon " << i << " categorisation : Quadrilateral\n";
+			case 4:
+				polygonType = "Quadrilateral";
+				break;
 
-		case 5:
-			cout << "Detected polygon " << i << " categorisation : Pentagon\n";
+			case 5:
+				polygonType = "Pentagon";
+				break;
 
-		case 6:
-			cout << "Detected polygon " << i << " categorisation : Hexagon\n";
+			case 6:
+				polygonType = "Hexagon";
+				break;
 
-		case 7:
-			cout << "Detected polygon " << i << " categorisation : Heptagon\n";
+			case 7:
+				polygonType = "Heptagon";
+				break;
 
-		case 8:
-			cout << "Detected polygon " << i << " categorisation : Octagon\n";
+			case 8:
+				polygonType = "Octagon";
+				break;
 
-		default:
-			break;
+			default:
+				if (vertices > 8)
+				{
+					polygonType = "Circle";
+				}
+				else
+				{
+					polygonType = "Undefined";
+				}				
+				break;
 		}
 
 		// Give each shape a unique name and label it on image
