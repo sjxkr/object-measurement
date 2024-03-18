@@ -18,16 +18,17 @@ using namespace cv;
 /*************************************************************** 
 Constants 
 ****************************************************************/
-const int nSamples(10);
-const int chessboardSizeX = 6;
-const int chessboardSizeY = 9;
+const int nSamples(10);				// samples required for camera calibration
+const int chessboardSizeX = 6;		// X = Columns
+const int chessboardSizeY = 9;		// Y = Rows
 const int squareSize = 24;		// in millimeters
 const int MAXLEN(1000);
 const int MAXWIDTH(5);
 const char newline('\n');
 const char terminator('@');
 const char nullChar('\0');
-const string calFilename("Calibration.bin");
+const string calFilename("Calibration.bin");		// calibration file
+const double refObjWidth = 18.0;					// reference object for pixel to mm conversion - UK 5p coin
 
 /*************************************************************** 
 Functions 
