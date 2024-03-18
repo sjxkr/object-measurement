@@ -555,13 +555,13 @@ void shapeRecognition()
 
 			case 4:
 				
-				if (aspectRatio != 1)
+				if (aspectRatio > 0.97 && aspectRatio < 1.03)
 				{
-					polygonType = "Rectangle";
+					polygonType = "Square";
 				}
 				else
 				{
-					polygonType = "Square";
+					polygonType = "Rectangle";
 				}
 				break;
 
