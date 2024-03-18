@@ -672,8 +672,19 @@ void shapeRecognition()
 				endl;			
 
 			// label the shape
-			string sText = to_string(i + 1) + ": " + shapeClass[i] + '\n' + "H: " + to_string(shapeHeight) + " mm" + '\n' + "W: " + to_string(shapeWidth) + " mm";
-			putText(dst, sText, shapeCentroid, FONT_HERSHEY_SIMPLEX, 0.4, fCol, fThickness);
+			string sText1 = to_string(i + 1) + ": " + shapeClass[i];
+			string sText2 = "H: " + to_string(shapeHeight) + " mm";
+			string sText3 = "W : " + to_string(shapeWidth) + " mm";
+
+			vector<string>lines{ sText1,sText2,sText3 };
+
+			for (int j = 0; j < lines.size(); j++)
+			{
+				int y = centreY;
+				putText(dst, lines[j], Point(centreX, y), FONT_HERSHEY_SIMPLEX, 0.4, fCol, fThickness);
+				y += 10;
+			}
+			
 		
 		}
 		else
@@ -681,12 +692,18 @@ void shapeRecognition()
 			cout << "Shape " << to_string(i + 1) << " : " << shapeClass[i] << ", Width = " << shapeWidth << " mm" << endl;
 
 			// label the shape
-			string sText = to_string(i + 1) + ": " + shapeClass[i] + "\n" + "W: " + to_string(shapeWidth) + " mm";
-			putText(dst, sText, shapeCentroid, FONT_HERSHEY_SIMPLEX, 0.4, fCol, fThickness);
-		}
+			string sText1 = to_string(i + 1) + ": " + shapeClass[i];
+			string sText2 = "W : " + to_string(shapeWidth) + " mm";
 
-		
-		//line(histImage, Point(x + xOffset, hist_h - 3), Point(x + xOffset, hist_h + 3), Scalar(0, 0, 0), 1, LINE_AA);
+			vector<string>lines{ sText1,sText2 };
+
+			for (int j = 0; j < lines.size(); j++)
+			{
+				int y = centreY;
+				putText(dst, lines[j], Point(centreX, y), FONT_HERSHEY_SIMPLEX, 0.4, fCol, fThickness);
+				y += 10;
+			}
+		}
 	
 	}
 
