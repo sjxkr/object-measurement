@@ -465,12 +465,12 @@ void shapeRecognition()
 	// define variables
 	vector<vector<Point>> contours;
 	vector<Vec4i> heirarchy;
+	vector<Vec3f> hCircles;
 	int maxLevel = 1;
 	int contID = 0;
 
 	// read binary image 
-	Mat imgInputTest = imread("Canny.png", -1);
-	
+	Mat imgInputTest = imread("Canny.png", -1);	
 
 	// image exist check
 	if (imgInputTest.empty())
@@ -479,10 +479,27 @@ void shapeRecognition()
 		exit(EXIT_FAILURE);
 	}
 
+	// detect circles and find reference circle
+	HoughCircles(imgInputTest, hCircles, HOUGH_GRADIENT, 1, imgInputTest.rows / 10, 100, 70, 35, 50);
+
+	// draw detected circle
+	for (int i = 0; 1 < hCircles.size(); i++)
+	{
+		Vec3i c = hCircles[i];
+		circle(imgInputTest, Point(c[0], c[1]), c[2], Scalar(0, 255, 0), 2);
+	}
+
+	// show detected circles
+	imshow("Detected Hough Circles", imgInputTest);
+
+	// wait
+	waitKey(0);
+
+	// close single window
+	destroyWindow("Detected Hough Circles");
+
 	// find contours
 	findContours(imgInputTest, contours, heirarchy, RETR_EXTERNAL, CHAIN_APPROX_NONE);
-
-	// calculate area of reference object
 
 	// print contours
 	cout<< "Contours:\n"<< contours[0] << endl;
