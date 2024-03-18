@@ -468,7 +468,7 @@ void shapeRecognition()
 	int maxLevel = 1;
 	int contID = 0;
 	double refArea;			// area of reference object
-	double minArea = 1;			// used to filter detected contours which are too small
+	double minArea = 500;			// used to filter detected contours which are too small
 
 	// read binary image 
 	Mat imgInputTest = imread("Canny.png", -1);	
@@ -569,7 +569,7 @@ void shapeRecognition()
 		}
 
 		// print the shape
-		cout << "Detected Shape " << i + 1 << ": " << polygonType << endl;
+		cout << "Detected Shape " << to_string(i + 1) << ": " << polygonType << endl;
 
 		// Give each shape a unique name and label it on image
 
@@ -578,7 +578,7 @@ void shapeRecognition()
 		// append shape id, shape description, area, real width and dict
 
 		// print results
-		cout << "Area of shape " << to_string(i) << " : " << area << endl;
+		cout << "Area of shape " << to_string(i+1) << " : " << area << endl;
 
 		//imshow("Contour" + to_string(i), dst);
 		//waitKey(0);
