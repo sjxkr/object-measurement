@@ -682,7 +682,7 @@ void shapeRecognition()
 			for (int j = 0; j < lines.size(); j++)
 			{				
 				putText(dst, lines[j], Point(centreX, centreY+y), FONT_HERSHEY_SIMPLEX, 0.4, fCol, fThickness);
-				y += 10;
+				y += 15;
 			}
 			
 		
@@ -701,7 +701,7 @@ void shapeRecognition()
 			for (int j = 0; j < lines.size(); j++)
 			{				
 				putText(dst, lines[j], Point(centreX, centreY+y), FONT_HERSHEY_SIMPLEX, 0.4, fCol, fThickness);
-				y += 10;
+				y += 15;
 			}
 		}
 	
