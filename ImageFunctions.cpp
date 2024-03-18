@@ -526,7 +526,7 @@ void shapeRecognition()
 
 
 	// close all previous windows 
-	cvDestroyAllWindows();
+	destroyAllWindows();
 
 	imshow("Input Image", imgInputTest);
 	imshow("Detected Shapes", dst);
