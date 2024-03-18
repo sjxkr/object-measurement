@@ -636,7 +636,7 @@ void shapeRecognition()
 
 	// calculate pixels per millimeter
 	refObjWidth = sqrt(refObjArea / PI);
-	pixPerMM = refObjWidth / realObjWidth;
+	pixPerMM = refObjWidth / (realObjWidth/2);
 
 	// convert areas from square pixels to square millimeters
 	for (int i = 0; i < shapeAreas.size(); i++)
