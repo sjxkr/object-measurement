@@ -468,7 +468,7 @@ void shapeRecognition()
 	int maxLevel = 1;
 	int contID = 0;
 	double refArea;			// area of reference object
-	double minArea = 100;			// used to filter detected contours which are too small
+	double minArea = 1;			// used to filter detected contours which are too small
 
 	// read binary image 
 	Mat imgInputTest = imread("Canny.png", -1);	
@@ -486,7 +486,7 @@ void shapeRecognition()
 	// filter out small detected contours by area
 	vector<vector<Point>> filteredContours;
 
-	for (int i = 0; contours.size(); i++)
+	for (int i = 0; i < contours.size(); i++)
 	{
 		double areaCheck = contourArea(contours[i]);
 		if (areaCheck >= minArea)
