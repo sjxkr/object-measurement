@@ -305,17 +305,19 @@ void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point
 	// declare variables
 	vector<vector<Point2f>> imagePointsProjected;
 	vector<Point3f> objPointsTest = objectPoints[0];
-	Mat rvecTest = (Mat_<double>(3, 1) << -0.12, -0.11, 0.02);
-	Mat tvecTest = (Mat_<double>(3, 1) << -61.99, -99.99, 523.539);
+
+	// get Mat depths
+	int rvecDepth = rvecs.depth();
+	int tvecDepth = tvecs.depth();
+
+	//Mat rvecTest = rvecs.at<>
+	//Mat tvecTest;
 
 
 	// project points using calibration values
-	projectPoints(objPointsTest, rvecTest, tvecTest, camMtx, dstMtx, imagePointsProjected);
+	//projectPoints(objPointsTest, rvecTest, tvecTest, camMtx, dstMtx, imagePointsProjected);
 
-	// print object points and projected image points
-	cout << "Object Points : " << objectPoints[0] << endl;
-	cout << "Project Points : " << imagePointsProjected[0] << endl;
-	
+
 	
 
 
