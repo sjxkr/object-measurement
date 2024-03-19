@@ -23,6 +23,16 @@ int captureMode()
 	{
 	case IDYES:
 		cout << "Loading calibration program.....\n";
+
+		// remind user to read calibration procedure
+		int userWarning = MessageBox(NULL, (LPCWSTR)L"PLEASE ENSURE YOU UNDERSTAND THE CALIBRATION PROCEDURE\nRefer to procedure document for further information.\n",
+			(LPCWSTR)L"Calibration Warning", MB_ICONASTERISK | MB_OKCANCEL);
+
+		if (userWarning == IDCANCEL)
+		{
+			cout << "Exiting Program..." << endl;
+			exit(EXIT_FAILURE);
+		}
 		break;
 
 	case IDNO:
@@ -829,10 +839,8 @@ void measureObject()
 	// edge detection
 	Mat imgCanny = edgeDetection(imgRemapped);
 
-	// shape recognition
+	// detect and measure objects
 	shapeRecognition(imgCanny, imgRemapped);
-
-	// measurement
 
 }
 

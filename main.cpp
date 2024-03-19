@@ -38,11 +38,8 @@ int main()
 		captureCalibrationImages();
 		runCameraCalibration();
 
-		// detect shape of object to be measured
-		//shapeRecognition();
-
 		// measure object
-		//measureObject();
+		measureObject();
 
 		break;
 
@@ -50,10 +47,6 @@ int main()
 
 		// measure object
 		measureObject();
-
-		// display results
-			// enter code here
-
 		break;
 
 	case IDCANCEL:
