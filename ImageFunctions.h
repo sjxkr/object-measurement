@@ -45,6 +45,6 @@ void captureCalibrationImages();
 void calibrationCheck(Mat& image, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs);
 Mat remapImage(Mat& image);
 Mat edgeDetection(Mat& image);
-void shapeRecognition();
+void shapeRecognition(Mat& cannyImage, Mat& remappedImage);
 void measureObject();
 void imageHistogramDisplay(Mat& image);

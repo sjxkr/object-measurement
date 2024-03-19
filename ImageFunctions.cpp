@@ -454,7 +454,7 @@ Mat edgeDetection(Mat& image)
 	return(imgCanny);
 }
 
-void shapeRecognition()
+void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 {
 	/*
 	* Purpose - Recognise the shape intended to be measured. Determine the required dimensions of the shape
@@ -478,18 +478,9 @@ void shapeRecognition()
 	vector<string> shapeClass;								// vector of cassification of shapes
 	vector<Rect> shapeBounds;								// vector of bounding boxes of all detected shapes
 
-	// read binary image 
-	Mat imgInputTest = imread("Canny.png", -1);	
-
-	// image exist check
-	if (imgInputTest.empty())
-	{
-		cout << "Error: Could not open image: bye" << endl;
-		exit(EXIT_FAILURE);
-	}
 
 	// find contours
-	findContours(imgInputTest, contours, heirarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+	findContours(cannyImage, contours, heirarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
 
 	// filter out small detected contours by area
 	vector<vector<Point>> filteredContours;
@@ -505,13 +496,13 @@ void shapeRecognition()
 	}
 
 	// initialise refArea variable to canvas size
-	refObjArea = imgInputTest.cols * imgInputTest.rows;
+	refObjArea = cannyImage.cols * cannyImage.rows;
 
 	// print contours
 	//cout<< "Contours:\n"<< contours[0] << endl;
 
 	// create output matrix and initialise with zeros and draw contours in this image
-	Mat dst = Mat::zeros(imgInputTest.rows, imgInputTest.cols, CV_8UC3);
+	Mat dst = Mat::zeros(cannyImage.rows, cannyImage.cols, CV_8UC3);
 
 	// draw contours
 	for (int i=0; i < filteredContours.size(); i++)
@@ -709,7 +700,7 @@ void shapeRecognition()
 	destroyAllWindows();
 
 	// show detected shapes and their approximation
-	imshow("Input Image", imgInputTest);
+	imshow("Input Image", cannyImage);
 	imshow("Detected Shapes", dst);
 
 	// return dict
@@ -801,7 +792,7 @@ void measureObject()
 	Mat imgCanny = edgeDetection(imgRemapped);
 
 	// shape recognition
-	shapeRecognition();
+	shapeRecognition(imgCanny, imgRemapped);
 
 	// measurement
 
