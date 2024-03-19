@@ -234,6 +234,7 @@ void runCameraCalibration()
 	imageSize = Size(image.cols , image.rows);
 	cout << "Image resolution: " << imageSize << endl;
 
+	// calibrate camera
 	rmsError = calibrateCamera(objectPoints, imagePoints, imageSize, cameraMatrix, distCoefficients, rvecs, tvecs);
 
 	// print calibration values to settings file
@@ -241,10 +242,11 @@ void runCameraCalibration()
 	cout << "Camera Matrix: " << cameraMatrix << endl;
 	cout << "Distortion Coefficients: " << distCoefficients << endl;
 
-	// write calibration values file
+	// write RMS Error to file
 	fout << rmsError;
 	fout << ",\n";
 
+	// write camera matrix to file
 	for (int x = 0; x < 3; x++)
 	{
 		for (int y = 0; y < 3; y++)
@@ -255,6 +257,7 @@ void runCameraCalibration()
 	}
 	fout << "\n";
 	
+	// write distortion matrix to file
 	for (int x = 0; x < 5; x++)
 	{
 		fout << distCoefficients.at<double>(x);
@@ -262,6 +265,7 @@ void runCameraCalibration()
 	}
 	fout << "\n";
 	
+	// write rotation vectors to file
 	for (int x = 0; x < nSamples; x++)
 	{
 		for (int y = 0; y < 3; y++)
@@ -272,6 +276,7 @@ void runCameraCalibration()
 	}
 	fout << "\n";
 
+	// write rotation vectors to file
 	for (int x = 0; x < nSamples; x++)
 	{
 		for (int y = 0; y < 3; y++)
@@ -293,7 +298,7 @@ void calibrationCheck(Mat &image, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs)
 {
 	/*
 	* Purpose - Verify the calibration and quantify the error in order to decide whether the calibration is good.
-	* Parameters - Camera matrix, distortion coefficients, chessboard dimensions
+	* Parameters - Camera matrix, distortion coefficients,
 	* Outputs - Total error
 	*/
 
