@@ -304,7 +304,12 @@ void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point
 
 	// declare variables
 	vector<vector<Point2f>> imagePointsProjected;
+	vector<Point2f> imagePointsCurrent;
 	vector<Point3f> objPointsTest = objectPoints[0];
+	vector<vector<Point2f>> imagePointsUndistorted;
+	vector<Point2f> imageUndistCurrent;
+	double cumError = 0;
+	double meanError = 0;
 
 
 	for (int i = 0; i < nSamples; i++)
@@ -323,13 +328,32 @@ void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point
 		// print rvectest
 		cout << "rvectest = " << rvecCurrent << endl;
 		cout << "tvectest = " << tvecCurrent << endl;
+		cout << "object points = " << objectPoints[i] << endl;
 
 		// project points using calibration values
-		projectPoints(objectPoints[i], rvecCurrent, tvecCurrent, camMtx, dstMtx, imagePointsProjected[i]);
+		projectPoints(objectPoints[i], rvecCurrent, tvecCurrent, camMtx, dstMtx, imagePointsCurrent);
+
+		// add current projected image points to 2d vector
+		imagePointsProjected.push_back(imagePointsCurrent);
 
 		// print projected points and image points
-		cout << imagePoints[i] << endl;
-		cout << imagePointsProjected[i] << endl;
+		cout << "Raw image points : " << imagePoints[i] << endl;
+		cout << "Projected Points : " << imagePointsProjected[i] << endl;
+
+		// calculate total and mean error
+		for (int j = 0; j < imagePoints[i].size(); j++)
+		{
+			// calculate distance between points
+			Point2f normInput = imagePoints[i][j] - imagePointsProjected[i][j];
+			double eucDistance = norm(normInput);
+			
+			// calculate error
+			cumError += eucDistance;
+			meanError = cumError / imagePoints[i].size();
+		}
+		
+		// print mean error
+		cout << "Mean Error : " << meanError << " Pixels" << endl;
 	}
 
 
