@@ -43,7 +43,7 @@ Functions
 int  captureMode();
 void runCameraCalibration();
 void captureCalibrationImages();
-void calibrationCheck(Mat& image, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs);
+void calibrationCheck(vector<vector<Point3f>>& objectPoints, vector<vector<Point2f>>& imagePoints, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs);
 Mat remapImage(Mat& image);
 Mat edgeDetection(Mat& image);
 void shapeRecognition(Mat& cannyImage, Mat& remappedImage);

@@ -290,11 +290,11 @@ void runCameraCalibration()
 	fout.close();
 
 	// calibration check
-	calibrationCheck(image, cameraMatrix, distCoefficients, rvecs, tvecs);
+	calibrationCheck(objectPoints, imagePoints, cameraMatrix, distCoefficients, rvecs, tvecs);
 
 }
 
-void calibrationCheck(Mat &image, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs)
+void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point2f>>& imagePoints, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs)
 {
 	/*
 	* Purpose - Verify the calibration and quantify the error in order to decide whether the calibration is good.
@@ -302,6 +302,26 @@ void calibrationCheck(Mat &image, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs)
 	* Outputs - Total error
 	*/
 
+	// declare variables
+	vector<vector<Point2f>> imagePointsProjected;
+	//Mat rvecTest = (Mat_<double>(3, 1) << 0, 0, 0);
+	//Mat tvecTest = (Mat_<double>(3, 1) << 0, 0, 0);
+
+
+	// project points using calibration values
+	for (int i = 0; i < objectPoints.size(); i++)
+	{
+		projectPoints(objectPoints[i], rvecs.row(i), tvecs.row(i), camMtx, dstMtx, imagePointsProjected);
+
+		// print object points and projected image points
+		cout << "Object Points : " << objectPoints[i] << endl;
+		cout << "Project Points : " << imagePointsProjected[i] << endl;
+	}
+	
+	
+
+
+	/*
 	// define variables
 	Mat imgUndistorted;
 
@@ -315,7 +335,7 @@ void calibrationCheck(Mat &image, Mat camMtx, Mat dstMtx, Mat rvecs, Mat tvecs)
 	imshow("Distorted", image);
 	imshow("Undistorted", imgUndistorted);
 	imshow("Diff", diff);
-
+	*/
 	waitKey(0);
 
 }
