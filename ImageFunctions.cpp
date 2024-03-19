@@ -731,7 +731,7 @@ void measureObject()
 	// Display camera preview and capture object
 	
 	// Define variables
-	VideoCapture cap(0);	// 0 = default camera
+	VideoCapture cap(0);	// 0 = default camera	
 	vector<int> compressParams;
 	compressParams.push_back(IMWRITE_PNG_COMPRESSION);
 	compressParams.push_back(1);
