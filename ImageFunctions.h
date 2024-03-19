@@ -31,7 +31,7 @@ const char newline('\n');
 const char terminator('@');
 const char nullChar('\0');
 const string calFilename("Calibration.bin");		// calibration file
-const double realObjWidth = 50.0;					// real object width for pixel to mm conversion
+const double realObjWidth = 18.0;					// real object width for pixel to mm conversion
 const int drawLineThickness = 2;						// line thickness for drawing shapes
 const int fThickness = 1;							// font thickness when required
 
