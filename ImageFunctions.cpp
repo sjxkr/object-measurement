@@ -15,13 +15,14 @@ int captureMode()
 	* Parameters - none
 	* Outputs - mode flag
 	*/
-
+	
 	int modeFlag = MessageBox(NULL, (LPCWSTR)L"Is a camera calibration required?\nClick 'Yes' to run camera calibration.\nClick 'No' to skip calibration.\n",
 		(LPCWSTR)L"Camera Calibration?", MB_ICONQUESTION | MB_YESNOCANCEL);
 
 	switch (modeFlag)
 	{
 	case IDYES:
+	{
 		cout << "Loading calibration program.....\n";
 
 		// remind user to read calibration procedure
@@ -33,6 +34,7 @@ int captureMode()
 			cout << "Exiting Program..." << endl;
 			exit(EXIT_FAILURE);
 		}
+	}
 		break;
 
 	case IDNO:
