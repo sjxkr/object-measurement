@@ -523,7 +523,7 @@ void shapeRecognition()
 		shapeAreas.push_back(area);
 
 		// Approximate the shape
-		double epsilon = 0.01 * arcLength(filteredContours[i], true);		// smaller epsilon = more points in approximation
+		double epsilon = 0.1 * arcLength(filteredContours[i], true);		// smaller epsilon = more points in approximation
 		vector<Point> approx;
 		approxPolyDP(filteredContours[i], approx, epsilon, true);
 
