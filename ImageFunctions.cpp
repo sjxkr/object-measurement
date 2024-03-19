@@ -376,6 +376,9 @@ Mat remapImage(Mat& image)
 		}
 	}
 
+	// close ifstream
+	fin.close();
+
 	// print calibrations
 	cout << "RMS Error:\n" << fRMSError << endl;
 	cout << "Camera Matrix:\n" << camMtx << endl;
@@ -463,6 +466,9 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 	*/
 
 	// define variables
+	vector<int> compressParams;
+	compressParams.push_back(IMWRITE_PNG_COMPRESSION);
+	compressParams.push_back(1);
 	vector<vector<Point>> contours;
 	vector<Vec4i> heirarchy;
 	int maxLevel = 1;
@@ -650,7 +656,7 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 		if (shapeClass[i] == "Rectangle")
 		{
 
-
+			// print results to console
 			cout << "Shape " << to_string(i + 1) <<
 				" : " <<
 				shapeClass[i] <<
@@ -677,6 +683,7 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 		}
 		else
 		{
+			// print results to console
 			cout << "Shape " << to_string(i + 1) << " : " << shapeClass[i] << ", Width = " << shapeWidth << " mm" << endl;
 
 			// label the shape
@@ -714,6 +721,10 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 	imshow("Remapped Image", remappedImage);
 	imshow("Detected Shapes", dst);
 	imshow("Blended Image", imgBlended);
+
+	// save images
+	imwrite("Results_Blended.png", imgBlended, compressParams);
+	imwrite("Results.png", imgBitwiseAnd, compressParams);
 
 	// wait
 	waitKey(0);
