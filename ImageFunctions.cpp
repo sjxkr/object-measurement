@@ -501,10 +501,7 @@ void shapeRecognition()
 		{
 			filteredContours.push_back(contours[i]);
 		}
-		else
-		{
-			i++;
-		}
+
 	}
 
 	// initialise refArea variable to canvas size
