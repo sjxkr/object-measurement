@@ -700,7 +700,7 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 	destroyAllWindows();
 
 	// overlay detected shapes onto input image
-	Mat imgBlended;
+	Mat imgBlended= Mat::zeros(cannyImage.rows, cannyImage.cols, CV_8UC3);;		// image sizes have to match for add weighted
 	double iAlpha = 0.5;
 	double iBeta = 1 - iAlpha;
 
