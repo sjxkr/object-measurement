@@ -303,33 +303,33 @@ void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point
 	*/
 
 	// declare variables
-	vector<Point2f> imagePointsProjected;
+	vector<vector<Point2f>> imagePointsProjected;
 	vector<Point3f> objPointsTest = objectPoints[0];
 
 
 	for (int i = 0; i < objectPoints.size(); i++)
 	{
 		// initialise rotation and translation vectors
-		Mat rvecTest(1, 3, CV_64F);
-		rvecTest.at<double>(i, 0) = rvecs.at<double>(i, 0);
-		rvecTest.at<double>(i, 1) = rvecs.at<double>(i, 1);
-		rvecTest.at<double>(i, 2) = rvecs.at<double>(i, 2);
+		Mat rvecCurrent(1, 3, CV_64F);
+		rvecCurrent.at<double>(i, 0) = rvecs.at<double>(i, 0);
+		rvecCurrent.at<double>(i, 1) = rvecs.at<double>(i, 1);
+		rvecCurrent.at<double>(i, 2) = rvecs.at<double>(i, 2);
 
-		Mat tvecTest(1, 3, CV_64F);
-		tvecTest.at<double>(i, 0) = tvecs.at<double>(i, 0);
-		tvecTest.at<double>(i, 1) = tvecs.at<double>(i, 1);
-		tvecTest.at<double>(i, 2) = tvecs.at<double>(i, 2);
+		Mat tvecCurrent(1, 3, CV_64F);
+		tvecCurrent.at<double>(i, 0) = tvecs.at<double>(i, 0);
+		tvecCurrent.at<double>(i, 1) = tvecs.at<double>(i, 1);
+		tvecCurrent.at<double>(i, 2) = tvecs.at<double>(i, 2);
 
 		// print rvectest
-		cout << "rvectest = " << rvecTest << endl;
-		cout << "tvectest = " << tvecTest << endl;
+		cout << "rvectest = " << rvecCurrent << endl;
+		cout << "tvectest = " << tvecCurrent << endl;
 
 		// project points using calibration values
-		projectPoints(objPointsTest, rvecTest, tvecTest, camMtx, dstMtx, imagePointsProjected);
+		projectPoints(objectPoints[i], rvecCurrent, tvecCurrent, camMtx, dstMtx, imagePointsProjected[i]);
 
 		// print projected points and image points
-		cout << imagePoints[0] << endl;
-		cout << imagePointsProjected << endl;
+		cout << imagePoints[i] << endl;
+		cout << imagePointsProjected[i] << endl;
 	}
 
 
