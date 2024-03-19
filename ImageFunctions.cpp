@@ -306,25 +306,21 @@ void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point
 	vector<Point2f> imagePointsProjected;
 	vector<Point3f> objPointsTest = objectPoints[0];
 
-	// get Mat depths
-	int rvecDepth = rvecs.depth();
-	int tvecDepth = tvecs.depth();
+	// initialise rotation and translation vectors
 
 	Mat rvecTest(1, 3, CV_64F);
-	rvecTest.at<double>(0, 0) = -0.116815;
-	rvecTest.at<double>(0, 1) = -0.1055;
-	rvecTest.at<double>(0, 2) = 0.0245051;
+	rvecTest.at<double>(0, 0) = rvecs.at<double>(0, 0);
+	rvecTest.at<double>(0, 1) = rvecs.at<double>(0, 1);
+	rvecTest.at<double>(0, 2) = rvecs.at<double>(0, 2);
 
 	Mat tvecTest(1, 3, CV_64F);
-	tvecTest.at<double>(0, 0) = -61.9879;
-	tvecTest.at<double>(0, 1) = -99.9936;
-	tvecTest.at<double>(0, 2) = 523.539;
+	tvecTest.at<double>(0, 0) = tvecs.at<double>(0, 0);
+	tvecTest.at<double>(0, 1) = tvecs.at<double>(0, 1);
+	tvecTest.at<double>(0, 2) = tvecs.at<double>(0, 2);
 
-	// try rows method
-	Mat rVecFirstRow = rvecs.row(0);
-
-	//print first row
-	cout << "first row of rvecs = " << rVecFirstRow << endl;
+	// print rvectest
+	cout << "rvectest = " << rvecTest << endl;
+	cout << "tvectest = " << tvecTest << endl;
 
 	//Mat tvecTest;
 	// project points using calibration values
