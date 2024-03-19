@@ -699,16 +699,20 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 	// close all previous windows 
 	destroyAllWindows();
 
-	// show detected shapes and their approximation
+	// overlay detected shapes onto input image
+	Mat imgBlended;
+	double iAlpha;
+	double iBeta = 1 - iAlpha;
+
+	addWeighted(cannyImage, iAlpha, dst, iBeta, 0.0, imgBlended, -1);
+
+	// show detected shapes and measurements
 	imshow("Input Image", cannyImage);
 	imshow("Detected Shapes", dst);
-
-	// return dict
+	imshow("Blended Image", imgBlended);
 
 	// wait
 	waitKey(0);
-
-
 }
 
 void measureObject()
