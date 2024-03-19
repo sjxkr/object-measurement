@@ -741,6 +741,7 @@ void measureObject()
 	// print user instructions
 	cout << "Capture image of the object to be measured\n";
 	cout << "Press 'c' to capture images\nPress'Esc' key once image has been captured.\n";
+	cout << "Initialising camera.... Please wait....\n";
 
 	// try to open webcam
 	if (!cap.isOpened())
