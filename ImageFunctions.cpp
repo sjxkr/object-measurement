@@ -700,14 +700,18 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 	destroyAllWindows();
 
 	// overlay detected shapes onto input image
-	Mat imgBlended= Mat::zeros(cannyImage.rows, cannyImage.cols, CV_8UC3);;		// image sizes have to match for add weighted
+	Mat imgBlended = Mat::zeros(cannyImage.rows, cannyImage.cols, CV_8UC3);		// image sizes have to match for add weighted															// 3 channel image for size matching
 	double iAlpha = 0.5;
 	double iBeta = 1 - iAlpha;
+	Mat imgBitwiseAnd = Mat::zeros(cannyImage.rows, cannyImage.cols, CV_8UC3);
 
-	addWeighted(cannyImage, iAlpha, dst, iBeta, 0.0, imgBlended, -1);
+	addWeighted(remappedImage, iAlpha, dst, iBeta, 0.0, imgBlended);
+	bitwise_and(remappedImage, dst, imgBitwiseAnd);
 
 	// show detected shapes and measurements
+	imshow("Bitwise AND Image", imgBitwiseAnd);
 	imshow("Input Image", cannyImage);
+	imshow("Remapped Image", remappedImage);
 	imshow("Detected Shapes", dst);
 	imshow("Blended Image", imgBlended);
 
