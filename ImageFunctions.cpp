@@ -353,7 +353,7 @@ void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point
 		}
 		
 		// print mean error
-		cout << "Mean Error : " << meanError << " Pixels" << endl;
+		cout << "Mean Error : " << round(meanError) << " Pixels" << endl;
 	}
 
 
