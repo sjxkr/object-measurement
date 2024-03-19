@@ -307,18 +307,18 @@ void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point
 	vector<Point3f> objPointsTest = objectPoints[0];
 
 
-	for (int i = 0; i < objectPoints.size(); i++)
+	for (int i = 0; i < nSamples; i++)
 	{
 		// initialise rotation and translation vectors
 		Mat rvecCurrent(1, 3, CV_64F);
-		rvecCurrent.at<double>(i, 0) = rvecs.at<double>(i, 0);
-		rvecCurrent.at<double>(i, 1) = rvecs.at<double>(i, 1);
-		rvecCurrent.at<double>(i, 2) = rvecs.at<double>(i, 2);
+		rvecCurrent.at<double>(0, 0) = rvecs.at<double>(i, 0);
+		rvecCurrent.at<double>(0, 1) = rvecs.at<double>(i, 1);
+		rvecCurrent.at<double>(0, 2) = rvecs.at<double>(i, 2);
 
 		Mat tvecCurrent(1, 3, CV_64F);
-		tvecCurrent.at<double>(i, 0) = tvecs.at<double>(i, 0);
-		tvecCurrent.at<double>(i, 1) = tvecs.at<double>(i, 1);
-		tvecCurrent.at<double>(i, 2) = tvecs.at<double>(i, 2);
+		tvecCurrent.at<double>(0, 0) = tvecs.at<double>(i, 0);
+		tvecCurrent.at<double>(0, 1) = tvecs.at<double>(i, 1);
+		tvecCurrent.at<double>(0, 2) = tvecs.at<double>(i, 2);
 
 		// print rvectest
 		cout << "rvectest = " << rvecCurrent << endl;
