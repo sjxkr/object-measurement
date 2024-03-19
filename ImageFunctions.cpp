@@ -751,12 +751,16 @@ void measureObject()
 		exit(EXIT_FAILURE);
 	}
 
-	// set camera resolution
+	// set camera resolution and print properties
 	cap.set(CAP_PROP_FRAME_WIDTH, 1280);
 	cap.set(CAP_PROP_FRAME_HEIGHT, 720);
-
 	int checkW = cap.get(CAP_PROP_FRAME_WIDTH);
-	cout << "Camera Width is set to " << checkW << endl;
+	int checkH = cap.get(CAP_PROP_FRAME_HEIGHT);
+	int checkFPS = cap.get(CAP_PROP_FPS);
+
+	cout << "Frame Width is set to " << checkW << endl;
+	cout << "Frame Height is set to " << checkH << endl;
+	cout << "Framerate is " << checkFPS << endl;
 
 	while (waitKey(1) != 27)	// esc to exit
 	{
@@ -865,9 +869,9 @@ void imageHistogramDisplay(Mat& image)
 	equalizeHist(imgCapGray, imgEqualised);
 
 
-	imshow("Calc Histogram Input", imgCapGray);
+	//imshow("Calc Histogram Input", imgCapGray);
 	imshow("Histogram", histImage);
-	imshow("Equalised Image", imgEqualised);
+	//imshow("Equalised Image", imgEqualised);
 
 	waitKey(0);
 	
