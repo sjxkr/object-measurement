@@ -706,7 +706,7 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 	Mat imgBitwiseAnd = Mat::zeros(cannyImage.rows, cannyImage.cols, CV_8UC3);
 
 	addWeighted(remappedImage, iAlpha, dst, iBeta, 0.0, imgBlended);
-	bitwise_and(remappedImage, dst, imgBitwiseAnd);
+	bitwise_or(remappedImage, dst, imgBitwiseAnd);
 
 	// show detected shapes and measurements
 	imshow("Bitwise AND Image", imgBitwiseAnd);
