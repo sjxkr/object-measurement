@@ -4,16 +4,16 @@
 /*
 ******* Header Template *******
 * Purpose - xxxxxxx
-* Parameters - xxxxxxx
+* Inputs - xxxxxxx
 * Outputs - xxxxxx
 *******************************/
 
 int captureMode()
 {
 	/*
-	* Purpose - Sets the acquisition mode of the program. Static or Dynamic
-	* Parameters - none
-	* Outputs - mode flag
+	* Purpose - Determine if the user requires a camera calibration
+	* Inputs - none
+	* Outputs - user selection
 	*/
 	
 	int modeFlag = MessageBox(NULL, (LPCWSTR)L"Is a camera calibration required?\nClick 'Yes' to run camera calibration.\nClick 'No' to skip calibration.\n",
@@ -56,8 +56,8 @@ void captureCalibrationImages()
 {
 	/*
 	* Purpose - Capture images to be used for camera calibration
-	* Parameters - Chessboard pattern dimensions
-	* Outputs - Camera Matrix, Distortion Coefficients
+	* Inputs - None
+	* Outputs - Captured images of calibration target written to project folder.
 	*/
 
 	// declare variables
@@ -72,6 +72,7 @@ void captureCalibrationImages()
 	// print user instructions
 	cout << "Capture " << nSamples << " images of the calibration target\n";
 	cout << "Press 'c' to capture images\nPress'Esc' key once calibration images have been captured.\n";
+	cout << "Initialising camera.... Please wait....\n";
 
 
 	if (!cap.isOpened())
@@ -137,9 +138,9 @@ void captureCalibrationImages()
 void runCameraCalibration()
 {
 	/*
-* Purpose - Detect chessboard and find corner coordinates and run calibration to determine coefficients
-* Parameters - xxxxxx
-* Outputs - xxxx
+* Purpose - Perform the camera calibration using a chessboard target
+* Inputs - None
+* Outputs - Camera calibration file containing; RMS Error, Camera Matrix, Distortion Matrix, Rotation Vectors, Translation Vectors
 */
 
 // define variables
@@ -201,9 +202,6 @@ void runCameraCalibration()
 
 		if (success)
 		{
-			// save file 
-			//imwrite(fName + "_corners.png", calImgCorners);
-
 			// refine corner points
 			cornerSubPix(calImgGray, cornerPoints, Size(11, 11), Size(-1, -1), cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::COUNT, 30, 0.1));
 
@@ -216,18 +214,15 @@ void runCameraCalibration()
 
 		}
 
-		//Mat cornerVerify = imread(fName + "_corners.png", -1);
-
 		// display images
 		//imshow("Original Image " + to_string(i+1), calImg);
 		//imshow("Gray Image " + to_string(i+1), calImgGray);
-		imshow("Found Corners " + to_string(i+1), calImgCorners);
-
+		imshow("Found Corners - Image " + to_string(i+1), calImgCorners);
 
 		// wait
 		waitKey(0);
 
-		// destroy window
+		// destroy windows
 		destroyAllWindows();
 	}
 
