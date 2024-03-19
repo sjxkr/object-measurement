@@ -274,6 +274,7 @@ void runCameraCalibration()
 		}
 	}
 	
+	// close ofstream
 	fout.close();
 
 	// calibration check
@@ -466,10 +467,11 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 	*/
 
 	// define variables
+	ofstream fout;		// ofstream for writing results file
 	vector<int> compressParams;
 	compressParams.push_back(IMWRITE_PNG_COMPRESSION);
-	compressParams.push_back(1);
-	vector<vector<Point>> contours;
+	compressParams.push_back(1);							// image writing parameters
+	vector<vector<Point>> contours;							// vector of detected contours
 	vector<Vec4i> heirarchy;
 	int maxLevel = 1;
 	int contID = 0;
@@ -641,6 +643,9 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 		cout << "Area for shape " << to_string(i + 1) << " = " << shapeAreasMM2[i] << " mm^2" << endl;
 	}
 
+	// open file stream to write results
+	fout.open(resultFilename);
+
 	// print shape class and dimension/s in real units
 	for (int i = 0; i < shapeClass.size(); i++)
 	{
@@ -663,7 +668,16 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 				", Height = " <<
 				shapeHeight << " mm" <<
 				", Width = " << shapeWidth << " mm" <<
-				endl;			
+				endl;
+
+			// write result to file
+			fout << "Shape " << to_string(i + 1) <<
+				" : " <<
+				shapeClass[i] <<
+				", Height = " <<
+				shapeHeight << " mm" <<
+				", Width = " << shapeWidth << " mm" <<
+				endl;
 
 			// label the shape
 			string sText1 = to_string(i + 1) + ": " + shapeClass[i];
@@ -686,6 +700,9 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 			// print results to console
 			cout << "Shape " << to_string(i + 1) << " : " << shapeClass[i] << ", Width = " << shapeWidth << " mm" << endl;
 
+			// print results to file
+			fout << "Shape " << to_string(i + 1) << " : " << shapeClass[i] << ", Width = " << shapeWidth << " mm" << endl;
+
 			// label the shape
 			string sText1 = to_string(i + 1) + ": " + shapeClass[i];
 			string sText2 = "W : " + to_string(shapeWidth) + " mm";
@@ -702,6 +719,8 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 	
 	}
 
+	// remember to close ofstream
+	fout.close();
 
 	// close all previous windows 
 	destroyAllWindows();
