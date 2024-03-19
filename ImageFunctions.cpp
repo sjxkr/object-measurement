@@ -303,7 +303,7 @@ void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point
 	*/
 
 	// declare variables
-	vector<vector<Point2f>> imagePointsProjected;
+	vector<Point2f> imagePointsProjected;
 	vector<Point3f> objPointsTest = objectPoints[0];
 
 	// get Mat depths
@@ -315,18 +315,24 @@ void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point
 	rvecTest.at<double>(0, 1) = -0.1055;
 	rvecTest.at<double>(0, 2) = 0.0245051;
 
-	Mat rtvecTest(1, 3, CV_64F);
-	rvecTest.at<double>(0, 0) = -61.9879;
-	rvecTest.at<double>(0, 1) = -99.9936;
-	rvecTest.at<double>(0, 2) = 523.539;
+	Mat tvecTest(1, 3, CV_64F);
+	tvecTest.at<double>(0, 0) = -61.9879;
+	tvecTest.at<double>(0, 1) = -99.9936;
+	tvecTest.at<double>(0, 2) = 523.539;
+
+	// try rows method
+	Mat rVecFirstRow = rvecs.row(0);
+
+	//print first row
+	cout << "first row of rvecs = " << rVecFirstRow << endl;
 
 	//Mat tvecTest;
 	// project points using calibration values
-	//projectPoints(objPointsTest, rvecTest, tvecTest, camMtx, dstMtx, imagePointsProjected);
+	projectPoints(objPointsTest, rvecTest, tvecTest, camMtx, dstMtx, imagePointsProjected);
 
-
-	
-
+	// print projected points and image points
+	cout << imagePoints[0] << endl;
+	cout << imagePointsProjected << endl;
 
 	/*
 	// define variables
