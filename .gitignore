@@ -365,3 +365,5 @@ FodyWeavers.xsd
 # Project files to ignore
 *.png
 *.bmp
+*.bin
+*.txt
