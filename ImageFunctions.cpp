@@ -310,10 +310,17 @@ void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point
 	int rvecDepth = rvecs.depth();
 	int tvecDepth = tvecs.depth();
 
-	//Mat rvecTest = rvecs.at<>
+	Mat rvecTest(1, 3, CV_64F);
+	rvecTest.at<double>(0, 0) = -0.116815;
+	rvecTest.at<double>(0, 1) = -0.1055;
+	rvecTest.at<double>(0, 2) = 0.0245051;
+
+	Mat rtvecTest(1, 3, CV_64F);
+	rvecTest.at<double>(0, 0) = -61.9879;
+	rvecTest.at<double>(0, 1) = -99.9936;
+	rvecTest.at<double>(0, 2) = 523.539;
+
 	//Mat tvecTest;
-
-
 	// project points using calibration values
 	//projectPoints(objPointsTest, rvecTest, tvecTest, camMtx, dstMtx, imagePointsProjected);
 
