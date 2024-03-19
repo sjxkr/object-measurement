@@ -701,7 +701,7 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 
 	// overlay detected shapes onto input image
 	Mat imgBlended;
-	double iAlpha;
+	double iAlpha = 0.5;
 	double iBeta = 1 - iAlpha;
 
 	addWeighted(cannyImage, iAlpha, dst, iBeta, 0.0, imgBlended, -1);
