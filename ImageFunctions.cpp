@@ -372,11 +372,11 @@ void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point
 
 	// calculate and print mean error in pixels
 	meanError = cumError / (nSamples * imagePoints[0].size());
-	cout << "Mean Error : " << setprecision(2) << meanError << " Pixels" << endl;
+	cout << "Mean Error : " <<  meanError << " Pixels" << endl;
 
 	// calculate mean pixel per mm conversion factor
 	meanCalFactor = cumObjDistance / (((chessboardSizeX * chessboardSizeY) - chessboardSizeY) * squareSize * nSamples);
-	cout << "Mean Error : " << setprecision(2) << meanError / meanCalFactor << endl;
+	cout << "Mean Error : " <<  meanError / meanCalFactor << endl;
 
 	// convert mean error to millimeters
 	double meanErrorMM = meanError / meanCalFactor;
@@ -694,7 +694,7 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 		shapeAreasMM2.push_back(shapeAreas[i] / pixPerMM);
 
 		// print areas in mm2
-		cout << "Area for shape " << to_string(i + 1) << " = " << setprecision(2) << shapeAreasMM2[i] << " mm^2" << endl;
+		cout << "Area for shape " << to_string(i + 1) << " = " <<  shapeAreasMM2[i] << " mm^2" << endl;
 	}
 
 	// open file stream to write results
@@ -717,26 +717,26 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 
 			// print results to console
 			cout << "Shape " << to_string(i + 1) <<
-				" : " << setprecision(2) <<
+				" : " << 
 				shapeClass[i] <<
-				", Height = " << setprecision(2) <<
+				", Height = " << 
 				shapeHeight << " mm" <<
-				", Width = " << setprecision(2) << shapeWidth << " mm" <<
+				", Width = " <<  shapeWidth << " mm" <<
 				endl;
 
 			// write result to file
 			fout << "Shape " << to_string(i + 1) <<
-				" : " << setprecision(2) <<
-				shapeClass[i] << setprecision(2) <<
-				", Height = " << setprecision(2) <<
+				" : " << 
+				shapeClass[i] << 
+				", Height = " << 
 				shapeHeight << " mm" <<
-				", Width = " << setprecision(2) << shapeWidth << " mm" <<
+				", Width = " <<  shapeWidth << " mm" <<
 				endl;
 
 			// label the shape with class and dimensions on the canvas
 			string sText1 = to_string(i + 1) + ": " + shapeClass[i];
-			string sText2 = "H: " + to_string(round(shapeHeight*100)/100) + " mm";
-			string sText3 = "W : " + to_string(round(shapeWidth * 100) / 100) + " mm";
+			string sText2 = "H: " + to_string(shapeHeight) + " mm";
+			string sText3 = "W : " + to_string(shapeWidth) + " mm";
 
 			vector<string>lines{ sText1,sText2,sText3 };
 			double y = 0.0;
@@ -759,7 +759,7 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 
 			// label the shape with class and dimensions on the canvas
 			string sText1 = to_string(i + 1) + ": " + shapeClass[i];
-			string sText2 = "W : " + to_string(round(shapeWidth*100)/100) + " mm";
+			string sText2 = "W : " + to_string(shapeWidth) + " mm";
 
 			vector<string>lines{ sText1,sText2 };
 			double y = 0.0;
