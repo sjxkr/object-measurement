@@ -12,13 +12,15 @@
 #include <Windows.h>
 #include <string.h>
 #include <string>
-#include<cmath>
+#include <cmath>
 #include <iomanip>
+#include <chrono>
 
 #define PI	3.14159	/* pi */
 
 using namespace std;
 using namespace cv;
+using namespace std::chrono;
 
 /*************************************************************** 
 Constants 

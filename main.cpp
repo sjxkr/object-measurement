@@ -24,6 +24,9 @@ int main()
 	//Set logging level to keep console clean of non-pertinent messages
 	cv::utils::logging::setLogLevel(cv::utils::logging::LogLevel::LOG_LEVEL_WARNING);
 
+	// start timer
+	chrono::steady_clock::time_point tStart = chrono::steady_clock::now();
+
 	// User capture mode prompt
 	int mode = captureMode();
 
@@ -56,6 +59,13 @@ int main()
 		break;
 
 	}
+
+	// end timer & calculate duration
+	chrono::steady_clock::time_point tStop = chrono::steady_clock::now();
+	duration<double> tSpan = duration_cast<duration<double>>(tStop - tStart);
+
+	// print duration https://cplusplus.com/reference/chrono/steady_clock/
+	cout << "Program completed in " << tSpan.count() << "seconds" << endl;
 
 	return 0;
 }
