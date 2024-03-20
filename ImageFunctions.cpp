@@ -958,13 +958,13 @@ void imageHistogramDisplay(Mat& image)
 	}
 
 	// Equalise histogram
-	Mat imgEqualised;
-	equalizeHist(imgCapGray, imgEqualised);
+	//Mat imgEqualised;
+	//equalizeHist(imgCapGray, imgEqualised);
 
 	// display histogram
 	//imshow("Calc Histogram Input", imgCapGray);
 	imshow("Histogram", histImage);
-	imshow("Equalised Image", imgEqualised);
+	//imshow("Equalised Image", imgEqualised);
 
 	// write histogram to file
 	imwrite("Histogram.png", compressParams);
