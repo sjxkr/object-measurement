@@ -13,6 +13,7 @@
 #include <string.h>
 #include <string>
 #include<cmath>
+#include <iomanip>
 
 #define PI	3.14159	/* pi */
 
