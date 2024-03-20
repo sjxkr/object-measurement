@@ -1,0 +1,4 @@
+Shape 1 : Circle, Width = 57.9916 mm
+Shape 2 : Hexagon, Width = 80.415 mm
+Shape 3 : Circle, Width = 23.5832 mm
+Shape 4 : Circle, Width = 18.5573 mm
