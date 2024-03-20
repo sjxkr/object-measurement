@@ -70,10 +70,9 @@ void captureCalibrationImages()
 	VideoCapture cap(0);	// 0 = default camera
 
 	// print user instructions
+	cout << "Initialising camera.... Please wait....\n";
 	cout << "Capture " << nSamples << " images of the calibration target\n";
 	cout << "Press 'c' to capture images\nPress'Esc' key once calibration images have been captured.\n";
-	cout << "Initialising camera.... Please wait....\n";
-
 
 	if (!cap.isOpened())
 	{
@@ -329,9 +328,9 @@ void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point
 		tvecCurrent.at<double>(0, 1) = tvecs.at<double>(i, 1);
 		tvecCurrent.at<double>(0, 2) = tvecs.at<double>(i, 2);
 
-		// print rvectest
-		cout << "rvectest = " << rvecCurrent << endl;
-		cout << "tvectest = " << tvecCurrent << endl;
+		// print current rotation and translation vectors
+		cout << "rvecCurrent = " << rvecCurrent << endl;
+		cout << "tvecCurrent = " << tvecCurrent << endl;
 		cout << "object points = " << objectPoints[i] << endl;
 
 		// project points using calibration values
