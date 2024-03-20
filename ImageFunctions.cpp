@@ -348,11 +348,11 @@ void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point
 			double eucDistance = norm(normInput);
 			
 			// calculate error
-			cumError += eucDistance;
-			meanError = cumError / imagePoints[i].size();
+			cumError += eucDistance;			
 		}
 		
-		// print mean error
+		// calculate and print mean error
+		meanError = cumError / imagePoints.size();
 		cout << "Mean Error : " << round(meanError) << " Pixels" << endl;
 	}
 
