@@ -368,21 +368,22 @@ void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point
 			
 		}
 		
-		// calculate and print mean error in pixels
-		meanError = cumError / (nSamples*imagePoints[0].size());
-		cout << "Mean Error : " << meanError << " Pixels" << endl;
-
-		// calculate mean pixel per mm conversion factor
-		meanCalFactor = cumObjDistance / (((chessboardSizeX*chessboardSizeY)-chessboardSizeY)*squareSize*nSamples);
-
-		// convert mean error to millimeters
-		double meanErrorMM = meanError / meanCalFactor;
-
-		// display results to user
-		wstring errorMMString = L"Mean Error: " + to_wstring(meanErrorMM) + L" mm";
-		LPCWSTR userMessage = errorMMString.c_str();
-		MessageBox(NULL, userMessage, (LPCWSTR)L"Calibration Results - Mean Error", MB_OK | MB_ICONINFORMATION);
 	}
+
+	// calculate and print mean error in pixels
+	meanError = cumError / (nSamples * imagePoints[0].size());
+	cout << "Mean Error : " << meanError << " Pixels" << endl;
+
+	// calculate mean pixel per mm conversion factor
+	meanCalFactor = cumObjDistance / (((chessboardSizeX * chessboardSizeY) - chessboardSizeY) * squareSize * nSamples);
+
+	// convert mean error to millimeters
+	double meanErrorMM = meanError / meanCalFactor;
+
+	// display results to user
+	wstring errorMMString = L"Mean Error: " + to_wstring(meanErrorMM) + L" mm";
+	LPCWSTR userMessage = errorMMString.c_str();
+	MessageBox(NULL, userMessage, (LPCWSTR)L"Calibration Results - Mean Error", MB_OK | MB_ICONINFORMATION);
 
 	waitKey(0);
 
