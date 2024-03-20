@@ -880,8 +880,12 @@ void measureObject()
 	// display histogram of captured image for verification
 	imageHistogramDisplay(imgRemapped);
 
+	// test only - use equalised image for edge detection
+	Mat imgEqualised;
+	equalizeHist(imgRemapped, imgEqualised);
+
 	// edge detection
-	Mat imgCanny = edgeDetection(imgRemapped);
+	Mat imgCanny = edgeDetection(imgEqualised);
 
 	// detect and measure objects
 	shapeRecognition(imgCanny, imgRemapped);
