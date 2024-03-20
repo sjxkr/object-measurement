@@ -1,5 +1,9 @@
-Shape 1 : Circle, Width = 18.5469 mm
-Shape 2 : Circle, Width = 19.5967 mm
-Shape 3 : Circle, Width = 50.0415 mm
-Shape 4 : Rectangle, Height = 42 mm, Width = 80 mm
-Shape 5 : Square, Width = 79 mm
+Shape 1 : Circle, Width = 19.7602 mm
+Shape 2 : Circle, Width = 20.645 mm
+Shape 3 : Circle, Width = 30.3777 mm
+Shape 4 : Circle, Width = 25.6588 mm
+Shape 5 : Circle, Width = 24.1842 mm
+Shape 6 : Circle, Width = 29.4929 mm
+Shape 7 : Circle, Width = 18.2856 mm
+Shape 8 : Circle, Width = 22.1197 mm
+Shape 9 : Circle, Width = 17.9907 mm
