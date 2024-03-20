@@ -376,6 +376,7 @@ void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point
 
 	// calculate mean pixel per mm conversion factor
 	meanCalFactor = cumObjDistance / (((chessboardSizeX * chessboardSizeY) - chessboardSizeY) * squareSize * nSamples);
+	cout << "Mean Error : " << meanError / meanCalFactor << endl;
 
 	// convert mean error to millimeters
 	double meanErrorMM = meanError / meanCalFactor;

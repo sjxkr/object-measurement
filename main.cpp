@@ -39,7 +39,7 @@ int main()
 		runCameraCalibration();
 
 		// print progress update
-		cout << "Camera calibration and check complete" << endl;
+		cout << "Camera calibration and check complete...please wait" << endl;
 		// measure object
 		measureObject();
 
