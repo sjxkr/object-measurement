@@ -11,6 +11,7 @@
 #include <vector>
 #include <Windows.h>
 #include <string.h>
+#include <string>
 #include<cmath>
 
 #define PI	3.14159	/* pi */

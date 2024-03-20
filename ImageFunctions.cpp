@@ -379,6 +379,9 @@ void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point
 		double meanErrorMM = meanError / meanCalFactor;
 
 		// display results to user
+		wstring errorMMString = L"Mean Error: " + to_wstring(meanErrorMM) + L" mm";
+		LPCWSTR userMessage = errorMMString.c_str();
+		MessageBox(NULL, userMessage, (LPCWSTR)L"Calibration Results - Mean Error", MB_OK | MB_ICONINFORMATION);
 	}
 
 	waitKey(0);
