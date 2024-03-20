@@ -352,8 +352,8 @@ void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point
 		}
 		
 		// calculate and print mean error
-		meanError = cumError / imagePoints.size();
-		cout << "Mean Error : " << round(meanError) << " Pixels" << endl;
+		meanError = cumError / (nSamples*imagePoints.size());
+		cout << "Mean Error : " << meanError << " Pixels" << endl;
 	}
 
 
