@@ -880,12 +880,8 @@ void measureObject()
 	// display histogram of captured image for verification
 	imageHistogramDisplay(imgRemapped);
 
-	// test only - use equalised image for edge detection
-	Mat imgEqualised;
-	equalizeHist(imgRemapped, imgEqualised);
-
 	// edge detection
-	Mat imgCanny = edgeDetection(imgEqualised);
+	Mat imgCanny = edgeDetection(imgRemapped);
 
 	// detect and measure objects
 	shapeRecognition(imgCanny, imgRemapped);
@@ -967,7 +963,7 @@ void imageHistogramDisplay(Mat& image)
 	//imshow("Equalised Image", imgEqualised);
 
 	// write histogram to file
-	imwrite("Histogram.png", compressParams);
+	imwrite("Histogram.png", histImage,compressParams);
 
 	waitKey(0);
 	
