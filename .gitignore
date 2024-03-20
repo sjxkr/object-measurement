@@ -366,4 +366,4 @@ FodyWeavers.xsd
 *.png
 *.bmp
 *.bin
-*.txt
+Results.txt
