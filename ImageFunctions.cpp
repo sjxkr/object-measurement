@@ -232,7 +232,9 @@ void runCameraCalibration()
 	// get camera resolution
 	Mat image = imread("Target_Capture_1.png", -1);
 	imageSize = Size(image.cols , image.rows);
-	cout << "Image resolution: " << imageSize << endl;
+
+	// print information message
+	cout << "Calibrating camera...Please wait\n";
 
 	// calibrate camera
 	rmsError = calibrateCamera(objectPoints, imagePoints, imageSize, cameraMatrix, distCoefficients, rvecs, tvecs);
@@ -310,6 +312,8 @@ void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point
 	vector<Point2f> imageUndistCurrent;
 	double cumError = 0;
 	double meanError = 0;
+	double cumObjDistance = 0;
+	double meanCalFactor = 0;
 
 
 	for (int i = 0; i < nSamples; i++)
@@ -343,35 +347,35 @@ void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point
 		// calculate total and mean error
 		for (int j = 0; j < imagePoints[i].size(); j++)
 		{
-			// calculate distance between points
+			// calculate distance between image points and re-projected points
 			Point2f normInput = imagePoints[i][j] - imagePointsProjected[i][j];
 			double eucDistance = norm(normInput);
+
+			// calculate total re-projection error in pixels
+			cumError += eucDistance;
+
+			if (j < imagePoints[i].size()-1)
+			{
+		
+				// calculate distance between chessboard corners in image space
+				Point2f normInputObj = imagePoints[i][j] - imagePoints[i][j+1];
+				double eucDistanceObj = norm(normInputObj);
+
+				// calclulate total object point distance in pixels (ignoring steps between end of last and start current row)				
+				if (eucDistanceObj < 250) { cumObjDistance += eucDistanceObj; }
+			}
 			
-			// calculate error
-			cumError += eucDistance;			
+			
 		}
 		
-		// calculate and print mean error
-		meanError = cumError / (nSamples*imagePoints.size());
+		// calculate and print mean error in pixels
+		meanError = cumError / (nSamples*imagePoints[0].size());
 		cout << "Mean Error : " << meanError << " Pixels" << endl;
+
+		// calculate mean pixel per mm conversion factor
+		//meanCalFactor = cumObjDistance / ();
 	}
 
-
-	/*
-	// define variables
-	Mat imgUndistorted;
-
-	// undistort image
-	undistort(image, imgUndistorted, camMtx, dstMtx);
-
-	Mat diff;
-	absdiff(image, imgUndistorted, diff);
-
-	// show images
-	imshow("Distorted", image);
-	imshow("Undistorted", imgUndistorted);
-	imshow("Diff", diff);
-	*/
 	waitKey(0);
 
 }
@@ -836,6 +840,7 @@ void measureObject()
 	Mat imgRemapped;
 
 	// print user instructions
+	cout << "Loading measurement sequence\n";
 	cout << "Capture image of the object to be measured\n";
 	cout << "Press 'c' to capture images\nPress'Esc' key once image has been captured.\n";
 	cout << "Initialising camera.... Please wait....\n";
