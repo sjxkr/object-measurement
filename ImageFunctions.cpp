@@ -300,8 +300,8 @@ void calibrationCheck(vector<vector<Point3f>> &objectPoints, vector<vector<Point
 {
 	/*
 	* Purpose - Verify the calibration and quantify the error in order to decide whether the calibration is good.
-	* Parameters - Camera matrix, distortion coefficients,
-	* Outputs - Total error
+	* Parameters - object points, image points, camera calibration values
+	* Outputs - Mean error from re-projecting points in pixels and millimeters.
 	*/
 
 	// declare variables
@@ -394,8 +394,8 @@ Mat remapImage(Mat& image)
 {
 	/*
 	* Purpose - To undistort and image by applying the camera calibration coefficients. Used for verification of image quality (focus, lighting)
-	* Parameters - raw colour image, camera matrix, distortion coefficients
-	* Outputs - Remapped undistorted image
+	* Inputs - raw colour image, calibration values read from calibration file
+	* Outputs - Remapped undistorted and cropped image
 	*/
 
 	// define variables
@@ -418,11 +418,11 @@ Mat remapImage(Mat& image)
 		exit(EXIT_FAILURE);
 	}
 
-	// get RMS error
+	// get RMS error from file
 	getline(fin, line, ',');
 	fRMSError = stod(line);
 	
-	// get camera matrix
+	// get camera matrix from file
 	for (int x = 0; x < 3; x++)
 	{
 		for (int y = 0; y < 3; y++)
@@ -432,14 +432,14 @@ Mat remapImage(Mat& image)
 		}
 	}
 	
-	// get distortion matrix
+	// get distortion matrix from file
 	for (int x = 0; x < 5; x++)
 	{
 		getline(fin, line, ',');
 		dstMtx.at<double>(x) = stod(line);
 	}
 
-	// get rotation vectors
+	// get rotation vectors from file
 	for (int x = 0; x < nSamples; x++)
 	{
 		for (int y = 0; y < 3; y++)
@@ -449,7 +449,7 @@ Mat remapImage(Mat& image)
 		}
 	}
 	
-	// get translation vectors
+	// get translation vectors from file
 	for (int x = 0; x < nSamples; x++)
 	{
 		for (int y = 0; y < 3; y++)
@@ -494,8 +494,8 @@ Mat edgeDetection(Mat& image)
 {
 	/*
 	* Purpose - Seperate the object from the background and apply a canny edge detection filter as a prerequisite for shape detection
-	* Parameters - remapped undistorted grayscale image
-	* Outputs - Filtered image
+	* Inputs - remapped undistorted image
+	* Outputs - Image with canny edge detection filter applied
 	*/
 
 	// Define variables
@@ -543,13 +543,13 @@ Mat edgeDetection(Mat& image)
 void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 {
 	/*
-	* Purpose - Recognise the shape intended to be measured. Determine the required dimensions of the shape
-	* Parameters - Filtered image
-	* Outputs - Shape, Required dimensions
+	* Purpose - Recognise the shape of all objects in frame. Determine, calculate and display the required dimensions of the detected shape.
+	* Inputs - Canny edge filtered image
+	* Outputs - Results file containing dimensions of detected shapes.
 	*/
 
 	// define variables
-	ofstream fout;		// ofstream for writing results file
+	ofstream fout;											// ofstream for writing results file
 	vector<int> compressParams;
 	compressParams.push_back(IMWRITE_PNG_COMPRESSION);
 	compressParams.push_back(1);							// image writing parameters
@@ -559,7 +559,6 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 	int contID = 0;
 	double refObjArea;										// area of reference object in image in pixels
 	double refObjWidth;										// width of reference object in image in pixels
-	double refObjWidthMM;									// width in MM
 	double realWorldArea = PI*pow((realObjWidth/2),2);		// real world area of refernce object
 	double minArea = 500;									// used to filter detected contours which are too small
 	double pixPerMM;										// conversion factor -> pixels per millimeter
@@ -569,10 +568,10 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 	vector<Rect> shapeBounds;								// vector of bounding boxes of all detected shapes
 
 
-	// find contours
+	// Find contours
 	findContours(cannyImage, contours, heirarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
 
-	// filter out small detected contours by area
+	// filter out small detected contours by their area
 	vector<vector<Point>> filteredContours;
 
 	for (int i = 0; i < contours.size(); i++)
@@ -588,10 +587,7 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 	// initialise refArea variable to canvas size
 	refObjArea = cannyImage.cols * cannyImage.rows;
 
-	// print contours
-	//cout<< "Contours:\n"<< contours[0] << endl;
-
-	// create output matrix and initialise with zeros and draw contours in this image
+	// create output Mat object for drawing outlines of detected shapes
 	Mat dst = Mat::zeros(cannyImage.rows, cannyImage.cols, CV_8UC3);
 
 	// draw contours
@@ -608,28 +604,18 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 		vector<Point> approx;
 		approxPolyDP(filteredContours[i], approx, epsilon, true);
 
-		// calculate object width in pixels
-			// boundingRect(approx);
-
-		// Calculate object width in real-world units
-		//	double objectWidthMeters = objectWidth;  // Actual width of the object in meters
-		//	double focalLength = cameraMatrix.at<double>(0, 0);  // Focal length along X-axis (assuming square pixels)
-		//	double realWidth = (objectWidthMeters * focalLength) / pixelWidth;
-
-		// draw bounding box around shape (draw contours for now)
-		//drawContours(dst, filteredContours, i, Scalar(255, 255, 0), drawLineThickness, LINE_AA, heirarchy, maxLevel);
-
-		// classify the shapes
+		// get number of vertices of the detected shape
 		int vertices = static_cast<int>(approx.size());
 		string polygonType;
 
-		// calculate aspect ratio
+		// create a box around the detected shape and calculate aspect ratio
 		Rect bRectangle = boundingRect(filteredContours[i]);
 		double aspectRatio = static_cast<double>(bRectangle.height) / static_cast<double>(bRectangle.width);
 
 		// append bounding rectangle to vector
 		shapeBounds.push_back(bRectangle);
 
+		// classify the shape based of number of vertices
 		switch (vertices)
 		{
 			case 3:
@@ -638,7 +624,8 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 				break;
 
 			case 4:
-				
+
+				// differentiate squares and rectangles
 				if (aspectRatio > 0.97 && aspectRatio < 1.03)
 				{
 					polygonType = "Square";
@@ -692,27 +679,12 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 				break;
 		}
 
-		// print the shape
-		cout << "Detected Shape " << to_string(i + 1) << " : " << polygonType << endl;
-
-		// Give each shape a unique name and label it on image
-
-		// add dimension to image next to shape
-
-		// append shape id, shape description, area, real width and dict
-
-		// print results
-		cout << "Area of shape " << to_string(i+1) << " : " << area << " square pixels"<< endl;
-
-		// draw approximation of shapes
+		// draw approximation of shapes onto the created canvas
 		drawContours(dst, vector<vector<Point>>{approx}, contID, Scalar(0, 0, 255), drawLineThickness);
 
-		//imshow("Contour" + to_string(i), dst);
-		//waitKey(0);
-		//destroyWindow("Contour" + to_string(i));
 	}
 
-	// calculate pixels per millimeter
+	// calculate pixels per millimeter using the known dimensions of the reference object
 	refObjWidth = sqrt(refObjArea / PI);
 	pixPerMM = refObjWidth / (realObjWidth/2);
 
@@ -728,7 +700,7 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 	// open file stream to write results
 	fout.open(resultFilename);
 
-	// print shape class and dimension/s in real units
+	// print and write results in real units (mm)
 	for (int i = 0; i < shapeClass.size(); i++)
 	{
 		// local variables
@@ -738,8 +710,8 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 		double centreY = shapeBounds[i].y + shapeBounds[i].height / 2;
 		Point shapeCentroid = Point(centreX,centreY);
 		Scalar fCol = Scalar(0, 255, 0);
-		double fScale;
 
+		// only display/write 2 dimensions of the shape is a rectangle
 		if (shapeClass[i] == "Rectangle")
 		{
 
@@ -761,7 +733,7 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 				", Width = " << shapeWidth << " mm" <<
 				endl;
 
-			// label the shape
+			// label the shape with class and dimensions on the canvas
 			string sText1 = to_string(i + 1) + ": " + shapeClass[i];
 			string sText2 = "H: " + to_string(shapeHeight) + " mm";
 			string sText3 = "W : " + to_string(shapeWidth) + " mm";
@@ -785,7 +757,7 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 			// print results to file
 			fout << "Shape " << to_string(i + 1) << " : " << shapeClass[i] << ", Width = " << shapeWidth << " mm" << endl;
 
-			// label the shape
+			// label the shape with class and dimensions on the canvas
 			string sText1 = to_string(i + 1) + ": " + shapeClass[i];
 			string sText2 = "W : " + to_string(shapeWidth) + " mm";
 
@@ -797,8 +769,7 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 				putText(dst, lines[j], Point(centreX, centreY+y), FONT_HERSHEY_SIMPLEX, 0.4, fCol, fThickness);
 				y += 15;
 			}
-		}
-	
+		}	
 	}
 
 	// remember to close ofstream
@@ -834,9 +805,9 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 void measureObject()
 {
 	/*
-	* Purpose - Measures the identified shape according to the required dimensions
-	* Parameters - Shape, required dimensions
-	* Outputs - Measured dimensions
+	* Purpose - Calls the functions required to measure objects
+	* Inputs - None
+	* Outputs - None
 	*/
 
 	// Display camera preview and capture object
@@ -898,7 +869,7 @@ void measureObject()
 	}
 
 	// close webcam preview
-	destroyAllWindows();
+	destroyWindow("Webcam Preview - Image Capture");
 
 	// read image from file
 	Mat img = imread(imgPath, -1);
@@ -914,13 +885,21 @@ void measureObject()
 
 	// detect and measure objects
 	shapeRecognition(imgCanny, imgRemapped);
-
 }
 
 void imageHistogramDisplay(Mat& image)
 {
+	/*
+	* Purpose - Calculate a histogram of an image, used to verify the quality of the captured image for measuring objects.
+	* Inputs - undistorted cropped color image
+	* Outputs - Displays and writes to file a histogram plot of the input image
+	*/
+
 	Mat imgCapGray;
 	Mat imgCap = image;
+	vector<int> compressParams;
+	compressParams.push_back(IMWRITE_PNG_COMPRESSION);
+	compressParams.push_back(1);
 
 	// convert to grayscale
 	cvtColor(imgCap, imgCapGray, COLOR_BGR2GRAY, 0);
@@ -978,10 +957,13 @@ void imageHistogramDisplay(Mat& image)
 	Mat imgEqualised;
 	equalizeHist(imgCapGray, imgEqualised);
 
-
+	// display histogram
 	//imshow("Calc Histogram Input", imgCapGray);
 	imshow("Histogram", histImage);
-	//imshow("Equalised Image", imgEqualised);
+	imshow("Equalised Image", imgEqualised);
+
+	// write histogram to file
+	imwrite("Histogram.png", compressParams);
 
 	waitKey(0);
 	
