@@ -772,11 +772,8 @@ void shapeRecognition(Mat& cannyImage, Mat& remappedImage)
 	bitwise_or(remappedImage, dst, imgBitwiseAnd);
 
 	// show detected shapes and measurements
-	imshow("Bitwise AND Image", imgBitwiseAnd);
-	imshow("Input Image", cannyImage);
-	imshow("Remapped Image", remappedImage);
-	imshow("Detected Shapes", dst);
-	imshow("Blended Image", imgBlended);
+	imshow("Results II", imgBitwiseAnd);
+	imshow("Results", imgBlended);
 
 	// save images
 	imwrite("Results_Blended.png", imgBlended, compressParams);
