@@ -860,7 +860,7 @@ void measureObject()
 		if (keySave == 'c')
 		{
 
-			cout << "Image captured\n";
+			cout << "Image captured. Press 'Esc' if you are happy with the image\n";
 
 			// write image
 			imwrite(imgPath, rawframe, compressParams);
