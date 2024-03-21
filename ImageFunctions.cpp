@@ -477,13 +477,6 @@ Mat remapImage(Mat& image)
 	double cropThreshold = 0.05;	// proportion of edges to trim
 	Mat croppedImage = imgUndistorted(Range(imgH*cropThreshold,imgH*(1-cropThreshold)),Range(imgW*cropThreshold,imgW*(1-cropThreshold)));	// Range(Start_Row,End_Row),Range(Start_Col,End_Col)
 
-	// display images - debugging only
-	//imshow("Remap - Distorted", image);
-	//imshow("Remap - Undistorted", imgUndistorted);
-	//imshow("Remap - Undis_Cropped", croppedImage);
-
-	//waitKey(0);
-
 	destroyAllWindows();
 
 	return(croppedImage);
@@ -523,17 +516,8 @@ Mat edgeDetection(Mat& image)
 	// apply canny filter
 	Canny(imgBlur, imgCanny, CannyThreshMin, CannyThreshMax, apSize);
 
-	// display images
-	//imshow("Input Image", image);
-	//imshow("Gray", imgGray);
-	imshow("OTSU", imgGrayThresh);
-	//imshow("Blurred", imgBlur);
-	imshow("Canny ED", imgCanny);
-
 	// save image for debuggin
 	imwrite("Canny.png", imgCanny);
-
-	waitKey(0);
 
 	// return filtered image
 	return(imgCanny);
@@ -953,18 +937,8 @@ void imageHistogramDisplay(Mat& image)
 		line(histImage, Point(x+xOffset, hist_h - 3), Point(x+xOffset, hist_h + 3), Scalar(0, 0, 0), 1, LINE_AA);
 	}
 
-	// Equalise histogram
-	//Mat imgEqualised;
-	//equalizeHist(imgCapGray, imgEqualised);
-
-	// display histogram
-	//imshow("Calc Histogram Input", imgCapGray);
-	imshow("Histogram", histImage);
-	//imshow("Equalised Image", imgEqualised);
-
 	// write histogram to file
 	imwrite("Histogram.png", histImage,compressParams);
 
-	waitKey(0);
 	
 }
